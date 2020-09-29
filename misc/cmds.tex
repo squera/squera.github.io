@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%							COMMANDS						  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Language formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\neutcol}[0]{black}
+\newcommand{\sourcecol}[0]{RoyalBlue}
+\newcommand{\targetcol}[0]{RedOrange}
+\newcommand{\othercol}[0]{CarnationPink}
+\newcommand{\commoncol}[0]{black}    % ForestGreen
+
+\newcommand{\col}[2]{\ensuremath{{\color{#1}{#2}}}}
+
+\newcommand{\src}[1]{\ms{\col{\sourcecol}{#1}}}
+\newcommand{\trgb}[1]{\ensuremath{\bm{\col{\targetcol }{#1}}}} %\bm breaks things, this is used only for \trg{\tau} or similar
+\newcommand{\trg}[1]{{\mf{\col{\targetcol }{#1}}}}
+\newcommand{\oth}[1]{\mi{\col{\othercol }{#1}}}
+
+\newcommand{\bl}[1]{\col{\neutcol }{#1}}
+\newcommand{\com}[1]{\mi{\col{\commoncol }{#1}}}
+
+%Important. Write:
+% \src{\begin{aligned} ... \end{aligned}}
+% and not
+% \begin{align*} \src{ ...}\end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Math formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mi}[1]{\ensuremath{\mathit{#1}}}
+\newcommand{\mr}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\mt}[1]{\ensuremath{\texttt{#1}}}
+\newcommand{\mtt}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\mf}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\mk}[1]{\ensuremath{\mathfrak{#1}}}
+\newcommand{\mc}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\ms}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\mb}[1]{\ensuremath{\mathbb{#1}}}
+\newcommand{\msc}[1]{\ensuremath{\mathscr{#1}}}
+
+\DeclareMathOperator\mydefsym{\ensuremath{\iangleq}}
+
+\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}}
+\newcommand{\myset}[2]{\ensuremath{\left\{#1 ~\relmiddle|~ #2\right\}}}
+
+\newcommand{\Nat}[0]{\ensuremath{\mb{N}}\xspace}
+
+\newcommand{\funname}[1]{\mtt{#1}}
+\newcommand{\fun}[2]{\ensuremath{{\bl{\funname{#1}\left(#2\right)}}}\xspace}
+\newcommand{\dom}[1]{\fun{dom}{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Compiler 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\compskel}[3]{\ensuremath{\bl{\left\llbracket {#1} \right\rrbracket^{#2}_{#3}}}}
+\newcommand{\comp}[1]{\compskel{\bl{#1}}{}{}}
+\newcommand{\compgen}[1]{\compskel{\src{#1}}{\S}{\T}}
+
+\newcommand{\backtrskel}[3]{\ensuremath{\bl{\left\langle\!\left\langle {#1} \right\rangle\!\right\rangle^{#2}_{#3}}}}
+\newcommand{\backtr}[1]{\backtrskel{#1}{}{}}
+\newcommand{\backtrgen}[1]{\backtrskel{\trg{#1}}{\T}{\S}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Language shortcuts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\S}[0]{\src{{S}}\xspace}
+\newcommand{\T}[0]{\trg{{T}}\xspace}
+
+\newcommand{\ctx}[0]{\ensuremath{\mk{C}}}
+\newcommand{\ctxs}[0]{\src{\ctx}\xspace}
+\newcommand{\ctxt}[0]{\trg{\ctx}\xspace}%M
+\newcommand{\ctxo}[0]{\oth{\ctx}\xspace}%M
+\newcommand{\ctxc}[0]{\com{\ctx}\xspace}%P
+\newcommand{\ctxh}[1]{\ctx\hole{#1}}
+\newcommand{\ctxhs}[1]{\ctxs\src{\hole{#1}}\xspace}
+\newcommand{\ctxht}[1]{\ctxt\trg{\hole{#1}}\xspace}%M
+\newcommand{\ctxho}[1]{\ctxo\oth{\hole{#1}}\xspace}%M
+\newcommand{\ctxhc}[1]{\ctxc\com{\hole{#1}}\xspace}%P
+\newcommand{\hole}[1]{\ensuremath{\left[#1\right]}}
+
+\newcommand{\evalctx}[0]{\ensuremath{\mb{E}}}
+\newcommand{\evalctxs}[0]{\src{\evalctx}\xspace}
+\newcommand{\evalctxt}[0]{\trg{\evalctx}\xspace}
+\newcommand{\evalctxo}[0]{\oth{\evalctx}\xspace}
+\newcommand{\evalctxc}[0]{\com{\evalctx}\xspace}
+\newcommand{\evalctxhs}[1]{\src{\evalctx\hole{#1}}\xspace}
+\newcommand{\evalctxht}[1]{\trg{\evalctx\hole{#1}}\xspace}
+\newcommand{\evalctxho}[1]{\oth{\evalctx\hole{#1}}\xspace}
+\newcommand{\evalctxhc}[1]{\com{\evalctx\hole{#1}}\xspace}
+

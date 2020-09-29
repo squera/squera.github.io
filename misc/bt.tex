@@ -1,0 +1,2396 @@
+\documentclass{article}
+
+\usepackage[inference]{semantic}
+\usepackage{amsmath}\allowdisplaybreaks
+\usepackage[ntheorem]{mathtools}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage[amsmath,hyperref,amsthm]{ntheorem}
+\usepackage{thmtools}
+\usepackage{nameref}
+\usepackage[capitalize]{cleveref}
+\usepackage{mathpartir}
+\usepackage{amssymb}
+\usepackage{stmaryrd} %\usepackage{MnSymbol}
+\usepackage{xspace}
+\usepackage{latexsym}
+\usepackage{latexsym}
+\usepackage{ifthen}
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage[colorinlistoftodos]{todonotes} 
+\usepackage{tikz}
+\usetikzlibrary{positioning,shadows,arrows,calc,backgrounds,fit,shapes,snakes,shapes.multipart,decorations.pathreplacing,shapes.misc,patterns}
+\usepackage{xspace}
+\usepackage[T1]{fontenc}
+\usepackage[scaled=.83]{beramono}
+\usepackage{epigraph}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{etoolbox}
+\usepackage{wrapfig}
+\usepackage{pgfplots}
+\usepackage{natbib}
+\usepackage{nameref}
+\usepackage{scalerel}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{pf2}\pflongnumbers
+\usepackage{bm}
+\usepackage{tabularx}
+%% allow deep lists... from http://stackoverflow.com/questions/1935952/maximum-nesting-level-of-lists-in-latex
+\usepackage{enumitem}
+\setlistdepth{9}
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\bullet$}
+\setlist[itemize,3]{label=$\bullet$}
+\setlist[itemize,4]{label=$\bullet$}
+\setlist[itemize,5]{label=$\bullet$}
+\setlist[itemize,6]{label=$\bullet$}
+\setlist[itemize,7]{label=$\bullet$}
+\setlist[itemize,8]{label=$\bullet$}
+\setlist[itemize,9]{label=$\bullet$}
+\renewlist{itemize}{itemize}{9}
+
+\usepackage{bussproofs}
+
+\hypersetup{ pdfpagemode=UseOutlines, colorlinks=true, linkcolor=red, citecolor=blue }
+
+\makeatletter
+\setlength\mpr@andskip{.3em}
+\makeatother
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\input{./cmds.tex}
+\tikzset{langnode/.style={align=left}}
+\tikzset{arrcomm/.style={align=left, font = \footnotesize, midway}}
+\tikzset{lecture/.style={align=left, font = \footnotesize, midway, below}}
+
+
+\title{\vspace*{-2cm}
+	Secure Compilation Lecture Notes\thanks{
+		These lecture notes are the result of the course evolution throughout numerous years.
+		I would like to thank the students of the following courses that used preliminary versions of these lecture notes for their feeback and endurance:
+		%. . . . 
+		(sc101 @ Cispa\&UdS'18),
+		% . . 
+		(cs350 @ Stanford'18),
+		% . . . . . . . . . . . 
+		(scs19 @ Cispa\&UdS'19),
+		%?
+		(cs350 @ Stanford'19)
+	}
+}
+\author{
+	Marco Patrignani
+	\\
+	{\small special thanks to: Akram El-Korashy, Dominique Devriese, Daniel Patterson}
+}
+\date{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%							DOCUMENT						  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Pure Whole Languages}
+\subsection{Source Language \S}
+
+\subsubsection{Syntax}
+\begin{align*}
+	\src{P} \bnfdef&\
+		\src{e}
+	\\
+	\src{e} \bnfdef&\ 
+		 \src{\truev} \mid \src{\falsev} \mid \src{e \odot e} \mid \src{n} \mid \src{x} \mid \src{e \oplus e} \mid \src{\letin{x}{e}{e}} \mid \src{\ifte{e}{e}{e}} \mid \src{\fail}
+	\\
+	\src{v} \bnfdef&\
+		\src{\truev} \mid \src{\falsev} \mid \src{n}
+	\\
+	\src{f} \bnfdef&\	
+		\src{n} \mid \src{\fail}
+	\\
+	\src{E} \bnfdef&\
+		\src{\hole{\cdot}} \mid \src{e\oplus E} \mid \src{E\oplus n} \mid \src{\letin{x}{E}{e}} \mid \src{\ifte{E}{e}{e}} \mid \src{e\odot E} \mid \src{E\odot n}
+	\\
+	\src{\gamma} \bnfdef&\ 
+		\srce \mid \src{\gamma; \subs{v}{x}}
+\end{align*}
+The program state is just an expression \src{e}.
+
+We assume some standard properties of substitutions $\gamma$, such as capture avoidance, distributivity over terms, and weakening.
+
+In the following, we assume: $\oplus \bnfdef +, -, \cdots$, $\odot \bnfdef <, >, ==$.
+
+
+\subsubsection{Dynamic Semantics}
+\begin{align*}
+	\text{Judgements:}&\
+	\src{e \redp e'} \qquad
+	\src{e \reds e'}
+\end{align*}
+\begin{center}
+	\typerule{Eval-letin}{}{
+	\src{\letin{x}{n}{e} \redp e\subs{n}{x}}
+	}{e-letin}
+	\and
+	\typerule{Eval-op}{
+		 n\oplus n'=n''
+	}{
+		\src{n\oplus n' \redp n''} 
+	}{e-op}
+	\and
+	\typerule{Eval-bop}{
+		n\odot n'=v
+	}{
+		\src{n\odot n' \redp v} 
+	}{e-bop}
+	\and
+	\typerule{Eval-if-t}{}{
+		\src{\ifte{\truev}{e}{e'} \redp e}
+	}{e-ift}
+	\and
+	\typerule{Eval-if-f}{}{
+		\src{\ifte{\falsev}{e}{e'} \redp e'}
+	}{t-iff}
+	\and
+	\typerule{Eval-ctx}{
+		\src{e\redp e'}
+	}{
+		\src{E\hole{e}\reds E\hole{e'}}
+	}{e-ctx}
+	\and
+	\typerule{Eval-fail}{}{
+		\src{E\hole{\fail}\reds fail}
+	}{e-fail}
+\end{center}
+We can use evaluation contexts (which are not program contexts) to determine where the reductions happen.
+
+\subsubsection{Static Semantics}
+\begin{align*}
+	\src{\tau} \bnfdef&\
+		\src{\Bool} \mid \src{\Nat} \mid \src{Nat\to Nat}
+	\\
+	\src{\Gamma} \bnfdef&\ 
+		\srce \mid \src{\Gamma ; x:\tau}
+\end{align*}
+
+\begin{align*}
+\src{\Gamma}\vdash&\ \src{e : \tau}		
+	&\mbox{ Well-typed expression }\src{e}\mbox{ of type }\src{\tau}
+\\
+\vdash&\ \src{fn(x)\mapsto e : Nat \to Nat}		
+	&\mbox{ Well-typed program }\src{e}\mbox{ of type }\src{\Nat}\mbox{ to }\src{\Nat}
+\end{align*}
+
+\begin{center}
+	\typerule{T-true}{}{
+		\src{\Gamma}\vdash\src{\truev}:\src{\Bool}
+	}{ty-tru}
+	\typerule{T-false}{}{
+		\src{\Gamma}\vdash\src{\falsev}:\src{\Bool}
+	}{ty-fal}
+	\typerule{T-n}{}{
+		\src{\Gamma}\vdash\src{n}:\src{\Nat}
+	}{ty-n}
+	\typerule{T-x}{
+		\src{x:\tau}\in\src{\Gamma}
+	}{
+		\src{\Gamma}\vdash\src{x}:\src{\tau}
+	}{ty-x}
+	\typerule{T-bop}{
+		\src{\Gamma}\vdash\src{e_1}:\src{\Nat}
+		\\
+		\src{\Gamma}\vdash\src{e_2}:\src{\Nat}
+	}{
+		\src{\Gamma}\vdash\src{e_1 \odot e_2}:\src{\Bool}
+	}{ty-bop}
+	\typerule{T-op}{
+		\src{\Gamma}\vdash\src{e_1}:\src{\Nat}
+		\\
+		\src{\Gamma}\vdash\src{e_2}:\src{\Nat}
+	}{
+		\src{\Gamma}\vdash\src{e_1 \oplus e_2}:\src{\Nat}
+	}{ty-op}
+	\typerule{T-let}{
+		\src{\Gamma}\vdash\src{e_1}:\src{\tau_1}
+		\\
+		\src{\Gamma;x:\tau_1}\vdash\src{e_2}:\src{\tau}
+	}{
+		\src{\Gamma}\vdash\src{\letin{x}{e_1}{e_2}}:\src{\tau}
+	}{ty-let}
+	\typerule{T-if}{
+		\src{\Gamma}\vdash\src{e}:\src{\Bool}
+		\\
+		\src{\Gamma}\vdash\src{e_1}:\src{\tau}
+		&
+		\src{\Gamma}\vdash\src{e_2}:\src{\tau}
+	}{
+		\src{\Gamma}\vdash\src{\ifte{e}{e_1}{e_2}}:\src{\tau}
+	}{ty-if}
+	\typerule{T-fail}{}{
+		\src{\Gamma}\vdash\src{\fail}:\src{\tau}
+	}{ty-fai}
+	\typerule{T-prog}{
+		\src{x:Nat}\vdash\src{e}:\src{\Nat}
+		\\
+		\src{\fail}\notin\src{e}
+	}{
+		\vdash\src{fn(x)\mapsto e}:\src{Nat \to Nat}
+	}{ty-prog}
+\end{center}
+
+\subsection{Target Language \T}
+\subsubsection{Syntax}
+\begin{align*}
+	\trg{P} \bnfdef&\
+		\trg{e}
+	\\
+	\trg{v}\bnfdef&\ 
+		\trg{n} \mid \trg{\truev} \mid \trg{\falsev}
+		\qquad\qquad
+		\trg{b}\bnfdef \trg{\truev} \mid \trg{\falsev}
+	\\
+	\trg{e} \bnfdef&\ 
+		\trg{n} \mid \trg{x} \mid \trg{e \oplus e} \mid \trg{\letin{x}{e}{e}} \mid \trg{\ifte{e}{e}{e}} \mid \trg{\fail} 
+	\\
+	\mid&\
+		\trg{\truev} \mid \trg{\falsev} \mid \trg{e \odot e} \mid \trg{\has{e}{T}}
+	\\
+	\trg{T} \bnfdef&\ \trg{\Nat} \mid \trg{\Bool}
+	\\
+	\trg{f} \bnfdef&\	
+		\trg{n} \mid \trg{\fail}
+	\\
+	\trg{E} \bnfdef&\
+		\trg{\hole{\cdot}} \mid \trg{e\oplus E} \mid \trg{E\oplus v} \mid \trg{\letin{x}{E}{e}} \mid \trg{\ifte{E}{e}{e}} \mid \trg{e\odot E} \mid \trg{E\odot v}
+	\\
+	\trgb{\gamma} \bnfdef&\ 
+		\trge \mid \trgb{\gamma; \subt{v}{x}}
+\end{align*}
+
+\subsubsection{Dynamic Semantics}
+\begin{align*}
+	\text{Judgements:}&\
+	\trg{e \redp e'}
+	\qquad
+	\trg{e \redt e'}
+\end{align*}
+
+\begin{center}
+	\typerule{Eval-letin}{}{
+		\trg{\letin{x}{v}{e} \redp e\subt{v}{x}}
+	}{e-letin}
+	\and
+	\typerule{Eval-op}{
+		 n\oplus n'=n''
+	}{
+		\trg{n\oplus n' \redp n''} 
+	}{e-op}
+	\and
+	\typerule{Eval-bop}{
+		n\odot n'=v
+	}{
+		\trg{n\odot n' \redp v} 
+	}{e-bop}
+	\and
+	\typerule{Eval-if-t}{}{
+		\trg{\ifte{\truev}{e}{e'} \redp e}
+	}{e-ift}
+	\and
+	\typerule{Eval-if-f}{}{
+		\trg{\ifte{\falsev}{e}{e'} \redp e'}
+	}{t-iff}
+	\and
+	\typerule{Eval-ctx}{
+		\trg{e\redp e'}
+	}{
+		\trg{E\hole{e}\redt E\hole{e'}}
+	}{e-ctx}
+	\and
+	\typerule{Eval-fail}{}{
+		\trg{E\hole{\fail}\redt fail}
+	}{e-fail}
+	\and
+	\typerule{Eval-has-nN}{}{
+		\trg{\has{n}{N} \redp \truev}
+	}{e-}
+	\and
+	\typerule{Eval-has0nB}{}{
+		\trg{\has{n}{B} \redp \falsev}
+	}{e-}
+	\and
+	\typerule{Eval-hasvN}{
+		\trg{v}\equiv\trg{\truev}\text{ or }\trg{\falsev}
+	}{
+		\trg{\has{v}{N} \redp \falsev} 
+	}{e-}
+	\and
+	\typerule{Eval-has-vB}{
+		\trg{\has{v}{B} \redp \truev}
+	}{}{e-}
+	\and
+	\typerule{Eval-op-fail}{
+		\trg{v}=\trg{b} \text{ or } \trg{v'}=\trg{b}
+	}{
+		\trg{v\oplus v' \redp fail}	
+	}{e-}
+	\and
+	\typerule{Eval-bop-fail}{
+		\trg{v}=\trg{b} \text{ or } \trg{v'}=\trg{b}
+	}{
+		\trg{v\odot v' \redp fail}
+	}{e-}
+	\and
+	\typerule{Eval-if-fail}{}{
+		\trg{\ifte{n}{e}{e'} \redp fail}
+	}{e-}
+\end{center}
+
+
+\subsection{\compgen{\cdot}: Compiler from \S to \T}
+\begin{align*}
+	\compgen{\truev} = &\ \trg{\truev}
+	\\
+	\compgen{\falsev} = &\ \trg{\falsev}
+	\\
+	\compgen{n} = &\ \trg{n}
+	\\
+	\compgen{x} = &\ \trg{x}
+	\\
+	\compgen{e \oplus e'} = &\ \trg{\compgen{e} \oplus \compgen{e'}}
+	\\
+	\compgen{e \odot e'} = &\ \trg{\compgen{e} \odot \compgen{e'}}
+	\\
+	\compgen{\letin{x}{e}{e'}} = &\ \trg{\letin{x}{\compgen{e}}{\compgen{e'}}}
+	\\
+	\compgen{\ifte{b}{e}{e'}} = &\ \trg{\ifte{\compgen{b}}{\compgen{e}}{\compgen{e'}}}
+	\\
+	\compgen{\fail} = &\ \trg{\fail}
+	\\
+	\compgen{\subs{v}{x}} = &\ \subt{\compgen{v}}{\compgen{x}}  
+\end{align*}
+
+\subsection{Compiler Correctness for \compgen{\cdot}}
+\begin{lemma}[Forward simulation]\label{thm:fow-sim}
+	\begin{align*}
+		&
+		\text{if } \src{e\gamma\ \redstars\ v}
+		\text{ then } \trg{\compgen{e}\compgen{\gamma}\ \redstart\ \compgen{v}}
+	\end{align*}
+\end{lemma}
+Find the proof template in \Cref{sec:proof-thm:fow-sim}.
+
+\begin{lemma}[Expression correctness]\label{thm:expr-corr}
+	\begin{align*}
+		&
+		\text{if }\trg{\compgen{e}\compgen{\gamma}\ \redstart\ \compgen{f}}
+		\text{ then }\src{e\gamma\ \redstars\ f}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	By contradiction we assume: \src{e\gamma \reds v'\neq v} (the case for \src{b} is analogous).
+
+	By \Thmref{thm:fow-sim} we get that \trg{\compgen{e}\compgen{\gamma}\redstart\compgen{v'}}.
+
+	By determinism of the compiler we have $\compgen{v}\neq\compgen{v'}$.
+
+	So we have that the same term \compgen{e} reduces to two different terms, which contradicts the determinism of the semantics.
+	\qed
+\end{proof}
+
+
+\begin{theorem}[Compiler correctness for \compgen{\cdot} (Whole Programs)]\label{thm:comp-corr}
+	\begin{align*}
+		&
+		\text{if }
+		\srce\vdash\src{P}:\src{\tau}
+		\andt
+		\trg{\compgen{P}\ \redstart\ \compgen{f}}
+		\text{ then }\src{P \redstars\ f}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	By \Thmref{thm:expr-corr}.
+	\qed
+\end{proof}
+
+
+
+
+\section{Partial Languages}
+\subsection{Source Language Additions: \So}
+\begin{align*}
+	\src{P} \bnfdef&\
+		\src{fn(x)\mapsto e}
+	\\
+	\src{\ctx} \bnfdef&\
+		\src{
+			\letin{y}{call~fn~e}{e}
+		}
+\end{align*}
+
+\begin{align*}
+\vdash&\ \src{\letin{y}{call~fn~e_1}{e_2} : Bool}		
+	&\mbox{ Well-typed context of type }\src{\Bool}
+\end{align*}
+
+\begin{center}
+	\typerule{T-ctx}{
+		\srce\vdash\src{e_1}:\src{\Nat}
+		\\
+		\src{y:Nat}\vdash\src{e_2}:\src{\Bool}
+	}{
+		\vdash\src{\letin{y}{call~fn~e_1}{e_2}}:\src{\Bool}
+	}{ty-ctx}
+\end{center}
+
+\subsection{Target Language Additions: \To}
+\begin{align*}
+	\trg{P} \bnfdef&\
+		\trg{fn(x)\mapsto e}
+	\\
+	\trg{\ctx} \bnfdef&\
+		\trg{
+			\letin{y}{call~fn~e}{e}
+		}
+\end{align*}
+
+
+\subsection{Common Definitions}
+\begin{definition}[Contextual equivalence]
+\begin{align*}
+	{P_1 \ceq P_2} \isdef&\ \forall {\ctx}.~ {\ctx\hole{P_1} \redstar f \andt \ctx\hole{P_2}\redstar f}
+\end{align*}
+\end{definition}
+
+\begin{definition}[Plugging]
+Given that $\ctx = \mi{\letin{y}{call~fn~e_{\mi{arg}}}{e_{\mi{cont}}}}$ and $P = fn(x)\mapsto e_{\mi{fun}}$.
+\begin{align*}
+		\ctx\hole{P} \isdef&\ 
+			\mi{\letin{y}{\letin{x}{e_{arg}}{e_{\mi{fun}}}}{e_{\mi{cont}}}}
+\end{align*}
+\end{definition}
+
+\begin{example}[Equivalent and inequivalent programs]
+	\begin{align*}
+		&\src{x+2}
+		&
+		&\src{x+1+1}
+		\\
+		&\src{\ifte{x>0}{0}{1}}
+		&
+		&\src{x}
+		\\
+		&\src{\letin{z}{x}{z+z}}
+		&
+		&\src{x+x}
+	\end{align*}
+\end{example}
+
+\subsection{\compst{\cdot}: Compiler from \So to \To}
+\begin{align*}
+	\compst{\src{fn(x)\mapsto e}} =&\ \trg{fn(x)\mapsto \compst{e}}
+	\\
+	\compst{e} =&\ \compgen{e}
+	\\
+	\compst{\letin{y}{call~fn~e}{e'}} =&\ \trg{\letin{y}{call~fn~\compst{e}}{\compst{e'}}}
+\end{align*}
+
+
+\subsection{Compiler Correctness for \compst{\cdot}}	
+\begin{theorem}[Compiler correctness for \compst{\cdot} (Partial Programs)]\label{thm:comp-corr-p}
+	\begin{align*}
+		\text{if }
+		&
+		\srce\vdash\src{P}:\src{\tau}
+		\andt
+		\vdash\src{\ctx}:\src{\Bool}
+		\andt
+		\trg{\ctx} = \compgen{\ctx}
+		\andt
+		\trg{ \ctx\hole{\compgen{P}}\ \redstart\ \compgen{f}}
+		\\
+		\text{ then }
+		&
+		\src{\ctx\hole{P} \redstars\ f}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Analogous to the proof of \Thmref{thm:comp-corr}.
+\end{proof}
+
+
+
+\section{Compiler Security: Fully Abstract Compilation}
+\begin{theorem}[Full abstraction of \compst{\cdot}]\label{thm:fa-compgen}
+	\begin{align*}
+		\forall \src{P_1}, \src{P_2}.~
+			&\
+			\src{P_1\ceqs P_2} \iff \trg{\compst{P_1}\ceqt \compst{P_2}}
+	\end{align*}
+\end{theorem}
+
+\begin{example}[Violations of full abtraction]
+	\begin{align*}
+		\trg{\ctx_b} =&\
+			\trg{\letin{y}{call~fn~\truev}{ 2 }}
+		\\
+		\src{P_1} =&\
+			\src{fn(x)\mapsto \letin{z}{x}{1}}
+		\\
+		\src{P_2} =&\
+			\src{fn(x)\mapsto 1}
+	\end{align*}
+	In this case, we have $\forall\src{\ctx},\exists\src{f}$:
+	\begin{itemize}
+		\item $\src{\ctx\hole{{P_1}} \redstars f}$
+		\item $\src{\ctx\hole{{P_2}} \redstars f}$
+		\item $\trg{\ctx_b\hole{\compgen{P_1}} \redstart \fail}$
+		\item $\trg{\ctx_b\hole{\compgen{P_2}} \redstart 2}$
+	\end{itemize}
+	So, $\src{P_1\ceqs P_2}$ but $\trg{\compgen{P_1}\nceqt\compgen{P_2}}$.
+\end{example}
+
+\subsection{Compiler Changes}
+\begin{align*}
+	\compst{\src{fn(x)\mapsto e}} =&\ \trg{fn(x)\mapsto \ifte{\has{x}{N}}{\compst{e}}{\fail}}
+\end{align*}
+
+\subsection{Fully Abstract Compilation via Context-based Backtranslation}
+\subsubsection{Reflection}
+\begin{lemma}[Equivalence reflection for \compst{\cdot}]\label{thm:refl-compgen}
+	\begin{align*}
+		\forall \src{P_1}, \src{P_2}.~
+			&\
+			\src{P_1\ceqs P_2} \Leftarrow \trg{\compst{P_1}\ceqt \compst{P_2}}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+We state this in contrapositive form:
+\begin{align*}
+	\src{P_1\nceqs P_2}\Rightarrow \trg{\compst{P_1}\nceqt \compst{P_2}}
+\end{align*}
+and expand the definitions of $\ceq$:
+\begin{align*}
+	&
+	\src{\exists \ctx.~ \ctx\hole{P_1}\redstars f \andt \ctx\hole{P_2}\redstars f' \andt f\neq f'} 
+	\\
+	&
+	\Rightarrow \trg{\exists \ctx.~ \ctx\hole{\compst{P_1}} \redstart f \andt \ctx\hole{\compst{P_2}}\redstart f'  \andt f\neq f'}
+\end{align*}
+Picking \trg{\ctx} is simple, assuming \compst{\cdot} can be applied to context (as is generally the case, like here), \trg{\ctx}=\compst{\src{\ctx}}.
+At this point, a clever usage of \Thmref{thm:fow-sim} gives this result.
+\qed
+\end{proof}
+
+
+\subsubsection{Preservation}
+\begin{lemma}[Equivalence preservation for \compst{\cdot}]\label{thm:pres-compgen}
+	\begin{align*}
+	\forall \src{P_1}, \src{P_2}.~
+		&\
+		\src{P_1\ceqs P_2} \Rightarrow \trg{\compst{P_1}\ceqt \compst{P_2}}
+\end{align*}
+
+\end{lemma}
+\begin{proof}[Proof attempt (this proof is not completed).]
+We state this in contrapositive form:
+\begin{align*}
+	\forall \src{P_1}, \src{P_2}.~
+		&\
+		\trg{\compst{P_1}\nceqt \compst{P_2}} \Rightarrow \src{P_1\nceqs P_2}
+\end{align*}
+and expand the definitions of $\ceq$:
+\begin{align*}
+	\forall \src{P_1}, \src{P_2}.~
+		&\
+		\trg{\exists \ctx.~ \ctx\hole{\compst{P_1}} \redstart f \andt \ctx\hole{\compst{P_2}}\redstart f' \andt f\neq f' } 
+		\\
+		&\ 
+		\Rightarrow \src{\exists \ctx.~ \ctx\hole{P_1}\redstars f \andt \ctx\hole{P_2}\redstars f' \andt f\neq f'}
+\end{align*}
+We can try to build \src{\ctx} starting from \trg{\ctx} as we cannot rely on any correctness result.
+\end{proof}
+
+\subsection{\backtrts{\cdot}: Context-based Backtranslation}
+\subsubsection{The Universal Type}
+We need a universal type, something to backtranslate target expression to in order for them to be valid.
+\begin{example}[Backtranslation type]
+We cannot backtranslate \trg{\truev} to \src{\truev} because when backtranslating \trg{3+true} we would get \src{3+true} that is not a valid source expression according to the grammar of \src{a}.
+Also, we need a mechanism that scales for all operations quantified over by $\oplus$, e.g., \trg{3*2} etc.
+\end{example}
+
+Anything that the target is backtranslated to, must be of this universal type.
+\begin{center}
+	This universal type is \emph{natural numbers}.
+\end{center}
+
+\subsubsection{Helper Functions}
+Then we need to convert to and from normal types and the universal type in order to ensure proper communication occurs.
+In fact, if we backtranslate \trg{call~ f~ true} to \src{call~ f~ 0}, the former will fail (by the typecheck inserted by the compiler) and the second will not.
+
+Inject takes something of a type and injects it into the universal type, extract takes from the universal type and extracts to a type.
+\begin{align*}
+	\src{\inject{\Nat}(e)} 
+		=&\ 
+		\src{e+2}
+	\\
+	\src{\inject{\Bool}(e)} 
+		=&\
+		\src{\ifte{e}{1}{0}}
+	\\
+	\src{\extract{\Nat} (e)} 
+		=&\ 
+		\src{\letin{x}{e}{\ifte{x\geq 2}{x-2}{\fail}}}
+	\\
+	\src{\extract{\Bool} (e)} 
+		=&\ 
+		\src{\letin{x}{e}{\ifte{x \geq 2}{\fail}{\ifte{x-1\geq 1}{\falsev}{\truev}}}}
+\end{align*}
+
+
+% \begin{center}
+% 	\begin{tikzpicture}[scale=0.8,every node/.style={scale=.9}]
+% 	  % \draw[help lines,yellow] (0,0) grid (10,7);
+% 		\draw[semithick, fill = \stlccol!20] (6.5,6) ellipse (5.5 and 2); %top big ecl
+% 		\draw[semithick, fill = gray!20] (6.5,6) ellipse (2.5 and 1); % top small ecl
+
+% 		% backtrans
+% 		\draw[dashed] (1,6) node[yshift=-2.5cm,xshift=1cm] {\backtrts{\cdot}} -- (4,1);% left
+% 		\draw[dashed] (12,6) -- (9,1);% right line
+
+% 		%compiler
+% 		\draw[] (4,6) -- (4,1) ;% left
+% 		\draw[] (9,6) node[yshift=-2.5cm,left] {\comp{\cdot}} -- (9,1);% right line
+
+% 		\draw[semithick, fill=\ulccol!20] (6.5,1) ellipse (2.5 and 1);% bottom ellipse
+
+% 		\draw[->, bend left, dotted] (8,6.2) node[above, xshift= 1cm, yshift = .3cm] {\src{extract}} to (10,6.2);
+% 		\draw[<-, bend right, dotted] (8,5.8) node[below, xshift= 1cm, yshift = -.3cm] {\src{inject}} to (10,5.8);
+
+% 		\draw (0,6) node {\src{Source}};
+% 		% \draw (0,7) node {\color{gray}{ULC}};
+% 		\draw (2,1) node {\trg{Target}};
+% 		% \draw (8.5,6) node {\src{\tau}};
+% 		% \draw (8.5,1) node {\trg{\src{\tau}^+}};
+% 		\draw (7,6.5) node {};
+% 		\draw (6,1) node {Target ctx};
+% 		\draw (5,1) node {};
+% 		\draw (6.4,7.4) node {Source programs that also use bools};
+% 		\draw (6.4,6) node {Backtranslated ctx};
+% 	\end{tikzpicture}	
+% \end{center}
+
+
+\subsubsection{Properties of the Helpers}
+\begin{lemma}[The Helpers are well-typed]\label{thm:helpers-well-typed}
+	The following holds:
+	\begin{itemize}
+		\item If $\src{\Gamma}\vdash\src{e:Nat}$ then $\src{\Gamma}\vdash\src{\inject{\Nat}(e):Nat}$
+		\item If $\src{\Gamma}\vdash\src{e:Bool}$ then $\src{\Gamma}\vdash\src{\inject{\Bool}(e):Nat}$
+		\item If $\src{\Gamma}\vdash\src{e:Nat}$ then $\src{\Gamma}\vdash\src{\extract{\Nat}(e):Nat}$
+		\item If $\src{\Gamma}\vdash\src{e:Nat}$ then $\src{\Gamma}\vdash\src{\extract{\Bool}(e):Bool}$
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+	Simple case analysis.
+\end{proof}
+
+
+\subsubsection{The Backtranslation}
+The backtranslation is based on the program context structure.
+\begin{align*}
+	\backtrts{\letin{y}{call~fn~e'}{e''}} =&\
+		\src{
+				\letins{y}{\src{\inject{\Nat}(call~fn~(\extract{\Nat}\backtrts{e'}))}}{
+				\backtrts{e''}}
+			}
+	\\
+	\backtrts{n} =&\ \src{n+2}
+	\\
+	\backtrts{x} =&\ \src{x}
+	\\
+	\backtrts{\truev} =&\ \src{0}
+	\\
+	\backtrts{\falsev} =&\ \src{1}
+	\\
+	\backtrts{e \oplus e'} =&\ 
+		\src{
+		\begin{aligned}[t]
+			&
+			\letins{\src{x1}}{\extract{\Nat}\backtrts{e}}{
+			\\&\ 
+				\letins{\src{x2}}{\extract{\Nat}\backtrts{e'}}{
+				\\
+				&\ \
+				\inject{\Nat}\src{x1\oplus x2}
+				}
+			}
+		\end{aligned}
+		}
+	\\
+	\backtrts{e \odot e'} =&\
+		\src{
+		\begin{aligned}[t]
+			&
+			\letins{\src{x1}}{\extract{\Nat}\backtrts{e}}{
+			\\&\ 
+				\letins{\src{x2}}{\extract{\Nat}\backtrts{e'}}{
+				\\
+				&\ \
+				\inject{\Bool}\src{x1\oplus x2}
+				}
+			}
+		\end{aligned}
+		}
+	\\
+	\backtrts{\letin{x}{e}{e'}} =&\ \src{\letin{x}{\backtrts{e}}{\backtrts{e'}}}
+	\\
+	\backtrts{\ifte{e}{e'}{e''}} =&\ \src{\letin{x}{\extract{\Bool}\backtrts{e}}{\ifte{x}{\backtrts{e'}}{\backtrts{e''}}}} % WAS x==1
+	\\
+	\backtrts{e~ has~ T} =&\
+		\begin{cases}
+			\src{\letin{x}{\backtrts{\trg{e}}}{\ifte{x \geq 2}{1}{0}}}
+			\\\text{ if }\trg{T}=\trg{\Nat}
+			\\
+			\src{\letin{x}{\backtrts{\trg{e}}}{\ifte{x \geq 2}{0}{1}}}
+			\\\text{ if }\trg{T}=\trg{\Bool}
+		\end{cases}
+	\\
+	\backtrts{\fail} =&\ \src{\fail}
+	\\
+	\backtrts{\subt{v}{x}} =&\ \subs{\backtrts{v}}{\backtrts{x}}
+\end{align*}
+The case for the \trg{e~ has~ T} from should be \src{\inject{\Bool}(\ifte{x\geq 2}{\truev}{\falsev})} (in the case for \src{\Bool}, swap \src{\truev} and \src{\falsev} for the \src{\Nat} case) but we shorten it to the definition above because we already know how the ``if'' expression and the subsequent inject will execute.
+
+\begin{remark}[Letin]
+	The backtranslation of \trg{\letin{x}{e}{e'}} may seem confusing, as it does not insert \inject{\Nat} for its subexpressions.
+
+	We argue why it is right using this example, for which we indicate the reductions:
+	\begin{itemize}
+		\item $\trg{e_1}=\trg{\letin{x}{2}{x+1}}$ and $\trg{t_1 \redstart 3}$;
+		% \item $\trg{t_1}=\trg{\letin{x}{\truev}{x+1}}$ and $\trg{t_2 \redstart fail}$.
+	\end{itemize}
+	% Both \trg{t_1} and \trg{t_2} are valid target expressions, so we must be able to backtranslate them.
+
+	Currently, what we get is:
+	\begin{itemize}
+		\item $\src{e_1}=\src{\letin{x}{4}{\letin{x1}{\extract{\Nat}x}{\letin{x2}{\extract{\Nat}3}{\inject{\Nat}x1+x2}}}}$
+		% \item $\src{t_2}=\src{\letin{x}{0}{\letin{x1}{\extract{\Nat}x}{\letin{x2}{\extract{\Nat}3}{\inject{\Nat}x1+x2}}}}$
+	\end{itemize}
+	If we unfold the reductions, we see that 
+
+	\begin{tabular}{c|c}
+	\src{e_1}
+	&
+	{$\begin{aligned}
+		&
+		\src{\letin{x}{4}{\letin{x1}{\extract{\Nat}x}{\letin{x2}{\extract{\Nat}3}{\inject{\Nat}x1+x2}}}}
+		\\
+		\reds\
+		&
+		\src{{\letin{x1}{\extract{\Nat}4}{\letin{x2}{\extract{\Nat}3}{\inject{\Nat}x1+x2}}}}
+		\\
+		\redstars\
+		&
+		\src{{{\letin{x2}{\extract{\Nat}3}{\inject{\Nat}2+x2}}}}
+		\\
+		\redstars\
+		&
+		\src{{{{\inject{\Nat}2+1}}}}
+		\\
+		\redstars\
+		&
+		\src{5}
+	\end{aligned}$}
+	\end{tabular}	
+
+	and these reductions proceed as expected.
+
+	However if we insert an additional \src{\extract{\Nat}} for the value bound to the \src{x}, these reductions will not go right, as we get an additional \src{+2}.
+	We could eliminate it by adding an \src{\inject{\Nat}} when variables are backtranslated, but this is hard to do correctly as we do not know if a variable will be used as a Nat or as a Bool in the target, as in this other valid expression:
+	\begin{itemize}
+		\item $\trg{e_2}=\trg{\letin{x}{\truev}{\ifte{x}{3}{0}}}$
+	\end{itemize}
+	This gets backtranslated to 
+	\begin{itemize}
+		\item $\src{e_2}=\src{\letin{x}{0}{\letin{z}{\extract{\Bool}x}{\ifte{z==1}{5}{2}}}}$
+	\end{itemize}
+	These expressions reduce correctly, but we would not know how to carry the information that \trg{x} is technically a Boolean (the \trg{\truev} expression may be a lot more complex than that and provide no help).
+
+	However, we know that \emph{when a variable is going to be used}, e.g., inside a \src{\oplus} expression, the \src{\extract{\cdot}} will be there.
+	%  while for \src{t_2}
+	% 
+	% \begin{tabular}{c|c}
+	% \src{t_2}
+	% &
+	% {$\begin{aligned}
+	% 	&
+	% 	\src{\letin{x}{0}{\letin{x1}{\extract{\Nat}x}{\letin{x2}{\extract{\Nat}3}{\inject{\Nat}x1+x2}}}}
+	% 	\\
+	% 	\reds
+	% 	&
+	% 	\src{{\letin{x1}{\extract{\Nat}0}{\letin{x2}{\extract{\Nat}3}{\inject{\Nat}x1+x2}}}}
+	% 	\\
+	% 	\redstart
+	% 	&
+	% 	\src{\fail}
+	% \end{aligned}$}
+
+	% Again as expected.
+\end{remark}
+
+\subsubsection{Properties of the Backtranslation}
+In order to use the context backtranslation, we need to prove that it is correct:
+\begin{lemma}[Backtranslation correctness]\label{thm:backtr-corr}
+\begin{align*}
+	\text{if }
+	&
+	\trg{e\gamma\ \redstart\ f}
+	\\
+	\text{then }
+	&
+	\src{\backtrts{e}\backtrts{\gamma}\ \redstars\ \backtrts{f}}
+\end{align*}	
+\end{lemma}
+Find the proof template in \Cref{sec:proof-thm:backtr-corr}.
+
+\subsubsection{Fully Abstract Compilation Reflection}
+We resume our proof for the $\Rightarrow$ direction of fully abstract compilation.
+
+\begin{proof}[Proof of \Cref{thm:pres-compgen}]
+What we have is:
+	\begin{align*}
+		&\
+		\trg{\exists \ctx.~ \ctx\hole{\compst{P_1}} \redstart f \andt \ctx\hole{\compst{P_2}}\redstart f' \andt f\neq f' } 
+		\\
+		&\ 
+		\Rightarrow \src{\exists \ctx.~ \ctx\hole{P_1}\redstars f \andt \ctx\hole{P_2}\redstars f' \andt f\neq f'}
+	\end{align*}
+We can instantiate \src{\ctx} with \backtrts{\ctx}.
+
+So we can assume:
+\begin{enumerate}
+	\item $\trg{\ctx\hole{\compst{P_1}}\ \redstart\ f}$
+	\item $\trg{\ctx\hole{\compst{P_2}}\ \redstart\ f'}$
+\end{enumerate}
+and prove this
+\begin{itemize}
+	\item $\src{\backtrts{\ctx}\hole{P_1}\ \redstars\ f}$
+	\item $\src{\backtrts{\ctx}\hole{P_2}\ \redstars\ f'}$
+\end{itemize}
+
+If we unfold the definition of $\ctx\hole{P}$ in the hypotheses, assuming that \src{P_1 = fn(x)\mapsto e_1} and \src{P_2 = fn(x)\mapsto e_2} we obtain
+\begin{enumerate}
+	\item $\trg{{\letin{y}{\letin{x}{e'}{\ifte{x~ has~ NAT}{\compst{e_1}}{\fail}}}{e''}}\ \redstart\ f}$
+	\item $\trg{{\letin{y}{\letin{x}{e'}{\ifte{x~ has~ NAT}{\compst{e_2}}{\fail}}}{e''}}\ \redstart\ f'}$
+\end{enumerate}
+
+We can unfold the reductions to see that:
+
+\begin{tabular}{c|c}
+	\compst{P_1}
+	&
+{$\begin{aligned}
+	&
+	\trg{{\letin{y}{\letin{x}{e'}{\ifte{x~ has~ NAT}{\compst{e_1}}{\fail}}}{e''}} }
+	\\
+	\redstart\
+	&
+	\trg{{\letin{y}{\letin{x}{v'}{\ifte{x~ has~ NAT}{\compst{e_1}}{\fail}}}{e''}} }
+	\\
+	\redt\
+	&
+	\trg{{\letin{y}{{\ifte{v'~ has~ NAT}{(\compst{e_1}\subt{v'}{x})}{\fail}}}{e''}} }
+\end{aligned}$}
+\end{tabular}
+
+We know that \trg{e'} must reduce to a value and not to \trg{\fail} because otherwise both target executions would reduce to \trg{\fail}, contradicting the hypothesis \trg{f\neq f'}.
+
+Also, by determinism and given that the program context is the same in both cases, we know that until here, the reductions are the same for the second program too, so:
+
+\begin{tabular}{c|c}
+	\compst{P_2}
+	&
+{$\begin{aligned}
+	&
+	\trg{{\letin{y}{\letin{x}{e'}{\ifte{x~ has~ NAT}{\compst{e_2}}{\fail}}}{e''}} }
+	\\
+	\redstart\
+	&
+	\trg{{\letin{y}{{\ifte{v'~ has~ NAT}{(\compst{e_2}\subt{v'}{x})}{\fail}}}{e''}} }
+\end{aligned}$}
+\end{tabular}
+
+Now we can perform a case analysis on \trg{v'} and rule out the case for booleans, otherwise both target executions would reduce to \trg{\fail}, contradicting the hypothesis \trg{f\neq f'}.
+
+So \trg{v'} really is a natural number \trg{n'}:
+
+\begin{tabular}{c|c}
+	\compst{P_1}
+	&
+{$\begin{aligned}
+	&
+	\trg{{\letin{y}{{\ifte{n'~ has~ NAT}{(\compst{e_1}\subt{n'}{x})}{\fail}}}{e''}}}
+	\\
+	\redt\
+	&
+	\trg{{\letin{y}{{{(\compst{e_1}\subt{n'}{x})}}}{e''}} }
+	\\
+	\redstart\
+	&
+	\trg{{\letin{y}{{{(\compst{n_1})}}}{e''}} }
+	\\
+	\redt\
+	&
+	\trg{{{e''}} \subt{\compst{n_1}}{y}}
+	\\
+	\redstart\
+	&
+	\trg{f}
+\end{aligned}$}
+\end{tabular}
+
+
+The execution of \src{P_2}, instead, must differ, so, determinism of the semantics let us conclude that these reductions happen, for a $\src{n_2}\neq\src{n_1}$:
+
+\begin{tabular}{c|c}
+	\compst{P_2}
+	&
+{$\begin{aligned}
+	&
+	\trg{{\letin{y}{{\ifte{n'~ has~ NAT}{(\compst{e_2}\subt{n'}{x})}{\fail}}}{e''}} }
+	\\
+	\redstart\
+	&
+	\trg{{{e''}} \subt{\compst{n_2}}{y}}
+	\\
+	\redstart\
+	&
+	\trg{f'}
+\end{aligned}$}
+\end{tabular}
+
+Let us take a look at the source reductions.
+By \Thmref{thm:backtr-corr}, we know the following:
+
+\begin{tabular}{c|c}
+	\src{P_1}
+	&
+{$\begin{aligned}
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}(\letin{x}{\extract{\Nat}\backtrts{e'}}{e_1})}}{\backtrts{e''}}} }
+	\\
+	\redstars\
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}(\letin{x}{\extract{\Nat}\backtrts{v'}}{e_1})}}{\backtrts{e''}}} }
+\end{aligned}$}
+\end{tabular}
+
+By inspecting the target reductions we know, $\extract{\Nat}\backtrts{v'}$ cannot fail, as \trg{v'} is a natural number.
+Additionally, we know that \src{v'}=\src{\backtrts{n'}-2}.
+By \Thmref{thm:expr-corr} we know:
+
+\begin{tabular}{c|c}
+	\src{P_1}
+	&
+{$\begin{aligned}
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}{e_1\subs{v'}{x}}}}{\backtrts{e''}}} \subs{\backtrts{v}}{z}}
+	\\
+	\redstars\
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}{n_1}}}{\backtrts{e''}}} }
+\end{aligned}$}
+\end{tabular}
+
+So by definition of \inject{\Nat} we have that $\src{n_1'} = \src{n_1+2}$:
+
+\begin{tabular}{c|c}
+	\src{P_1}
+	&
+{$\begin{aligned}
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}{n_1}}}{\backtrts{e''}}} }
+	\\
+	\reds\
+	&
+	\src{{\letin{y}{n_1'}{\backtrts{e''}}} }
+	\\
+	\redstars\
+	&
+	\src{\backtrts{e''} \subs{n_1'}{y}}
+\end{aligned}$}
+\end{tabular}
+
+So we need to show the reductions for \src{P_2}, again by \Thmref{thm:backtr-corr}:
+
+\begin{tabular}{c|c}
+	\src{P_2}
+	&
+{$\begin{aligned}
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}(\letin{x}{\extract{\Nat}\backtrts{e'}}{e_2})}}{\backtrts{e''}}} }
+	\\
+	\redstars\
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}{a_2\subs{v'}{x}}}}{\backtrts{e''}}} }
+\end{aligned}$}
+\end{tabular}
+
+And by how the reductions proceded in the target and \Thmref{thm:expr-corr}, we know that:
+
+\begin{tabular}{c|c}
+	\src{P_2}
+	&
+{$\begin{aligned}
+	\reds\
+	&
+	\src{{\letin{y}{\src{\inject{\Nat}{n_2}}}{\backtrts{e''}}} }
+\end{aligned}$}
+\end{tabular}
+
+We can define $\src{n_2'}=\src{n_2+2}$ and we get:
+
+\begin{tabular}{c|c}
+	\src{P_2}
+	&
+{$\begin{aligned}
+	\reds\
+	&
+	\src{{\letin{y}{n_2'}{\backtrts{e''}}} }
+	\\
+	\reds\
+	&
+	\src{{\backtrts{e''}} \subs{n_2'}{y}}
+\end{aligned}$}
+\end{tabular}
+
+At this stage in the proof we make a simplification for the sake of clarity.
+We lift this and show how to conclude this proof properly in \Cref{sec:propdiff}.
+
+For simplicity, we can assume that \trg{e''} is \trg{\ifte{y==\compst{n1}}{0}{1}} and thus $\trg{f}=\trg{0}$ and $\trg{f'}=\trg{1}$.
+
+Given that we know \trg{e''}, let us work out its backtranslation (modulo some optimisation and elimination of bits that we know how will reduce):
+
+\begin{tabular}{c|c}
+	\src{P_1} \& \src{P_2}
+	&
+{$\begin{aligned}
+	&
+	\src{\letin{z}{\extract{\Bool}\backtrts{y==n_1}}{\ifte{z==1}{\backtrts{0}}{\backtrts{1}}}}
+	\\
+	=\
+	&
+	\src{\letin{z}{\extract{\Bool}\begin{aligned}[t]
+				&
+				\letins{x1}{\extract{\Nat}\backtrts{y}}{
+				\\&\ 
+					\letins{x2}{\extract{\Nat}\backtrts{n_1}}{
+					\\
+					&\ \
+					\inject{\Bool}\src{x1== x2}
+					}
+				}
+			\end{aligned} }{\ifte{z==1
+	}{2}{3}}}
+	\\
+	=\
+	&
+	\src{\letin{z}{\extract{\Bool}\begin{aligned}[t]
+				&
+				\letins{x1}{\extract{\Nat}\src{y}}{
+				\\&\ 
+					\letins{x2}{\extract{\Nat}\src{n_1+2}}{
+					\\
+					&\ \
+					\inject{\Bool}\src{x1== x2}
+					}
+				}
+			\end{aligned} }{\ifte{z==1
+	}{2}{3}}}
+	\\
+	=\
+	&
+	\src{\letin{z}{\extract{\Bool}\begin{aligned}[t]
+				&
+				\letins{x1}{\src{y-2}}{
+				\\&\ 
+					\letins{x2}{\src{n_1}}{
+					\\
+					&\ \
+					\inject{\Bool}\src{x1== x2}
+					}
+				}
+			\end{aligned} }{\ifte{z==1
+	}{2}{3}}}
+	\\
+	=\
+	&
+	\src{{\ifte{{y-2 == n_1}
+	}{2}{3}}}
+\end{aligned}$}
+\end{tabular}
+
+So we have
+
+\begin{tabular}{c|c}
+	\src{P_1}
+	&
+{$\begin{aligned}
+	&
+	\src{\ifte{y-2==n_1}{2}{3} \subs{n_1'}{y}}
+	\\
+	=\
+	&
+	\src{\ifte{n_1'-2==n_1}{2}{3} }
+	\\
+	=\
+	&
+	\src{\ifte{n_1+2-2==n_1}{2}{3} }
+	\\
+	\reds\
+	&
+	\src{2}
+\end{aligned}$}
+\end{tabular}
+
+Now we know \backtrts{e''} and we know that $\src{n_2}\neq\src{n_1}$, so we have that 
+
+\begin{tabular}{c|c}
+	\src{P_2}
+	&
+{$\begin{aligned}
+	=\
+	&
+	\src{\ifte{y-2==n_1}{2}{3} \subs{n_2'}{y}}
+	\\
+	=\
+	&
+	\src{\ifte{n_2+2-2==n_1}{2}{3}}
+	\\
+	=\
+	&
+	\src{\ifte{n_2==n_1}{2}{3}}
+	\\
+	\reds\
+	&
+	\src{3}
+\end{aligned}$}
+\end{tabular}
+
+So \src{f}=\src{2} and \src{f'}=\src{3} and this proof holds.
+\qed
+\end{proof}
+
+\subsubsection{Proper Differentiation}\label{sec:propdiff}
+Note that the assumption on what \trg{e''} looks like is a simplifying assumption just for the sake of explanation.
+To conclude the proof properly we need to apply again \Cref{thm:backtr-corr} and we need the following trivial lemma too:
+\begin{lemma}[Differentiation]\label{thm:di}
+	\begin{align*}
+		\text{ if } \trg{f}\neq\trg{f'} \text{ then } \backtrts{f}\neq\backtrts{f'}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Trivial case analyisis.
+\end{proof}
+
+\begin{proof}[Proper completion of \Cref{thm:pres-compgen}]
+	We have:
+	\begin{itemize}
+		\item $\trg{{{e''}} \subt{\compst{n_1}}{y}} \redstart\ \trg{f'}$
+		\item $\trg{{{e''}} \subt{\compst{n_2}}{y}} \redstart\ \trg{f'}$
+	\end{itemize}
+	and we need to reason about
+	\begin{itemize}
+		\item $\src{{\backtrts{e''}} \subs{n_1'}{y}}$
+		\item $\src{{\backtrts{e''}} \subs{n_2'}{y}}$
+	\end{itemize}
+	Since $\src{n_1'} = \src{n_1+2}$, $\src{n_2'} = \src{n_2+2}$, we can rewrite the last two items as
+	\begin{itemize}
+		\item $\src{{\backtrts{e''}} \subs{\backtrts{n_1}}{\backtrts{y}}}$
+		\item $\src{{\backtrts{e''}} \subs{\backtrts{n_2}}{\backtrts{y}}}$
+	\end{itemize}
+	By how backtranslation works on substitutions, we can apply \Thmref{thm:backtr-corr} twice to conclude that:
+	\begin{itemize}
+		\item $\src{{\backtrts{e''}} \subs{\backtrts{n_1}}{\backtrts{y}} \redstars\ \backtrts{f}}$
+		\item $\src{{\backtrts{e''}} \subs{\backtrts{n_2}}{\backtrts{y}} \redstars\ \backtrts{f'}}$
+	\end{itemize}
+	Finally, we apply \Thmref{thm:di} to conclude $\backtrts{f}\neq\backtrts{f'}$
+	\qed
+\end{proof}
+
+
+\subsubsection{Completing the Full Abstraction Proof}
+\begin{proof}[Proof of \Cref{thm:fa-compgen}]
+	By \Thmref{thm:pres-compgen} and \Thmref{thm:refl-compgen}.
+	\qed
+\end{proof}
+
+
+\subsection{Fully Abstract Compilation via Trace-based Backtranslation}
+\subsubsection{Target Changes: \Tr}
+\begin{align*}
+	\trg{e} \bnfdef&\
+		\cdots \mid \trg{refl~e}
+\end{align*}
+
+\begin{center}
+	\typerule{Eval-refl}{
+		\trg{n}=\card{\trg{e}}
+	}{
+		\trg{refl~e} \redt \trg{n} 
+	}{e-refl}
+\end{center}
+Function \card{\cdot} returns a hash of its argument so each term has its numerical representation.
+
+Notice that this addition is only in the target.
+The compiler does not generate this expression, so only the context can use it.
+Moreover, by structure of the context, it can only use that expression on its own expression, not on the programs.
+
+
+\subsubsection{Target Trace Semantics}
+\begin{align*}
+	\trg{t} \bnfdef&\
+		\trg{call~n?\cdot ret~n!}
+\end{align*}
+
+\begin{definition}[Traces of a program]
+	\begin{align*}
+		\trt{P} = \myset{\trg{call~n?\cdot ret~n'!}}{ \trg{P}=\trg{fn(x)\mapsto e} \andt \trg{\letin{x}{n}{e}\ \redstart\ n'} }
+	\end{align*}
+\end{definition}
+
+\subsubsection{Trace Equivalence}
+\begin{definition}[Trace equivalence]
+\begin{align*}
+	\trg{P_1\teq P_2} \isdef \trt{P_1}=\trt{P_2}
+\end{align*}
+\end{definition}
+
+\begin{lemma}[Soundness of traces]\label{thm:sound-traces}
+	\begin{align*}
+		\trg{P_1\teq P_2}\Rightarrow\trg{P_1\ceqt P_2}
+	\end{align*}
+\end{lemma}
+Find the proof in \Cref{sec:proof-thm:sound-traces}.
+
+\subsubsection{Compiler from \So to \Tr}
+\begin{align*}
+	\compsr{P} =&\ \compst{P}
+\end{align*}
+
+
+\subsection{\backtrtstr{\cdot}: Trace-based Backtranslation}
+At this point we are given two different traces which, by definition, agree on the \trg{call ..} parameters and we must build both a source program context \src{\ctx} that leads to the differentiation.
+\begin{align*}
+	\trg{t_1} =&\ \trg{call~n? \cdot ret~n^1!}
+	&
+	\trg{t_2} =&\ \trg{call~n? \cdot ret~n^2!}
+\end{align*}
+
+\begin{align*}
+	\backtrtstr{n} =&\ 
+		\src{n}
+	\\
+	\backtrtstr{\trg{t_1},\trg{t_2}} =&\
+	\src{
+		\letin{y}{call~fn~\backtrtstr{n}}{ \ifte{y == \backtrtstr{n^1}}{1}{2} }
+		}
+\end{align*}
+
+\subsubsection{Properties of the Backtranslation of Traces}
+\begin{lemma}[Correctness of the backtranslation of traces]\label{thm:trace-backtr-corr}
+	\begin{align*}
+		\text{ if }
+		&
+		\trg{call~n? \cdot ret~n'!} \in \trt{\compst{P}}
+		\\
+		&
+		\src{P} = \src{fn(x)\mapsto e}
+		\\
+		\text{ then }
+		&
+		\src{\letin{y}{\letin{x}{\backtrtstr{n}}{e}}{e'} \redstar e'\subs{\backtrtstr{n'}}{y} }
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	This follows by unfolding the definitions of the trace semantics and by \Thmref{thm:expr-corr}.
+	\qed
+\end{proof}
+
+
+\subsubsection{Fully Abstract Compilation}
+\begin{theorem}[Full abstraction of \compsr{\cdot}]\label{thm:fa-compgen-r}
+	\begin{align*}
+		\forall \src{P_1}, \src{P_2}.~
+			&\
+			\src{P_1\ceqs P_2} \iff \trg{\compsr{P_1}\ceqt \compsr{P_2}}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Since the compiler has not changed, the reflection holds by \Thmref{thm:refl-compgen}.
+	The preservation holds by \Thmref{thm:pres-compgen-r} below.
+	\qed
+\end{proof}
+
+\subsubsection{Fully Abstract Compilation Preservation}
+\begin{lemma}[Equivalence preservation for \compsr{\cdot}]\label{thm:pres-compgen-r}
+	\begin{align*}
+	\forall \src{P_1}, \src{P_2}.~
+		&\
+		\src{P_1\ceqs P_2} \Rightarrow \trg{\compsr{P_1}\ceqt \compsr{P_2}}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+We can apply \Thmref{thm:sound-traces} and we get:
+\begin{align*}
+	\forall \src{P_1}, \src{P_2}.~
+		&\
+		\src{P_1\ceqs P_2} \Rightarrow \trg{\compsr{P_1}\teq \compsr{P_2}}
+\end{align*}
+in contrapositive form:
+\begin{align*}
+	\forall \src{P_1}, \src{P_2}.~
+		&\
+		  \trg{\compsr{P_1}\nteq \compsr{P_2}}\Rightarrow\src{P_1\nceqs P_2}
+\end{align*}
+expanding the definitions:
+\begin{align*}
+	\forall \src{P_1}, \src{P_2}.~
+		&\
+		  \exists\trg{t \in\trt{\compsr{P_1}} \andt t\notin\trt{\compsr{P_2}}}
+	\\
+	&\
+	\Rightarrow\src{\exists \ctx.~ \ctx\hole{P_1}\redstars n' \andt \ctx\hole{P_2}\redstars n''}
+\end{align*}
+We pick another trace \trg{t'} from \trt{\compsr{P_2}} such that the first part is the same as in \trg{t} for the backtranslation.
+Knowing that $\compsr{n_1}=\trg{n^1}$ and $\trg{n^1}\neq\trg{n^2}$, the traces are
+\begin{align*}
+	\trg{t} =&\ \trg{call~n? \cdot ret~n^1!}
+	&
+	\trg{t'} =&\ \trg{call~n? \cdot ret~n^2!}
+\end{align*}
+
+We can now use the backtranslation of traces with \trg{t} and \trg{t'} to instantiate \src{\ctx}.
+
+The reductions proceed as follows.
+By \Thmref{thm:trace-backtr-corr} we know:
+
+\begin{tabular}{c|c}
+	\compsr{P_1}
+	&
+	{$\begin{aligned}
+		&
+	\src{
+		\letin{y}{call~fn~\backtrtstr{n}}{ \ifte{y == \backtrtstr{n^1}}{1}{2} }
+		}
+	\\
+	\redstars
+	&
+	\src{
+		\ifte{y == \backtrtstr{n^1}}{1}{2}\subs{\backtrtstr{n_1}}{y}
+		)}
+	\\
+	\equiv
+	&
+	\src{
+		\ifte{n_1 == \backtrtstr{n^1}}{1}{2}
+		}
+	\end{aligned}$}
+	\end{tabular}
+
+and
+
+\begin{tabular}{c|c}
+	\compsr{P_2}
+	&
+	{$\begin{aligned}
+	&
+	\src{( 
+		\letin{y}{call~fn~\backtrtstr{n}}{ \ifte{y == \backtrtstr{n^2}}{1}{2} }
+		}
+	\\
+	\redstars
+	&
+	\src{
+		\ifte{n_2=1 == \backtrtstr{n^2}}{1}{2}
+		}
+	\end{aligned}$}
+\end{tabular}
+
+The different reductions now are straightforward, so \src{f}= \src{1} and \src{f'}=\src{2} so this case holds.
+\qed
+\end{proof}
+
+
+\section{Stateful Languages}
+\subsection{Source Heap: \Sh}
+\subsubsection{Syntax}
+\begin{align*}
+	\src{P} \bnfdef&\
+		\src{H\triangleright fn(x)\mapsto e}
+	\\
+	\src{e} \bnfdef&\ 
+		 \cdots \mid \src{\letnews{x}{e}{e}} \mid \src{\letreads{x}{e}{e}} \mid \src{\letwrites{x}{e}{e}{e}}
+	\\
+	\src{v} \bnfdef&\
+		\src{v} \mid \src{\ell}
+	\\
+	\src{E} \bnfdef&\
+		\cdots \mid \src{\letnews{x}{E}{e}} \mid \src{\letreads{x}{E}{e}} \mid \src{\letwrites{x}{E}{e}{e}}
+	\\
+	\mid&\ \src{\letwrites{x}{v}{E}{e}}
+	\\
+	\src{H} \bnfdef&\
+		\srce \mid \src{H;\ell\mapsto n}
+	\\
+	\src{\Omega} \bnfdef&\
+		\src{H\triangleright e}
+\end{align*}
+Programs have a global heap.
+
+\src{H(\ell)} returns the number \src{n} in \src{H} to which \src{\ell} maps to.
+
+\src{H\cup\ell\mapsto n} updates \src{H} with a (possibly new) binding of the form \src{\ell\mapsto n}.
+If \src{\ell} is in the domain of \src{H}, the binding for \src{\ell} is updated to point to \src{n}.
+
+
+\subsubsection{Dynamic Semantics}
+\begin{align*}
+	\text{Judgement:}&\
+	\src{\Omega \reds \Omega'}
+\end{align*}
+\begin{center}
+	\typerule{Eval-ctx}{
+		\src{H\triangleright e\redp H\triangleright e'}
+	}{
+		\src{H\triangleright e\reds H\triangleright e'}
+	}{e-}
+	\and
+	\typerule{Eval-new}{
+		\src{\ell}\notin\src{H}
+	}{
+		\src{H\triangleright \letnews{x}{n}{e} \redp H\cup\ell\mapsto n\triangleright e\subs{x}{\ell}}
+	}{e-}
+	\and
+	\typerule{Eval-read}{}{
+		\src{H\triangleright \letreads{x}{\ell}{e} \redp H\triangleright e\subs{H(\ell)}{x}}
+	}{e-}
+	\\
+	\typerule{Eval-write}{}{
+		\src{H \triangleright \letwrites{x}{n}{\ell}{e''} \redp H\cup\ell\mapsto n\triangleright e''\subs{n}{x}}
+	}{e-}
+\end{center}
+The new context rule replaces the old one, and any old rule needs to be updated to carry around the heap.
+
+
+\subsubsection{Static Semantics}
+Programs are now passed locations as input from the context.
+The related typing rules are trivially changed accordingly.
+\begin{align*}
+	\src{\tau} \bnfdef&\
+		\cdots \mid \refty{\Nat}
+	\\
+	\src{\Sigma} \bnfdef&\
+		\srce \mid \src{\Sigma; \ell:\refty{\Nat}}
+	\\
+	\vdash&\ \src{H\triangleright fn(x)\mapsto e : \refty{\Nat} \to Nat}		
+	&\mbox{ Well-typed program }\src{e}\mbox{ of type }\refty{\Nat}\mbox{ to }\src{\Nat}
+\end{align*}
+
+\begin{center}
+	\typerule{T-alloc}{
+		\src{\Gamma,\Sigma}\vdash\src{e}:\src{\Nat}
+		&
+		\src{\Gamma;x:\refty{\Nat},\Sigma}\vdash\src{e'}:\src{\tau}
+	}{
+		\src{\Gamma,\Sigma}\vdash\src{\letnews{x}{e}{e'}}:\src{\tau}
+	}{ty-alloc}
+	\typerule{T-read}{
+		\src{\Gamma,\Sigma}\vdash\src{e}:\refty{\Nat}
+		&
+		\src{\Gamma;x:\src{\Nat},\Sigma}\vdash\src{e'}:\src{\tau}
+	}{
+		\src{\Gamma,\Sigma}\vdash\src{\letreads{x}{e}{e'}}:\src{\tau}
+	}{ty-read}
+	\typerule{T-write}{
+		\src{\Gamma,\Sigma}\vdash\src{e}:\src{\Nat}
+		&
+		\src{\Gamma,\Sigma}\vdash\src{e'}:\refty{\Nat}
+		&
+		\src{\Gamma;x:\src{\Nat},\Sigma}\vdash\src{e''}:\src{\tau}
+	}{
+		\src{\Gamma,\Sigma}\vdash\src{\letwrites{x}{e}{e'}{e''}}:\src{\tau}
+	}{ty-write}
+	\typerule{T-loc}{
+		\src{\ell}\in\dom{\src{\Sigma}}
+	}{
+		\src{\Gamma,\Sigma}\vdash\src{\ell}:\src{\refty{\Nat}}
+	}{ty-loc}
+	\typerule{T-prog}{
+		\src{x:\Nat,\Sigma}\vdash\src{e}:\src{\Nat}
+		\\
+		\src{\fail}\notin\src{e}
+		\\
+		\src{\Sigma} = \dom{\src{H}}:\src{\refty{\Nat}}
+	}{
+		\vdash\src{H\triangleright fn(x)\mapsto e}:\src{\refty{\Nat} \to \Nat}
+	}{ty-prog}
+\end{center}
+ 
+
+
+\subsection{Target Heap: \Th}
+\subsubsection{Syntax}
+\begin{align*}
+	\trg{P} \bnfdef&\
+		\trg{H\triangleright fn(x)\mapsto e}
+	\\
+	\trg{e} \bnfdef&\ 
+		\cdots \mid \trg{\letnew{x}{e}{e}} \mid \trg{\letread{x}{e}{e}}
+	\mid
+		 \trg{\letwrite{x}{e}{e}{e}}
+	\\
+	\trg{E} \bnfdef&\
+		\cdots \mid \trg{\letnew{x}{E}{e}} \mid \trg{\letread{x}{E}{e}}
+	\\
+	\mid&\ 
+		\trg{\letwrite{x}{E}{e}{e}} \mid \trg{\letwrite{x}{v}{E}{e}} 
+	\\
+	\trg{H} \bnfdef&\
+		\trge \mid \trg{H;n\mapsto v}
+	\\
+	\trg{\Omega} \bnfdef&\
+		\trg{H\triangleright e}
+\end{align*}
+
+\subsubsection{Dynamic Semantics}
+\begin{align*}
+	\text{Judgement:}&\
+	\trg{\Omega \redt \Omega'}
+\end{align*}
+\begin{center}
+	\typerule{Eval-ctx}{
+		\trg{H\triangleright e\redp H\triangleright e'}
+	}{
+		\trg{H\triangleright e\redt H\triangleright e'}
+	}{e-}
+	\and
+	\typerule{Eval-new}{
+		\text{the cardinality of } \trg{H} = n
+	}{
+		\trg{H\triangleright \letnew{x}{v}{e} \redt H\cup n+1\mapsto v\triangleright e\subt{x}{n+1}}
+	}{e-}
+	\and
+	\typerule{Eval-read}{
+		\trg{n\mapsto v} \in \trg{H}
+	}{
+		\trg{H\triangleright \letread{x}{n}{e} \redt H\triangleright e\subt{v}{x}}
+	}{e-}
+	\and
+	\typerule{Eval-read-no}{
+		 \trg{n} \notin \dom{\trg{H}}
+	}{
+		\trg{H\triangleright \letread{x}{n}{e} \redt H\triangleright e\subt{\falsev}{x}}
+	}{e-}
+	\and
+	\typerule{Eval-write}{
+		\trg{n\mapsto v} \in \trg{H}
+	}{
+		\trg{H \triangleright \letwrite{x}{v'}{n}{e''} \redt H\cup n\mapsto v'\triangleright e''\subt{n}{x}}
+	}{e-}
+\end{center}
+Reading always succeeds, but if the location is not allocated, \trg{\falsev} is returned.
+
+\subsection{Common Definitions}
+Assume both languages also contain pairs \com{\pair{e,e}} and projections \com{\projone{e}}, \com{\projtwo{e}} as standardly done.
+
+Also, we will use a shorthand \com{e_1;e_2} for the expression \com{\letin{\_}{e_1}{e_2}}.
+
+
+\begin{definition}[Plugging]
+\begin{align*}
+		\ift
+		&
+		\com{\ctx = \letin{y}{call~fn~e}{e_c} }
+		\\
+		\andt 
+		&
+		\com{P = H\triangleright fn(x)\mapsto e_{{fun}}}
+		\\
+		\thent 
+		\ctx\hole{P} \isdef&\ 
+			\com{
+				H\triangleright
+				\letin{y}{\letin{x}{e}{e_{fun}}}{e_c}
+			}
+\end{align*}
+\end{definition}
+
+\subsubsection{Behaviours}
+We define a behaviour as a sequence of call/returns from the context to the program.
+The behaviours of a program is the set of all behaviours it can generate.
+
+Note that while this is analogous to traces, this is for whole programs.
+Also, while traces capture a sort of context/program interaction, behaviours capture a whole program/environment interaction, e.g., they would capture I/O if our language had any.
+\begin{align*}
+	\com{b} \bnfdef
+		&\
+		\com{call~n~H?} \cdot \com{ret~n~H!}
+\end{align*}
+While we write this in black, there are really two behaviours, as the heaps are different between \Sh and \Th.
+This will be relevant later.
+
+\begin{align*}
+	\com{\ctxhc{P}} \sem&\ \com{\com{call~n_1~H_1?} \cdot \com{ret~n_1'~H_1'!}}
+	\\
+		&\text{ if }
+		\begin{aligned}[t]
+			\com{\ctx} =&\ \com{\letin{y_1}{call~fn~e_1}{e_c}}
+			\\
+			\com{P} =&\ \com{H_0\triangleright fn(x)\mapsto eb}
+			\\
+			&\
+			\com{H_0\triangleright e_1 \redstar H_1\triangleright n_1}
+			\\
+			&\
+			\com{H_1\triangleright \letin{x}{n_1}{eb} \redstar H_1'\triangleright n_1'}
+			\\
+			&\
+			\com{H_1'\triangleright \letin{y_1}{n_1'}{e_2} \redstar H\triangleright n}
+		\end{aligned}
+	\\
+	\behav{\ctxhc{P}} \isdef
+		&\
+		\myset{ b }{ \com{\ctxhc{P}\sem b} }
+\end{align*}
+
+\subsection{\comph{\cdot}: Compiler from \Sh to \Th}
+The compiler maps a source location to a target number.
+
+\begin{align*}
+	\cdots&
+	\\
+	\comph{\src{H\triangleright fn(x)\mapsto e}} =&\ 
+		\trg{
+			\begin{aligned}[t]
+				\trg{\comph{H}\triangleright fn(z)\mapsto }
+				&
+				\letreadnorm{
+					\trg{x}
+				}{
+					\trg{z}
+				}{
+				\\
+				&\
+					\trg{\ifte{\has{x}{\Nat}}{\comph{e,H}}{\fail}}
+				}
+			\end{aligned}
+		}
+	\\
+	\comph{\letnews{x}{e}{e'},H} = &\ 
+		\trg{
+				\letnew{
+					\trg{x_l}
+				}{
+					\comph{e,H}
+				}{
+					\comph{e',H}
+				}	
+		}
+	\\
+	\comph{\letreads{x}{e}{e'},H} = &\ 
+		\trg{
+					\letreadnorm{
+						\comph{x}
+					}{
+						\comph{e,H}
+					}{
+						\comph{e',H}
+					}
+		}
+	\\
+	\comph{\letwrites{x}{e}{e'}{e''},H} = &\ 
+		\trg{
+					\letwritenorm{
+						\comph{x}
+					}{
+						\comph{e,H}
+					}{
+						\comph{e',H}	
+					}{
+						\comph{e'',H}
+					}
+		}
+	\\
+	\comph{\ell,H} =&\
+		\trg{n}
+	\\
+		&
+		\wheret \fun{indexof}{\src{\ell},\src{H}}=n
+	\\
+	\comph{\srce} =&\ \trge
+	\\
+	\comph{H; \ell\mapsto n'} =&\
+		\trg{\comph{H}; n+1\mapsto\comph{n',\srce}}
+	\\
+		&
+		\wheret \fun{card}{\trg{H}}=n
+\end{align*}
+We keep the heap around to know what number to compile a location to.
+Also, we compile the program global heap giving each location its position in the heap list.
+
+\subsubsection{Compiler Shortcomings}
+Even by typechecking the argument, the context can still guess a location and write a boolean to it.
+\begin{align*}
+	\src{P_1} =&\
+		\src{\ell\mapsto 2 \triangleright fn(x)\mapsto \letread{y}{\ell}{y+1;3}}
+	\\
+	\src{P_2} =&\
+		\src{\ell\mapsto 2 \triangleright fn(x)\mapsto 3}
+	\\
+	\trg{\ctx_b} =&\
+		\trg{ \letin{y}{call~fn~ \letwritenorm{z}{\truev}{1}{z}}{ \truev } }
+\end{align*}
+Obviously $\src{P_1\ceqs P_2}$.
+
+The reductions of \comph{P_1} will get stuck when doing \comph{y+1} since \comph{y} will contain the \trg{\truev} value written there by \trg{\ctx_b}.
+On the other hand, the reductions of \comph{P_2} will not get stuck, so $\trg{\comph{P_1}\nceqt\comph{P_2}}$.
+
+
+
+
+
+\section{Compiler Security: Robustly Safe Compilation}
+
+\subsection{Target Memory Protection: Capabilities \Tcaps}
+In this case we do not extend the language \Th, but the language \To into the new language \Tcaps.
+\subsubsection{Syntax}
+\begin{align*}
+	\trg{v}\bnfdef&\ 
+		\cdots \mid \trg{k}
+	\\
+	\trg{e} \bnfdef&\ 
+		\cdots \mid \trg{\letnewt{x}{e}{e}} \mid \trg{\letreadt{x}{e}{e}{e}}
+	\\
+	\mid&\
+		 \trg{\letwritet{x}{e}{e}{e}{e}} \mid \trg{\lethidet{x}{e}{e}}
+	\\
+	\trg{\ctx} \bnfdef&\
+		\trg{
+			\letin{y}{call~fn~e}{e}
+		} 
+		\text{ such that } \trg{\lethidet{x}{e}{e}}\notin \trg{e}
+	\\
+	\trg{E} \bnfdef&\
+		\cdots \mid \trg{\letnewt{x}{E}{e}} \mid \trg{\letreadt{x}{E}{e}{e}}
+	\\
+	\mid&\ 
+		\trg{\letwritet{x}{E}{e}{e}{e}} \mid \trg{\letwritet{x}{v}{E}{e}{e}} 
+	\\
+	\mid&\ 
+		\trg{\lethidet{x}{E}{e}}
+	\\
+	\trg{H} \bnfdef&\
+		\trge \mid \trg{H;n\mapsto n : \eta} \mid \trg{H;k}
+	\\
+	\trg{\eta} \bnfdef&\
+		\trg{\bot} \mid \trg{k}
+	\\
+	\trg{\Omega} \bnfdef&\
+		\trg{H\triangleright e}
+\end{align*}
+
+\subsubsection{Dynamic Semantics}
+\begin{align*}
+	\text{Judgement:}&\
+	\trg{\Omega \redt \Omega'}
+\end{align*}
+\begin{center}
+	\typerule{Eval-new}{
+		\text{ if the cardinality of } \trg{H} = n
+	}{
+		\trg{H\triangleright \letnewt{x}{n'}{e} \redt H\cup n+1\mapsto n'\triangleright e\subt{x}{n+1}}
+	}{e-}
+	\and
+	\typerule{Eval-read}{
+		\trg{n\mapsto v:k} \in \trg{H}
+	}{
+		\trg{H\triangleright \letreadt{x}{n}{k}{e} \redt H\triangleright e\subt{v}{x}}
+	}{e-}
+	\and
+	\typerule{Eval-read-nocap}{
+		\trg{n\mapsto v:\bot} \in \trg{H}
+	}{
+		\trg{H\triangleright \letreadt{x}{n}{v}{e} \redt H\triangleright e\subt{v}{x}}
+	}{e-}
+	\and
+	\typerule{Eval-read-no}{
+		\trg{n} \notin \dom{\trg{H}}
+	}{
+		\trg{H\triangleright \letreadt{x}{n}{v}{e} \redt H\triangleright e\subt{\falsev}{x}}
+	}{e-}
+	\and
+	\typerule{Eval-write}{
+		\trg{n\mapsto v:k} \in \trg{H}
+	}{
+		\trg{H \triangleright \letwritet{x}{n'}{n}{k}{e''} \redt H\cup n\mapsto n'\triangleright e''\subt{n}{x}}
+	}{e-}
+	\and
+	\typerule{Eval-write-nocap}{
+		 \trg{n\mapsto \_:\bot} \in \trg{H}
+	}{
+		\trg{H \triangleright \letwritet{x}{n'}{n}{v}{e''} \redt H\cup n\mapsto n'\triangleright e''\subt{n}{x}}
+	}{e-}
+\end{center}
+
+
+\subsubsection{\compcaps{\cdot}: Compiler from \Sh to \Tcaps}
+The compiler translates source locations \src{\ell} into pairs \trg{n,k} of the natural number \trg{n} which is the target location and a capability \trg{k} used to hide location \trg{n}.
+
+Thus, since programs expect locations, it expects a pair as input.
+It will treat the first element of the pair as a location and try to read there with the second element.
+Note that if the location is not allocated, or if it contains a boolean, \trg{x} will not pass the dynamic typecheck.
+Also, note that in the case of programs, the compiler remaps \src{x} as \trg{z} in order to perform the typecheck on inputs.
+\begin{align*}
+	\com{\beta} \bnfdef&\
+		\come \mid \com{\beta};\src{\ell}\mapsto\trg{\pair{n,k}}
+\end{align*}
+
+\begin{align*}
+	\fun{getbeta}{\srce} =&\
+		\come
+	\\
+	\fun{getbeta}{\src{H;\ell\mapsto n'}}  =&\
+		\fun{getbeta}{\src{H}} ; \src{\ell}\mapsto\trg{\pair{n+1,k}}
+	\\
+	&
+	\wheret
+		\fun{card}{\trg{H}}=n
+		\andt
+		\trg{k}\notin\fun{getbeta}{\src{H}}.\com{capabilities}
+\end{align*}
+Function \fun{getbeta}{\src{H}} inputs a heap and returns a partial bijection \com{\beta} where all locations in the heap are bound to increasing numbers and fresh capabilities.
+
+\begin{align*}
+	\compcaps{\src{H\triangleright fn(x)\mapsto e},\com{\beta}} =&\ 
+		\trg{
+			\begin{aligned}[t]
+				\trg{\compcaps{H,\com{\beta}}\triangleright fn(z)\mapsto }
+				&
+				\letreadt{
+					\trg{x}
+				}{
+					\trg{\projone{z}}
+				}{
+					\trg{\projtwo{z}}
+				}{
+					\\
+					&\
+					\trg{\ifte{\has{x}{\Nat}}{\compcaps{e,\com{\beta}}}{\fail}}
+				}
+			\end{aligned}
+		}
+	\\
+	&
+	\andt
+	 \com{\beta} = \fun{getbeta}{\src{H}}
+\end{align*}
+\begin{align*}
+	\cdots
+	\\
+	\compcaps{\letnews{x}{e}{e'},\com{\beta}} = &\ 
+		\trg{
+			\begin{aligned}[t]
+				&
+				\letnewt{
+					\trg{x_l}
+				}{
+					\compcaps{e,\com{\beta}}
+				}{
+					\\
+					&\
+					\lethidet{
+						\trg{x_c}
+					}{
+						\trg{x_l}
+					}{
+						\\
+						&\ \ 
+						\letint{
+							\compcaps{x,\com{\beta}}
+						}{
+							\trg{\pair{x_l,x_c}}
+						}{
+							\\
+							&\ \ \ 
+							\compcaps{e',\com{\beta}}
+						}
+					}
+				}	
+			\end{aligned}
+		}
+	\\
+	\compcaps{\letreads{x}{e}{e'},\com{\beta}} = &\ 
+		\trg{
+			\begin{aligned}[t]
+				&
+				\letint{
+					\trg{x_p}
+				}{
+					\compcaps{e,\com{\beta}}
+				}{
+					\\
+					&\
+					\letreadt{
+						\compcaps{x,\com{\beta}}
+					}{
+						\trg{\projone{x_p}}
+					}{
+						\trg{\projtwo{x_p}}
+					}{
+						\\
+						&\ \ 
+						\compcaps{e',\com{\beta}}
+					}
+				}
+			\end{aligned}
+		}
+	\\
+	\compcaps{\letwrites{x}{e}{e'}{e''},\com{\beta}} = &\ 
+		\trg{
+			\begin{aligned}[t]
+				&
+				\letint{
+					\trg{x_p}
+				}{
+					\compcaps{e',\com{\beta}}
+				}{
+					\\
+					&\
+					\letwritet{
+						\compcaps{x,\com{\beta}}
+					}{
+						\compcaps{e,\com{\beta}}
+					}{
+						\trg{\projone{x_p}}
+					}{
+						\trg{\projtwo{x_p}}
+					}{
+						\\
+						&\ \ 
+						\compcaps{e',\com{\beta}}
+					}
+				}
+			\end{aligned}
+		}
+	\\
+	\compcaps{\ell,\com{\beta}} =&\
+		\fun{\com{\beta}}{\src{\ell}}
+	\\
+	\compcaps{\srce;\com{\beta}} =&\
+		\trge
+	\\
+	\compcaps{H;\ell\mapsto n', \com{\beta}} =&\
+		\trg{\compcaps{H,\com{\beta}}; n\mapsto \compcaps{n',\com{\beta}}:k  }
+	\\
+	&
+	\wheret
+		\src{\ell}\mapsto\trg{\pair{n,k}}\in\com{\beta}
+\end{align*}
+
+\subsection{Compiler Correctness}
+To state this, we need to tell when two heaps are related ($\src{H}\relatebeta\trg{H}$), that is when two $\com{\beta}$-related locations point to related values.
+Then, we need to tell when two values (and final values) are related ($\src{v}\relatebeta\trg{v}$).
+\begin{center}
+	\typerule{Rel-fail}{}{
+		\src{\fail}\relatebeta\trg{\fail}
+	}{r-v-t}
+	\and
+	\typerule{Rel-val-true}{}{
+		\src{\truev}\relatebeta\trg{\truev}
+	}{r-v-t}
+	\and
+	\typerule{Rel-val-false}{}{
+		\src{\falsev}\relatebeta\trg{\falsev}
+	}{r-v-f}
+	\and
+	\typerule{Rel-val-n}{}{
+		\src{n}\relatebeta\trg{n}
+	}{r-v-n}
+	\and
+	\typerule{Rel-val-loc}{
+		\src{\ell}\mapsto\trg{\pair{n,k}}\in\com{\beta}
+	}{
+		\src{\ell}\relatebeta\trg{\pair{n,k}}
+	}{r-v-l}
+	\and
+	\typerule{Rel-heap-no}{
+		\trg{H}\equiv\trge 
+		\text{ or }
+		\trg{H}\equiv\trg{k_1;\cdots;k_n} 
+	}{
+		\srce\relatebeta\trg{H}
+	}{r-h-n}
+	\and
+	\typerule{Rel-heap}{
+		\src{H}\relatebeta\trg{H}
+		&
+		\src{\ell}\relatebeta\trg{\pair{n',k}}
+	}{
+		\src{H;\ell\mapsto n}\relatebeta\trg{H;n'\mapsto n:k}
+	}{r-h}
+	\and
+	\typerule{Rel-trace}{
+		\src{\ell}\relatebeta\trg{\pair{n,k}}
+		&
+		\src{H}\relatebeta\trg{H}
+		&
+		\src{n'}\relatebeta\trg{n'}
+		&
+		\src{H'}\relatebeta\trg{H'}
+	}{
+		\src{\src{call~\ell~H?} \cdot \src{ret~n'~H'!}} \relatebeta \trg{\trg{call~\pair{n,v}~H?} \cdot \trg{ret~n'~H'!}}
+	}{r-trace}
+\end{center}
+
+At this point, since we have added cases to the compiler, we need to add the missing cases to the compiler correctness proof and to the auxiliary lemmas.
+These additions are straightforward.
+\begin{theorem}[Compiler correctness for \compcaps{\cdot}]\label{thm:comp-corr-caps}
+		\begin{align*}
+		\forall \cdots  \exists \beta'\supseteq\beta \text{ if }
+		&
+		\srce\vdash\src{P}:\src{\tau}
+		\\
+		\andt&\
+		\vdash\src{\ctx}:\src{\Bool}
+		\\
+		\andt&\
+		\trg{\ctx} = \compcaps{\ctx,\com{\beta}}
+		\\
+		\andt&\
+		\trg{ \ctx\hole{\compcaps{P,\com{\beta}}}\ \redstart\ \compcaps{H,\com{\beta'}}\triangleright \compcaps{f,\com{\beta'}}}
+		\\
+		\thent
+		&
+		\src{\ctx\hole{P} \redstars\ H\triangleright f}
+		\\
+		&\
+		\src{f}\relate_{\beta'}\trg{f}
+		\\
+		&\
+		\src{H}\relate_{\beta'}\trg{H}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	By \Thmref{thm:expr-corr-caps}.
+\end{proof}
+
+\begin{lemma}[Expression correctness for \compcaps{\cdot}]\label{thm:expr-corr-caps}
+	\begin{align*}
+		\forall \cdots  \exists \beta'\supseteq\beta 
+		\ift
+		&
+		\trg{\compcaps{H,\com{\beta}}\triangleright \compcaps{e,\com{\beta}}\compcaps{\gamma,\com{\beta}}\ \redstart\ \compcaps{H',\com{\beta'}}\triangleright\compcaps{f,\com{\beta'}}}
+		\\
+		&
+		\src{H}\relatebeta\trg{H}
+		\\
+		\thent&
+		\src{H\triangleright e\gamma\ \redstars\ H'\triangleright f}
+		\\
+		&\
+		\src{f}\relate_{\beta'}\trg{f}
+		\\
+		&\
+		\src{H'}\relate_{\beta'}\trg{H'}
+	\end{align*}
+\end{lemma}
+Simple adaptation of the previous proof.
+
+
+
+\subsection{\backtrcaps{\cdot}: Trace-based Backtranslation}
+In this case we have a single trace to backtranslate into a single source context.
+\begin{align*}
+	\backtrcaps{ \trg{\trg{call~\pair{n,v}~H?} \cdot \trg{ret~n'~H'!}} } =
+		&\
+		\src{\letins{y}{call~fn~e}{e'}}
+		\\
+		&\
+		\begin{aligned}[t]
+			\text{where }
+			&
+			\src{e}=
+				\src{
+					\begin{aligned}[t]
+						&
+						\letins{
+							\src{z}
+						}{
+							\fun{allocate}{\trg{H}, \trg{n}}
+						}{
+							\src{z}	
+						}
+					\end{aligned}
+				}
+			\\
+			&
+			\src{e'} = \fun{update}{\trg{H}~\com{from}~\trg{H'}}
+		\end{aligned}
+\end{align*}
+\begin{align*}
+	\fun{allocate}{\trg{H}, \trg{n}}
+		=
+		&\
+		\src{0} 
+		&&
+			\text{ if }\trg{n}\notin\dom{\trg{H}}
+	\\  
+		=
+		&\
+		\src{x_n} 
+		&&
+			\text{ if }\trg{H}=\trge
+	\\  
+		=
+		&\
+			\src{
+				\begin{aligned}[t]
+					&
+					\letnews{
+						\src{x_n}
+					}{
+						\backtrcaps{v}
+					}{
+					\\
+					&\
+						\fun{allocate}{\trg{H'}} 
+					}	
+				\end{aligned}
+			}
+		&&
+			\text{ if }\trg{H}=\trg{H';n\mapsto v:\eta}
+	\\
+	\fun{update}{~\trg{H}~\com{from}~\trg{H'}} =
+		&\
+		\src{true}
+\end{align*}
+When backtranslating the allocation, we stop if we see that the heap is not going to be used anyway, otherwise we allocate it and make sure that the correct variable is returned.
+Note that backtranslating the return is not necessary here, the compiled code will do that.
+However, we keep that structure as it will be useful later.
+
+\subsubsection{Properties of the Backtranslation}
+In order to use the context backtranslation, we need to prove that it is correct.
+We must define when behaviours are related ($\src{b}\relatebeta\trg{b}$), that is when their values and heaps are related.
+\begin{center}
+	\typerule{Rel-trace}{
+		\src{\ell}\relatebeta\trg{\pair{n,k}}
+		&
+		\src{H}\relatebeta\trg{H}
+		&
+		\src{n'}\relatebeta\trg{n'}
+		&
+		\src{H'}\relatebeta\trg{H'}
+	}{
+		\src{\src{call~\ell~H?} \cdot \src{ret~n'~H'!}} \relatebeta \trg{\trg{call~\pair{n,v}~H?} \cdot \trg{ret~n'~H'!}}
+	}{r-trace}
+\end{center}
+
+Additionally, we need to know that just before performing the ``call'', heaps are related.
+\begin{lemma}[Call correctness]\label{thm:call-corr}
+	\begin{align*}
+		\ift
+		&\
+		\src{P} = \src{H_0\triangleright fn(x)\mapsto e_f}
+		\\
+		&\
+		\trg{\ctxht{\compst{P,\com{\beta}}} \redstart H\triangleright 
+			\begin{aligned}[t]
+				&
+				\letint{\trg{y}}{
+					\begin{aligned}[t]
+					&
+					\letint{\trg{x}}{\trg{\pair{n,v}}}{ 
+					\\
+					&\
+						\letreadt{
+							\trg{x}
+						}{
+							\trg{\projone{z}}
+						}{
+							\trg{\projtwo{z}}
+						}{
+						\\
+						&\ \ 
+							\trg{\ifte{\has{x}{\Nat}}{\compcaps{e,\com{\beta}}}{\fail}}
+						}
+			 		}	
+					\end{aligned}
+			 	\\
+			 	&\
+			 	}{\trg{e_c}}
+			\end{aligned}
+		 } 
+		\\
+		\thent \exists \beta'\supseteq\beta
+		&\
+		\src{\backtrcaps{\trg{call~\pair{n,v}~H?} \cdot \trg{ret~n'~H'!}}\hole{P} \redstars H\triangleright \letin{y}{\letin{x}{\ell}{e_f}}{e_c}}
+		\\
+		&\
+		\src{H}\relate_{\beta'}\trg{H}
+		\\
+		&\
+		\src{\ell}\relate_{\beta'}\trg{\pair{n,v}}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Simple unfolding of definitions.
+\end{proof}
+
+
+Expression correctness will then tell us that given related heaps and related arguments, a program and its compilation produce related outputs with related heaps.
+These two together will tell that the backtranslation is correct.
+\begin{theorem}[Correctness of the backtranslation of behaviours]\label{thm:beh-backtr-corr}
+	\begin{align*}
+		\text{ if }
+		&
+		\trg{b} \in \behav{\ctxht{\compst{P,\com{\beta}}}}
+		\\
+		&
+		\src{b}\relatebeta\trg{b}
+		\\
+		\text{ then }
+		&
+		\src{b} \in \behav{\src{\backtrcaps{b}\hole{P}}}
+	\end{align*}
+\end{theorem}
+\begin{proof}[Proofsketch]
+	By \Thmref{thm:call-corr} and \Thmref{thm:expr-corr-caps}.
+\end{proof}
+
+\subsubsection{Proving RSC}
+\begin{theorem}[RSC for \compcaps{\cdot}]
+	\begin{align*}
+		\forall\src{P}, \ctxt, \trg{b}, \exists \ctxs, \com{\beta}, \src{b}\relatebeta\trg{b}\ldotp  
+		\\
+		\ift
+		&\
+		\trg{\ctxht{\compcaps{P,\com{\beta}}}\sem b}
+		\\
+		\thent
+		&\
+		\src{\ctxhs{P}\sem b}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	This follows directly from \Thmref{thm:beh-backtr-corr}.
+\end{proof}
+
+
+\newpage
+\appendix
+\section{Appendix: Proofs}
+The appendix provides general indications on how the proofs proceed and omits some cases for students to practice proofs.
+
+\subsection{Proof of \Cref{thm:fow-sim}}\label{sec:proof-thm:fow-sim}
+\begin{proof}[Proof of \Cref{thm:fow-sim}]
+	By structural induction over \src{e}.
+	\begin{description}
+		\item[Base case]
+		\begin{description}
+			\item[\src{e}=\src{n}]  
+			\item[\src{e}=\src{\truev}]  
+			\item[\src{e}=\src{\falsev}]  
+			\item[\src{e}=\src{x}] 
+		\end{description}
+		\item[Inductive case]
+
+		In this case we identify these inductive hypotheses:
+		\begin{enumerate}
+			\item if $\src{e \redstars n}$ then $\trg{\compst{e}\redstart \compst{n}}$;
+			\item if $\src{e' \redstars n'}$ then $\trg{\compst{e'}\redstart \compst{n'}}$;
+			\item if $\src{e_b \redstars v}$ then $\trg{\compst{e_b}\redstart \compst{v}}$ (only in the ``if'' case).
+		\end{enumerate}
+
+		The following cases arise:
+		\begin{description}
+			\item[\src{e}=\src{\letin{x}{e}{e}}] 
+			\item[\src{e}=\src{\ifte{e_b}{e}{e'}}]
+			\item[\src{e}=\src{e\oplus e'}] 
+			\item[\src{e}=\src{e\odot e'}] 
+		\end{description}
+	\end{description}
+\end{proof}
+
+\subsection{Proof of \Cref{thm:backtr-corr}}\label{sec:proof-thm:backtr-corr}
+\begin{proof}[Proof of \Cref{thm:backtr-corr}]
+	By structural induction over \trg{e}.
+	\begin{description}
+		\item[Base case]
+		\begin{description}
+			\item[\trg{e}=\trg{n}]  
+			\item[\trg{e}=\trg{\truev}]  
+			\item[\trg{e}=\trg{\falsev}]  
+			\item[\trg{e}=\trg{\fail}] 
+			\item[\trg{e}=\trg{x}] 
+		\end{description}
+		\item[Inductive case]
+
+		In this case we identify these inductive hypotheses:
+		\begin{enumerate}
+			\item if \trg{e\redstart f} then \src{\backtrts{e}\redstars\backtrts{f}};
+			\item if \trg{e'\redstart f'} then \src{\backtrts{e'}\redstars\backtrts{f'}};
+			\item if \trg{e''\redstart f''} then \src{\backtrts{e''}\redstars\backtrts{f''}} (only needed in the ``if'' case).
+		\end{enumerate}
+
+		The following cases arise:
+		\begin{description}
+			\item[\trg{e}=\trg{\letin{x}{e}{e'}}] 
+			\item[\trg{e}=\trg{\ifte{e}{e'}{e''}}]
+			\item[\trg{e}=\trg{e\oplus e'}] 
+			\item[\trg{e}=\trg{e\odot e'}] 
+		\end{description}
+	\end{description}
+\end{proof}
+
+\subsection{Proof of \Cref{thm:sound-traces}}\label{sec:proof-thm:sound-traces}
+\begin{proof}[Proof of \Cref{thm:sound-traces}]
+	The proof proceeds by contradiction.
+
+	Assume the thesis is false: wlog we have: \trg{P_1\nceqt P_2}, so $\exists\ctxt.\ctxht{P_1}\termt\andt\ctxht{P_2}\divrt$
+
+	Let us take a look at the traces of \ctxht{P_1} and \ctxht{P_2} respectively.
+
+	They are of the form \trg{call~n?\cdot ret~n_1!} and \trg{call~n?\cdot ret~n_2!}.
+
+	By determinism of the semantics, \trg{n} must coincide since it comes from the same \ctxt.
+
+	By analysing the semantics, the only way for \ctxt to behave differently is to receive two different numbers \trg{n_1} and \trg{n_2}.
+
+	This contradicts the assumption that traces are equal.
+\end{proof}
+
+
+
+% \listoftodos
+
+% \bibliographystyle{plain}
+% \bibliography{./../biblio.bib}
+
+\end{document}
