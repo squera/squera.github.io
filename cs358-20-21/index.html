@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.75.1">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<title>CS358 2020-2021</title>
+
+
+
+
+
+
+<meta name="robots" content="index follow">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+
+
+
+  
+    <link rel="canonical" href="squera.github.io/cs358-20-21/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Marco Patrignani">
+<meta property="og:title" content="CS358 2020-2021">
+
+  <meta property="og:url" content="squera.github.io/cs358-20-21/">
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "squera.github.io",
+      "inLanguage": "en",
+      "name": "Marco Patrignani",
+      "description": "",
+      "publisher": ""
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/squera.github.io/css/main.min.67541ff42a34c6bc54d2c51e07a589255e6ff99032ad66cae11f1e7f95fda30c50cdd9dfc36e4179fe72477157e0c9935c8ce74453908d98664e200ca3910516.css" integrity="sha512-Z1Qf9Co0xrxU0sUeB6WJJV5v&#43;ZAyrWbK4R8ef5X9owxQzdnfw25Bef5yR3FX4MmTXIznRFOQjZhmTiAMo5EFFg==">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#dd587c" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#225670" media="(prefers-color-scheme: light)">
+  
+
+  <style>
+  
+    html {
+      --accent: #225670;
+    }
+  
+    .req-js,
+    img.lazyload {
+      display: none;
+    }
+    
+  </style>
+  
+</noscript>
+
+
+
+
+
+
+  <link rel="preload" href="/squera.github.io/fonts/open-sans-v17-latin-700.woff" as="font" crossorigin="anonymous">
+
+  <link rel="preload" href="/squera.github.io/fonts/open-sans-v17-latin-700.woff2" as="font" crossorigin="anonymous">
+
+  <link rel="preload" href="/squera.github.io/fonts/open-sans-v17-latin-italic.woff" as="font" crossorigin="anonymous">
+
+  <link rel="preload" href="/squera.github.io/fonts/open-sans-v17-latin-italic.woff2" as="font" crossorigin="anonymous">
+
+  <link rel="preload" href="/squera.github.io/fonts/open-sans-v17-latin-regular.woff" as="font" crossorigin="anonymous">
+
+  <link rel="preload" href="/squera.github.io/fonts/open-sans-v17-latin-regular.woff2" as="font" crossorigin="anonymous">
+
+  <link rel="preload" href="/squera.github.io/fonts/oswald-v29-latin-700.woff" as="font" crossorigin="anonymous">
+
+  <link rel="preload" href="/squera.github.io/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+<script defer src="/squera.github.io/js/lazysizes.min.min.a85a0eccaf9ef0d2f083a9dc4d0e05dc90acc5be0e84b43e20fde692871e1861ae0191f7c3ca2c00f2664efabf6aff2625a478b8f22ea43cb056cb6ec9a8d948.js" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    
+      'use strict';const PREFERS_LIGHT=window.matchMedia('(prefers-color-scheme: light)');const PREFERS_DARK=window.matchMedia('(prefers-color-scheme: dark)');const ROOT=document.documentElement;const SHEET=document.documentElement.style;const META_THEME_COLOR=document.querySelector('meta[name=theme-color]');function setDark(){ROOT.dataset.mode='dark'};function setLight(){ROOT.dataset.mode='light'};if(localStorage.getItem('isDark')=='true'){setDark()}else if(localStorage.getItem('isDark')=='false'){setLight()}else if(PREFERS_DARK.matches){setDark()}else if(PREFERS_LIGHT.matches){setLight()};function getAccent(){if(ROOT.dataset.mode==='dark'){if(localStorage.getItem('darkAccent')===null){var currentAccent="#dd587c"}else{var currentAccent=localStorage.getItem('darkAccent')
+}}else if(ROOT.dataset.mode==='light'){if(localStorage.getItem('lightAccent')===null){var currentAccent="#225670"}else{var currentAccent=localStorage.getItem('lightAccent')
+}};return currentAccent};var activeAccent=getAccent();SHEET.setProperty('--accent',activeAccent);META_THEME_COLOR.setAttribute('content',activeAccent);function updateAccent(){var activeAccent=getAccent();SHEET.setProperty('--accent',activeAccent);PALETTE.value=activeAccent;META_THEME_COLOR.setAttribute('content',activeAccent);};document.addEventListener('DOMContentLoaded',function(){PALETTE.value=activeAccent;function smoothTransition(){document.body.style.transition=document.querySelector('header').style.transition=document.querySelector('footer').style.transition='background-color .3s ease, color .3s ease'};function userModeChange(){smoothTransition();if(ROOT.dataset.mode=='light'){setDark();localStorage.setItem('isDark','true')
+}else{setLight();localStorage.setItem('isDark','false')
+};updateAccent()};function OSModeChange(){smoothTransition();if(PREFERS_LIGHT.matches){setLight();localStorage.setItem('isDark','false')
+}else if(PREFERS_DARK.matches){setDark();localStorage.setItem('isDark','true')
+};updateAccent()};PREFERS_LIGHT.addListener(OSModeChange);PREFERS_DARK.addListener(OSModeChange);document.querySelector('footer button').addEventListener('click',userModeChange)})
+    
+  </script>
+
+
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/squera.github.io">Marco Patrignani
+    
+  </a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/squera.github.io/papers/">Papers</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/squera.github.io/research/">Research</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/squera.github.io/teaching/">Teaching</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/squera.github.io/personal/">Personal</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/squera.github.io/lists/">Lists</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>CS358 2020-2021</h1>
+
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h3 id="cs358-programming-language-foundations"><a class="anchor" href="#cs358-programming-language-foundations" title='Anchor for "CS358: PROGRAMMING LANGUAGE FOUNDATIONS".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> CS358: PROGRAMMING LANGUAGE FOUNDATIONS</h3> 
+
+<p>By profs. <a href="https://squera.github.io/about/">Marco Patrignani</a> and <a href="">Marco Vassena</a></p>
+
+
+
+
+
+  <h4 id="general-course-information"><a class="anchor" href="#general-course-information" title='Anchor for "General Course Information".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> General Course Information</h4> 
+
+<p>This course teaches important topics in programming languages: the foundations of programming languages and their mechanisation in Agda.<br>
+We will see the lambda calculus as well as its common type systems: simple types, polymorphism (System F), recursive types, heap typing and non-interference.
+We will study the meaning of semantic typing and reason about programs using logical relations.<br>
+Not only will we see this theory on the board, but we will also mechanise most of it using the Agda theorem prover.</p>
+<p>At the end of the course, students will have learned how to formalise languages, both on paper and with a mechanised proof assistant, and why that is important.
+They will know how to reason about different and complex language constructs through advanced methods.
+Students will come to know all basic typing constructs as well as several advanced ones as found in many modern languages.</p>
+<p>For any question, please contact Marco Patrignani (see mail <a href="/about">here</a>).</p>
+
+
+
+
+
+  <h4 id="useful-links"><a class="anchor" href="#useful-links" title='Anchor for "Useful Links".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Useful Links</h4> 
+
+<ul>
+<li>Piazza: TBD</li>
+<li>Gradescope: TBD (find the code in Piazza)</li>
+<li>Calendar: TBD (or find it in Canvas)</li>
+</ul>
+
+
+
+
+
+  <h4 id="prerequisites-and-interests"><a class="anchor" href="#prerequisites-and-interests" title='Anchor for "Prerequisites and Interests".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Prerequisites and Interests</h4> 
+
+<p>Interest in formal languages and formal techniques is important.<br>
+We&rsquo;ll assume no prior deep knowledge of formal languages and mechanisation.
+Having attended cs143, or cs242 (2018-2020 edition) or cs350 will provide a bit of background.</p>
+<p>Auditing is welcome.</p>
+<p>Students that show interest in these topics and want to further their knowledge of them and perform research on these topics are welcome to contact the instructors.</p>
+
+
+
+
+
+  <h4 id="location-and-time-slots-all-times-are-in-pacific"><a class="anchor" href="#location-and-time-slots-all-times-are-in-pacific" title='Anchor for "Location and Time Slots (all times are in Pacific)".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Location and Time Slots (all times are in Pacific)</h4> 
+
+<ul>
+<li>Time slot:
+T-TH, 10:30-11:50</li>
+<li>Location: Zoom</li>
+<li>Office hours:
+Friday afternoon 10-12, but other slots can be opened if needed.
+Please drop an email ahead of time if you plan to come.</li>
+<li>Teaching Assistant:
+TBD</li>
+</ul>
+
+
+
+
+
+  <h4 id="evaluation-and-grading"><a class="anchor" href="#evaluation-and-grading" title='Anchor for "Evaluation and Grading".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Evaluation and Grading</h4> 
+
+<p>The course has a number of intermediate assignments and a final exam.
+Assignments will help a student consolidate the skills necessary to understand this course as well as prepare them for the final exam. You can collaborate on solutions to exercises together, but you must write your solution individually, in your own words.</p>
+<p>Assignments will be available typically one week in advance before they are due.
+Typically, they are due on Wednesday, and they&rsquo;ll be available the Wednesday before.
+Please check them out before class and report possible elements of confusion.</p>
+<ul>
+<li>Assignment 1 [  ] release date: TBD, due date: TBD</li>
+<li>Assignment 2 [  ] release date: TBD, due date: TBD</li>
+<li>Assignment 3 [  ] release date: TBD, due date: TBD</li>
+<li>Assignment 4 [  ] release date: TBD, due date: TBD</li>
+<li>Assignment 5 [  ] release date: TBD, due date: TBD</li>
+<li>Assignment 6 [  ] release date: TBD, due date: TBD</li>
+<li>Assignment 7 [  ] release date: TBD, due date: TBD</li>
+</ul>
+<p>Assignment turn-in must happen through Gradescope (see link above).</p>
+<hr>
+<p>The final exam is a take-home set of exercises analogous to those presented in the assignments. The same collaboration policy as the assignments applies to the exam as well.</p>
+<ul>
+<li>Exam [  ] release date: TBD, due date: TBD</li>
+</ul>
+<p>Final exam turn-in must happen through Gradescope (see link above).</p>
+<hr>
+<p>Grading:
+70% assignments
+30% final exam</p>
+
+
+
+
+
+  <h4 id="course-material"><a class="anchor" href="#course-material" title='Anchor for "Course Material".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Course Material</h4> 
+
+<p>Courses on foundations on PL are widespread, and there are many textbooks and lecture notes out there.
+However, we focus on quite advanced subjects, and so we recommend the following notes in order to integrate notes taken during class. Please note that the course will indeed follow Dreyer&rsquo;s notes .</p>
+<ul>
+<li>Derek Dreyer&rsquo;s lecture notes <input disabled="" type="checkbox"> </li>
+<li>Benjamin Pierce&rsquo;s TAPL <input disabled="" type="checkbox"> </li>
+</ul>
+
+
+
+
+
+  <h4 id="high-level-syllabus"><a class="anchor" href="#high-level-syllabus" title='Anchor for "High-level Syllabus".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> High-level Syllabus</h4> 
+
+<p>The course is divided in the following parts:</p>
+<ul>
+<li>Part 0: Typesetting PL notions in LaTeX and Knowing Agda
+In order to typeset PL notions in LaTeX (akin to those we see in class), please check out this document <input disabled="" type="checkbox"> and the related commands file [  ], it should compile to this document <input disabled="" type="checkbox"> .<br>
+To install Agda TBD</li>
+</ul>
+<p>We will have a preliminary session related to setting up Agda during the OH of the first week.</p>
+<ul>
+<li><strong>Part 1</strong>: the lambda calculus.
+Here we&rsquo;ll see the untyped and the simply-typed lambda calculus, different forms of operational semantics: structural and contextual, types such as pairs, products, properties such as progress, preservation, strong normalisation, semantic type soundness.</li>
+<li><strong>Part 2</strong>: System F
+Here we&rsquo;ll see System F, the polymorphic lambda calculus with universal and existential types, how to encode them in a semantic model of type soundness, how to scale the previous properties to this complex setting and how to reason about Parametricity.</li>
+<li><strong>Part 3</strong>: Recursion and Mutable State
+Here we&rsquo;ll see how to extend the language with recursive (or \mu) types, their different forms, the semantic model for (now) possibly-diverging computation in the form of Kripke Logical Relations.
+We&rsquo;ll also extend the language with a state, so a heap with operations for allocation, reading and writing to it, changing the computation from pure to impure, we will study the semantic model for stateful computation.</li>
+<li><strong>Part 4</strong>: Program equivalence
+Here we&rsquo;ll learn how to formalise and reason about the semantics of programs and how to tell when they behave the same, we will see what properties to encode as equivalences and how to develop a semantic model for program equivalence.</li>
+<li><strong>Part 5</strong>: Mechanisation in Agda
+This part will run alongside the previous ones.
+Here we&rsquo;ll learn how to mechanise the languages, typing and operational semantics seen in the other parts.
+We&rsquo;ll learn how to prove properties about those languages using Agda and we&rsquo;ll formalise an advanced type system for reasoning about security for secure information flow and non-interference.</li>
+</ul>
+
+
+
+
+
+  <h4 id="class-outline"><a class="anchor" href="#class-outline" title='Anchor for "Class Outline".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Class Outline</h4> 
+
+<p><em>Please note that this is tentative and precise class contents can vary slightly</em></p>
+<p>The screenshots of each lecture are collected on a google drive folder whose link is on piazza.</p>
+<ul>
+<li>12 jan (Patrignani)<br>
+ULC syntax, SOS semantics, small step CBV, CBN</li>
+<li>14 jan (Patrignani)<br>
+ULC SOS big step, contextual semantics (COS), equivalence of SOS and COS</li>
+<li>19 jan (Vassena)<br>
+Mechanisation of ULC in Agda</li>
+<li>21 jan (Patrignani)<br>
+STLC sums, pairs, encoding if-then-else, typing</li>
+<li>26 jan (Patrignani)<br>
+STLC progress and preservation, strong normalisation, logical relation (LR), semantic typing, fundamental prop</li>
+<li>28 jan (Vassena)<br>
+Mechanisation of STLC in Agda</li>
+<li>2   feb (Patrignani)<br>
+STLC compatibility lemmas</li>
+<li>4   feb (Vassena)<br>
+Mechanisation of LR in Agda</li>
+<li>9   feb (Patrignani)<br>
+SF: universal types syntax, typing, semantics, existential types &amp; records</li>
+<li>11 feb (Patrignani)<br>
+SF new logical relation &amp; compatibility lemmas</li>
+<li>16 feb (Patrignani)<br>
+Free theorems</li>
+<li>18 feb (Vassena)<br>
+Mechanisation of the SF LR in Agda</li>
+<li>23 feb (Patrignani)<br>
+Mu types, iso and equi recursive types, step-indexed LR for mu types</li>
+<li>25 feb (Patrignani)<br>
+References, usage and typing, Kripke worlds</li>
+<li>2  mar (Vassena)<br>
+Mechanisation of mu types and of references in Agda</li>
+<li>4  mar (Vassena)<br>
+Mechanisation of the security type system in Agda</li>
+<li>9  mar (Vassena)<br>
+Mechanisation of the security type system in Agda</li>
+<li>11 mar (Vassena)<br>
+Mechanisation of non-interference in Agda</li>
+<li>16 mar (Patrignani)<br>
+Contextual equivalence (CEQ), program contexts</li>
+<li>18 mar (Patrignani)<br>
+Binary logical relation for CEQ and for parametricity, representation independence</li>
+</ul>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#225670" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#225670"><option value="#dd587c"></datalist>
+</section>
+
+
+
+
+
+    </footer>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true">
+      <symbol viewBox="0 0 512 512" id="adjust">
+        <path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"/>
+      </symbol>
+      
+      
+      
+      
+  
+<symbol viewBox="0 0 448 512" id="hashtag">
+  <path d="M440.667 182.109l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l14.623-81.891C377.123 38.754 371.468 32 363.997 32h-40.632a12 12 0 0 0-11.813 9.891L296.175 128H197.54l14.623-81.891C213.477 38.754 207.822 32 200.35 32h-40.632a12 12 0 0 0-11.813 9.891L132.528 128H53.432a12 12 0 0 0-11.813 9.891l-7.143 40C33.163 185.246 38.818 192 46.289 192h74.81L98.242 320H19.146a12 12 0 0 0-11.813 9.891l-7.143 40C-1.123 377.246 4.532 384 12.003 384h74.81L72.19 465.891C70.877 473.246 76.532 480 84.003 480h40.632a12 12 0 0 0 11.813-9.891L151.826 384h98.634l-14.623 81.891C234.523 473.246 240.178 480 247.65 480h40.632a12 12 0 0 0 11.813-9.891L315.472 384h79.096a12 12 0 0 0 11.813-9.891l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l22.857-128h79.096a12 12 0 0 0 11.813-9.891zM261.889 320h-98.634l22.857-128h98.634l-22.857 128z"/>
+</symbol>
+
+
+
+      
+      
+      
+    </svg>
+
+    
+    
+    
+
+      <script>
+        
+          'use strict';const PALETTE=document.querySelector('footer input');PALETTE.onchange=function(){const PICK=PALETTE.value;SHEET.setProperty('--accent',PICK);if(ROOT.dataset.mode==='light'){localStorage.setItem('lightAccent',PICK)}else{localStorage.setItem('darkAccent',PICK)};updateAccent()};
+        
+      </script>
+
+    
+    
+    
+    
+
+  </body>
+</html>
