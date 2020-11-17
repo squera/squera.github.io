@@ -315,7 +315,7 @@
 
   <h3 id="cs358-programming-language-foundations"><a class="anchor" href="#cs358-programming-language-foundations" title='Anchor for "CS358: PROGRAMMING LANGUAGE FOUNDATIONS".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> CS358: PROGRAMMING LANGUAGE FOUNDATIONS</h3> 
 
-<p>By profs. <a href="https://squera.github.io/about/">Marco Patrignani</a> and <a href="">Marco Vassena</a></p>
+<p>By profs. <a href="https://squera.github.io/about/">Marco Patrignani</a> and <a href="https://people.cispa.io/marco.vassena/">Marco Vassena</a></p>
 
 
 
@@ -323,13 +323,18 @@
 
   <h4 id="general-course-information"><a class="anchor" href="#general-course-information" title='Anchor for "General Course Information".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> General Course Information</h4> 
 
-<p>This course teaches important topics in programming languages: the foundations of programming languages and their mechanisation in Agda.<br>
-We will see the lambda calculus as well as its common type systems: simple types, polymorphism (System F), recursive types, heap typing and non-interference.
-We will study the meaning of semantic typing and reason about programs using logical relations.<br>
-Not only will we see this theory on the board, but we will also mechanise most of it using the Agda theorem prover.</p>
-<p>At the end of the course, students will have learned how to formalise languages, both on paper and with a mechanised proof assistant, and why that is important.
-They will know how to reason about different and complex language constructs through advanced methods.
-Students will come to know all basic typing constructs as well as several advanced ones as found in many modern languages.</p>
+<p>How can programming language designers ensure that programmers know exactly what their programs do?
+Programming language (PL) theory can help answer this and similar questions precisely.</p>
+<p>In this course, we study fundamental concepts of PL theory that are essential to the design and specification of programming languages.
+We will learn how to formalize fundamental concepts such as program syntax, semantics, and type systems, starting from a minimal language (lambda calculus), which we will then extend progressively with more advanced features (algebraic data types, heaps, recursion, and polymorphism) typical of many existing programming languages. Finally, we will see how these PL concepts enable powerful reasoning principles through the use of logical relations, and how to apply them to enforce security (data confidentiality and integrity) through basic language-based information-flow control techniques.</p>
+<p>The theoretical lectures on the whiteboard will be accompanied with practical computer sessions on the Agda proof assistant.
+In these sessions, we will develop interactively, assisted by Agda, computer-certified software artefacts of formal definitions, theorem statements, and proofs. These artefacts are automatically checked for correctness by Agda and therefore give us high-assurance of the validity of the theoretical results.</p>
+<p>At the end of the course, students will be able to:</p>
+<ol>
+<li>Design expressive programming languages with complex features following established PL methods</li>
+<li>Formalize sophisticated type systems that enforce rich program properties and analyse their guarantees using advanced proof techniques.</li>
+<li>Reason about program equivalence, correctness, and security formally both with pen and paper, and with the Agda proof assistant.</li>
+</ol>
 <p>For any question, please contact Marco Patrignani (see mail <a href="/about">here</a>).</p>
 
 
@@ -414,8 +419,9 @@ Please check them out before class and report possible elements of confusion.</p
 <p>Courses on foundations on PL are widespread, and there are many textbooks and lecture notes out there.
 However, we focus on quite advanced subjects, and so we recommend the following notes in order to integrate notes taken during class. Please note that the course will indeed follow Dreyer&rsquo;s notes .</p>
 <ul>
-<li>Derek Dreyer&rsquo;s lecture notes <input disabled="" type="checkbox"> </li>
-<li>Benjamin Pierce&rsquo;s TAPL <input disabled="" type="checkbox"> </li>
+<li>Derek Dreyer&rsquo;s lecture notes <a href="https://plv.mpi-sws.org/semantics/2017/lecturenotes.pdf"> [.pdf] </a></li>
+<li>Benjamin Pierce&rsquo;s TAPL <a href="https://www.amazon.com/Types-Programming-Languages-MIT-Press/dp/0262162091/ref=sr_1_1?keywords=tapl&amp;qid=1552933582&amp;s=gateway&amp;sr=8-1-spell"> amazon </a></li>
+<li>Programming Languages Foundations with Agda (available online: <a href="https://plfa.github.io">https://plfa.github.io</a>).</li>
 </ul>
 
 
