@@ -1,4 +1,4 @@
-module Asgn2 where
+module Asgn5 where
 
 -- Your Name:  ............................................
 
@@ -125,7 +125,7 @@ module §1 where  -- (11 pts)
 module §2 where
 
 -- This part is worth 14 points and contains 6 exercises.
--- Well-Typed Syntax: 3 + 1 + 4 = 7 points
+-- Well-Typed Syntax: 3 + 1 + 3 = 7 points
 -- Logical Relations: 1 + 4 + 2 = 7 points
 
   open import Data.Unit
@@ -187,7 +187,7 @@ module §2 where
   (v ∷ θ) !! here = v
   (v ∷ θ) !! there x = θ !! x
 
-  -- 4pt) Complete the big-step semantics with the rules for inl, inr, and case.
+  -- 3pt) Complete the big-step semantics with the rules for inl, inr, and case.
   data _⇓⟨_⟩_ {Γ} : ∀ {τ} → Expr Γ τ → Env Γ → Value τ → Set where
 
     Unit : ∀ {θ} → （） ⇓⟨ θ ⟩ （）
