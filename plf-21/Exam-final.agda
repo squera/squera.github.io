@@ -1,12 +1,3 @@
--- DO NOT USE THIS FILE, FIND THE NEW ONE HERE:
--- https://squera.github.io/plf-21/Exam-final.agda
---
-
-
-
-
-
-
 module Exam where
 
 -- Your Name:  ............................................
@@ -55,12 +46,12 @@ module §1 where
   -- push their results on the stack, so that they can be used as
   -- operands by the following instructions.
   --
-  -- Instr i := push v   -- Push value v on the stack
-  --          | pop      -- Pop the value from the top of the stack
-  --          | add      -- Pop two numbers from the stack and push their sum on the stack
-  --          | nop      -- No operation: leave the stack unchanged
-  --          | jz is    -- Jump to and execute instructions "is" if the top of the stack is 0.
-  --          | cmp      -- Pop two char c₁ and c₂ from the top of the stack, push 0 if c₁ = c₂, or 1 otherwise.
+  -- Instr i := push v      -- Push value v on the stack
+  --          | pop         -- Pop the value from the top of the stack
+  --          | add         -- Pop two numbers from the stack and push their sum on the stack
+  --          | nop         -- No operation: leave the stack unchanged
+  --          | br is₁ is₂  -- Pop a number n from the top of the stack and execute is₁ if n = 0, or is₂ otherwise.
+  --          | cmp         -- Pop two char c₁ and c₂ from the top of the stack, push 0 if c₁ = c₂, or 1 otherwise.
   --
   -- Instructions is := i : is | []
 
@@ -152,12 +143,12 @@ module §1 where
   -- parametric in the concrete number and the type of registers,
   -- which do not change during the execution.
 
-  -- Similarly, add a register map to stack machine configuration, adapt
-  -- the small-step semantics given in the previous exercise, and add
-  -- new rules for instructions "get n" and "set n". As you add new
-  -- rules to the semantics your proofs will become incomplete and may
-  -- break (do not worry, Agda will tell you!). Add the missing cases
-  -- and repair those broken proofs.
+  -- Similarly, add a register map to stack machine configuration,
+  -- adapt the small-step semantics given in the previous exercise,
+  -- and add new rules for instructions "get n" and "set n". As you
+  -- add new rules to the semantics your proofs will become incomplete
+  -- and may break (do not worry, Agda will tell you!). Add the
+  -- missing cases and repair the proofs that broke.
 
   -- End of Part §1.
   --------------------------------------------------------------------------------
@@ -168,14 +159,15 @@ module §2 where
   ---------------------------------------------------------------------------
   -- 1. Well-Typed Syntax & Semantics:            10 +
   -- 2. L-Equivalence & Non-Interference:         10 +
-  -- 3. Arrays Extension:                         15 =
+  -- 3. I/O & Labeled Channels:                   15 =
   ---------------------------------------------------------------------------
   -- *  Total:                                    35 pt
 
-  -- The goal of this exercise is to formalize a static IFC type system
-  -- for a simple language with algebraic data types, which we will
-  -- later extend with heap-allocated arrays.  To represent algebraic
-  -- data types, the language must include the following constructs:
+  -- The goal of this exercise is to formalize a static IFC type
+  -- system for a simple language with algebraic data types, which you
+  -- will later extend with I/O and labeled channels. To represent
+  -- algebraic data types, the language must include the following
+  -- constructs:
   --
   -- Numbers    n ∈ ℕ
   -- Variables  x, y, z
@@ -198,7 +190,7 @@ module §2 where
 
 
   --------------------------------------------------------------------------------
-  -- 1. Well-Typed Syntax & Semantics (10pt)
+  -- 1. Well-Typed Syntax & Semantics (15pt)
 
   -- Define appropriate labeled types for this language and then give
   -- a well-typed syntax for its constructs, i.e., expressions,
@@ -216,7 +208,7 @@ module §2 where
   -- constraints, would leak).
 
   --------------------------------------------------------------------------------
-  -- 2. L-Equivalence & Non-Interference (10pt)
+  -- 2. L-Equivalence & Non-Interference (20pt)
 
   -- Define an appropriate type-indexed L-equivalence relation for
   -- labeled values and environments. Make sure that only values and
@@ -226,33 +218,30 @@ module §2 where
   -- State non-interference for this language and then prove that all
   -- well-typed programs satisfy non-interference.
 
+
   --------------------------------------------------------------------------------
-  -- 3. Arrays Extension (15pt)
+  -- 3. Labeled Channels (15pt)
 
-  -- (5pt) Extend the syntax of types, values, and expressions given
-  -- in exercise 1, so that programs can dynamically create, read, and
-  -- write arrays in a type- and memory-safe way, and securely,
-  -- without leaking data.  In particular, add the following
-  -- constructs to the category of expressions:
+  -- (8pt) Extend the language with labeled input/output channels.
+  -- Expressions "input ℓ" reads the next input value from the channel
+  -- labeled ℓ, while expression "output ℓ e" evaluates "e" and writes
+  -- it to the output channel labeled ℓ.  Adapt the type system to
+  -- support I/O and explain how the new rules ensure that these
+  -- operations prevent well-typed programs from leaking data.
 
-  -- Expr. e := ... | new(e₁, e₂)   -- Allocate an array of length e₁ in the heap and initialize it with the value of e₂
-  --                | e₁[e₂]        -- Read array e₁ at index e₂
-  --                | e₁[e₂] ≔ e₃   -- Update the content of array e₁ at index e₂ with the value of e₃.
-  --                | len(e)        -- Return the length of array e
+  -- (4pt) Give a data type to represent labeled channels and define a
+  -- big-step semantics for the language with input/output expressions
+  -- (define a new semantics judgment so that you do not break the
+  -- proofs from the previous exercises). Explain your design, the
+  -- changes in the semantics, and the new rules for I/O.
 
-  -- Explain how the constraints for the operations that read and
-  -- write the heap prevent data leaks through explicit and implicit
-  -- flows.
+  -- (3 pt) Explain what you consider attacker observable behavior on
+  -- labeled channels. Then, give a corresponding L-equivalence
+  -- definition for labeled channels and adapt the definition of
+  -- non-interference accordingly. You do not have to give a complete
+  -- proof, but argue why well-typed programs satisfy the new
+  -- non-interference property that you gave.
 
-  -- Similarly, add heaps and configurations to the language and adapt
-  -- the semantics given in exercise 1 accordingly.
-
-  -- (10pt) Extend the definition of L-equivalence for the new values
-  -- and add similar relations for the new syntactic constructs
-  -- (configurations and heaps). Adapt the definition of
-  -- non-interference for the new extensions and then complete the
-  -- previous proof with the missing cases and fix the cases that are
-  -- now incomplete.
 
   -- End of Part §2.
   --------------------------------------------------------------------------------
