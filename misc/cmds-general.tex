@@ -1,0 +1,660 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%							COMMANDS						  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	TODO annotations		\usepackage{todonotes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\MP}[1]{\todo[color=blue!30]{MP TODO: #1}}
+\newcommand{\MPin}[1]{\todo[color=blue!30,inline]{MP TODO: #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Math formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mi}[1]{\ensuremath{\mathit{#1}}}
+\newcommand{\mr}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\mt}[1]{\ensuremath{\texttt{#1}}}
+\newcommand{\mtt}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\mf}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\mk}[1]{\ensuremath{\mathfrak{#1}}}
+\newcommand{\mc}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\ms}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\mb}[1]{\ensuremath{\mathbb{#1}}}
+\newcommand{\msc}[1]{\ensuremath{\mathscr{#1}}}
+
+\newcommand{\isdef}[0]{\ensuremath{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily def}}}{=}}}}
+
+\newcommand{\lift}[1]{\ensuremath{\lceil#1\rceil}}
+
+% http://tex.stackexchange.com/questions/5502/how-to-get-a-mid-binary-relation-that-grows
+\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}}
+
+\DeclareMathOperator\mydefsym{\ensuremath{\iangleq}}
+\newcommand\bnfdef{\ensuremath{\mathrel{::=}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Language formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\neutcol}[0]{black}
+\newcommand{\stlccol}[0]{RoyalBlue}
+\newcommand{\ulccol}[0]{RedOrange}
+\newcommand{\commoncol}[0]{black}    % CarnationPink
+\newcommand{\othercol}[0]{CarnationPink}
+
+\newcommand{\col}[2]{\ensuremath{{\color{#1}{#2}}}}
+
+\newcommand{\src}[1]{\ms{\col{\stlccol}{#1}}}
+\newcommand{\trgb}[1]{\ensuremath{\bm{\col{\ulccol }{#1}}}}
+\newcommand{\trg}[1]{{\mf{\col{\ulccol }{#1}}}}
+\newcommand{\oth}[1]{\mi{\col{\othercol }{#1}}}
+\newcommand{\bl}[1]{\col{\neutcol }{#1}}
+\newcommand{\com}[1]{\mi{\col{\commoncol }{#1}}}
+
+\newcommand{\hil}[1]{\colorbox{yellow}{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}%
+
+\AtEndEnvironment{problem}{\null\hfill\QEDA}
+\AtEndEnvironment{example}{}%\null\hfill$\boxdot$}
+
+\Crefname{lstlisting}{Listing}{Listings}
+\Crefname{problem}{Problem}{Problems}
+
+\Crefname{equation}{Rule}{Rules}
+
+\newenvironment{proofsketch}{\trivlist\item[]\emph{Proof Sketch}.\xspace}{\unskip\nobreak\hskip 1em plus 1fil\nobreak$\Box$\parfillskip=0pt\endtrivlist}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	naming HP and referring to them
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{hps}
+\crefname{hps}{}{}
+\newcommand{\hpdef}[2]{ % nome, label
+	\def\thehps{#1}%
+  	\refstepcounter{hps}%
+  	\label{hp:#2}%
+  	#1
+}
+\newcommand{\hpref}[1]{\Cref{hp:#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Compiler 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\genlang}[2]{\ensuremath{\lambda^{#1}_{#2}}}
+\newcommand{\stlcf}[0]{\src{\genlang{fx}{}}}
+\newcommand{\stlcm}[0]{\stlcim}
+\newcommand{\stlcim}[0]{\trg{\genlang{\mu}{I}}}
+\newcommand{\stlcem}[0]{\oth{\genlang{\mu}{E}}}
+
+\newcommand{\genlangF}[2]{\ensuremath{F^{#1}_{#2}}}
+\newcommand{\sysfim}[0]{\trg{\genlangF{\mu}{I}}}
+\newcommand{\sysfem}[0]{\oth{\genlangF{\mu}{E}}}
+\newcommand{\sysff}[0]{\src{\genlangF{fx}{}}}
+\newcommand{\sysfm}[0]{\trg{\genlangF{\mu^+}{}}}
+
+\newcommand{\compskel}[3]{\ensuremath{\bl{\left\llbracket {#1} \right\rrbracket^{#2}_{#3}}}}
+\newcommand{\comp}[1]{\compskel{\bl{#1}}{}{}}
+\newcommand{\compgen}[1]{\compskel{\src{#1}}{\S}{\T}}
+\newcommand{\compstlc}[1]{\compskel{\src{#1}}{\stlcf}{\stlcm}}
+\newcommand{\compstlce}[1]{\compskel{\trg{#1}}{\stlcim}{\stlcem}}
+\newcommand{\compfe}[1]{\compskel{\trg{#1}}{\sysfim}{\sysfem}}
+
+\newcommand{\funname}[1]{\mtt{#1}}
+\newcommand{\fun}[2]{\ensuremath{{\bl{\funname{#1}\left(#2\right)}}}\xspace}
+\newcommand{\dom}[1]{\fun{dom}{#1}}
+
+\newcommand{\Nat}[0]{\ensuremath{\mb{N}}\xspace}
+
+\newcommand{\backtrskel}[3]{\ensuremath{\bl{\left\langle\!\left\langle {#1} \right\rangle\!\right\rangle^{#2}_{#3}}}}
+\newcommand{\backtr}[1]{\backtrskel{#1}{}{}}
+\newcommand{\backtrgen}[1]{\backtrskel{\trg{#1}}{\T}{\S}}
+\newcommand{\backtrstlc}[1]{\backtrskel{\trg{#1}}{\stlcm}{\stlcf}}
+\newcommand{\backtrstlce}[1]{\backtrskel{\oth{#1}}{\stlcem}{\stlcim}}
+\newcommand{\backtrfe}[1]{\backtrskel{\oth{#1}}{\sysfem}{\sysfim}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Language shortcuts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\S}[0]{\src{{S}}\xspace}
+\newcommand{\T}[0]{\trg{{T}}\xspace}
+
+\newcommand{\ctx}[0]{\ensuremath{\mk{C}}}
+\newcommand{\ctxs}[0]{\src{\ctx}\xspace}
+\newcommand{\ctxt}[0]{\trg{\ctx}\xspace}%M
+\newcommand{\ctxo}[0]{\oth{\ctx}\xspace}%M
+\newcommand{\ctxc}[0]{\com{\ctx}\xspace}%P
+\newcommand{\ctxh}[1]{\ctx\hole{#1}}
+\newcommand{\ctxhs}[1]{\ctxs\src{\hole{#1}}\xspace}
+\newcommand{\ctxht}[1]{\ctxt\trg{\hole{#1}}\xspace}%M
+\newcommand{\ctxho}[1]{\ctxo\oth{\hole{#1}}\xspace}%M
+\newcommand{\ctxhc}[1]{\ctxc\com{\hole{#1}}\xspace}%P
+\newcommand{\hole}[1]{\ensuremath{\left[#1\right]}}
+
+\newcommand{\evalctx}[0]{\ensuremath{\mb{E}}}
+\newcommand{\evalctxs}[0]{\src{\evalctx}\xspace}
+\newcommand{\evalctxt}[0]{\trg{\evalctx}\xspace}
+\newcommand{\evalctxo}[0]{\oth{\evalctx}\xspace}
+\newcommand{\evalctxc}[0]{\com{\evalctx}\xspace}
+\newcommand{\evalctxhs}[1]{\src{\evalctx\hole{#1}}\xspace}
+\newcommand{\evalctxht}[1]{\trg{\evalctx\hole{#1}}\xspace}
+\newcommand{\evalctxho}[1]{\oth{\evalctx\hole{#1}}\xspace}
+\newcommand{\evalctxhc}[1]{\com{\evalctx\hole{#1}}\xspace}
+
+\newcommand{\Bools}[0]{\src{{Bool}}\xspace}
+\newcommand{\Nats}[0]{\src{{Nat}}\xspace}
+\newcommand{\Boolt}[0]{\trg{{Bool}}\xspace}
+\newcommand{\Natt}[0]{\trg{{Nat}}\xspace}
+\newcommand{\Boolo}[0]{\oth{{Bool}}\xspace}
+\newcommand{\Nato}[0]{\oth{{Nat}}\xspace}
+\newcommand{\Units}[0]{\src{{Unit}}\xspace}
+\newcommand{\Unitt}[0]{\trg{{Unit}}\xspace}
+\newcommand{\Unito}[0]{\oth{{Unit}}\xspace}
+\newcommand{\trues}[0]{\src{{true}}\xspace}
+\newcommand{\falses}[0]{\src{{false}}\xspace}
+\newcommand{\units}[0]{\src{{unit}}\xspace}
+\newcommand{\truet}[0]{\trg{{true}}\xspace}
+\newcommand{\falset}[0]{\trg{false}\xspace}
+\newcommand{\unitt}[0]{\trg{unit}\xspace}
+\newcommand{\trueo}[0]{\oth{{true}}\xspace}
+\newcommand{\falseo}[0]{\oth{{false}}\xspace}
+\newcommand{\unito}[0]{\oth{{unit}}\xspace}
+
+\newcommand{\srce}[0]{\src{\emptyset}\xspace}
+\newcommand{\trge}[0]{\trgb{\emptyset}\xspace}
+\newcommand{\come}[0]{\com{\emptyset}\xspace}
+\newcommand{\othe}[0]{\oth{\emptyset}\xspace}
+
+\newcommand{\SInit}[1]{\ensuremath{{\Omega_0}({#1})}\xspace}
+\newcommand{\SInits}[1]{\ensuremath{\src{\Omega_0}(\src{#1})}\xspace}
+\newcommand{\SInitt}[1]{\ensuremath{\trg{\Omega_0}(\trg{#1})}\xspace}
+\newcommand{\SInito}[1]{\ensuremath{\oth{\Omega_0}(\oth{#1})}\xspace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Type rules
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{typerule}
+\crefname{typerule}{rule}{rules}
+
+\newcommand{\typeruleInt}[5]{%									    % #1 is the title, #2 is the hypotheses. #3 is the thesis, #4 is the label for referencing
+	\def\thetyperule{#1}%
+	\refstepcounter{typerule}%
+	\label{tr:#4}%
+ %\ensuremath{\begin{array}{c}\textsf{\scriptsize ({#1})} \\#2 \\\hline{\ensuremath{#3}}\end{array}} \inference
+  \ensuremath{\begin{array}{c}#5 \inference{#2}{#3}\end{array}} 
+}
+\newcommand{\typerule}[4]{%									        % #1 is the title, #2 is the hypotheses. #3 is the thesis, #4 is the label for referencing
+  \typeruleInt{#1}{#2}{#3}{#4}{\textsf{\scriptsize ({#1})} \\      }
+}
+\newcommand{\typerulenolabel}[4]{%									% #1 is the title, #2 is the hypotheses. #3 is the thesis, #4 is the label for referencing
+  \typeruleInt{#1}{#2}{#3}{#4}{}
+}
+\newcommand{\typerulenothing}[4]{%									% #1 is the title, #2 is the hypotheses. #3 is the thesis, #4 is the label for referencing
+  \typeruleInt{}{#1}{#2}{}{}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Figures, tables and tikz
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{veryback}
+\pgfdeclarelayer{veryback2}
+\pgfdeclarelayer{veryback3}
+\pgfdeclarelayer{back2}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{veryback3,veryback2,veryback,background,back2,main,foreground}
+
+\newcommand{\tikzpic}[1]{
+\begin{tikzpicture}[shorten >=1pt,auto,node distance=6mm]
+\tikzstyle{state} =[fill=white,minimum size=4pt]
+\tikzstyle{field} =[fill=gray!5,draw=black!70, rectangle, minimum width={width("whiskersfieldww")+2pt}]]
+#1
+\end{tikzpicture}
+}
+\newcommand{\tikzpicremember}[1]{
+\begin{tikzpicture}[shorten >=1pt,auto,remember picture]
+#1
+\end{tikzpicture}
+}
+
+\newcommand{\tikzpicT}[1]{
+\begin{tikzpicture}[shorten >=1pt,node distance=12mm,auto]
+\tikzstyle{state} =[fill=white,minimum size=4pt]
+#1
+\end{tikzpicture}
+}
+
+\newcommand{\myfig}[3]{\begin{figure} [!h]
+#1
+\caption{\label{fig:#2}#3}
+\end{figure}}
+
+\newcommand{\mytab}[3]{\begin{table} [!h]
+\centering
+#1
+
+\caption{\label{tab:#2}#3}
+\end{table}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Misc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\etal}[0]{\textit{et al.}\xspace} 
+
+\newcommand{\BREAK}[0]{
+\botrule
+\begin{center}$\spadesuit$\end{center}
+\botrule}
+
+\newcommand{\mytoprule}[1]{\vspace{1mm}\noindent\hrulefill\ \raisebox{-0.5ex}{\fbox{\ensuremath{#1}}} \hrulefill\hrulefill\hrulefill\vspace{0.5mm}}
+\def\botrule{\vspace{0mm}\hrule\vspace{2mm}}
+
+\newcommand{\link}[1]{\href{#1}{#1}}
+
+\newcommand{\myparagraph}[1]{ \smallskip \noindent\noindent\textit{#1}~}
+
+\DeclareMathOperator\compat{\ensuremath{\raisebox{1mm}{$\frown$}}}
+
+\newcommand{\set}[1]{\ensuremath{\widehat{#1}} }%\setb{#1}}
+\newcommand{\card}[1]{\ensuremath{|\!|{#1}|\!|}}
+
+\renewcommand{\emptyset}[0]{\varnothing}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstdefinelanguage{Java} %thanks to whoever did this
+{morekeywords={abstract, all, and, as, assert, but, check, disj, else, exactly, extends, fact, for, fun, iden, if, iff, implies, in, Int, int, let, lone, module, no, none, not, one, open, or, part, pred, run, seq, set, sig, some, sum, then, univ, package, class, public, private, null, return, new, interface, extern, object, implements, System, static, super, try , catch, throw, throws, Unit, var, val, of, principal, trust},
+sensitive=true,
+%commentstyle=\color{mygreen},
+%morecomment=[l][\small\itshape\color{mygreen}]{--},
+%morecomment=[l][\small\itshape\color{mygreen}]{//},
+%morecomment=[s][\small\itshape\color{mygreen}]{/*}{*/},
+%keywordstyle=\color{blue!60!black}\bfseries,
+%stringstyle=\ttfamily\color{red!50!brown},
+%identifierstyle=\color{purple!40!black},
+keywordstyle=\bfseries\color{green!40!black},
+commentstyle=\itshape\color{purple!40!black},
+morecomment=[l][\small\itshape\color{purple!40!black}]{//},
+identifierstyle=\color{blue},
+stringstyle=\color{orange},
+basicstyle=\small,
+basicstyle={\small\ttfamily},
+numbers=left,
+numberstyle=\tiny\color{mygray},
+tabsize=2,
+numbersep=3pt,
+breaklines=true,
+lineskip=-2pt,
+stepnumber=1,
+captionpos=b,
+breaklines=true,
+breakatwhitespace=false,
+showspaces=false,
+showtabs=false,
+float=!h,
+%frame=single,
+columns=fullflexible,escapeinside={(*@}{@*)},
+moredelim=**[is][\color{red!60}]{@}{@},
+literate={->}{{$\to$}}1 {^}{{$\mspace{-3mu}\widehat{\quad}\mspace{-3mu}$}}1
+{<}{$<$ }2 {>}{$>$ }2 {>=}{$\geq$ }2 {=<}{$\leq$ }2
+{<:}{{$<\mspace{-3mu}:$}}2 {:>}{{$:\mspace{-3mu}>$}}2
+{=>}{{$\Rightarrow$ }}2 {+}{$+$ }2 {++}{{$+\mspace{-8mu}+$ }}2
+{<=>}{{$\Leftrightarrow$ }}2 {+}{$+$ }2 {++}{{$+\mspace{-8mu}+$ }}2
+{\~}{{$\mspace{-3mu}\widetilde{\quad}\mspace{-3mu}$}}1
+{!=}{$\neq$ }2 {*}{${}^{\ast}$}1 %{.}{$\cdot$}1
+{\#}{$\#$}1
+}
+\lstset{language=Java,numbersep=5pt,frame=single}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Contextual equivalence
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator\niff{\ensuremath{\nLeftrightarrow}}
+\DeclareMathOperator\nsimeq{\ensuremath{\mathrel{\not\simeq}}}
+\DeclareMathOperator\nequiv{\ensuremath{\mathrel{\not\equiv}}}
+
+\DeclareMathOperator\ceq{\ensuremath{\mathrel{\simeq_{{ctx}}}}}
+\DeclareMathOperator\nceq{\mathrel{\nsimeq_{{ctx}}}}
+
+\DeclareMathOperator\ceqs{\src{\ceq}}
+\DeclareMathOperator\ceqt{\trgb{\ceq}}
+\DeclareMathOperator\ceqo{\oth{\ceq}}
+\DeclareMathOperator\ceqc{\com{\ceq}}
+
+\DeclareMathOperator\nceqs{\src{\nceq}}
+\DeclareMathOperator\nceqt{\trgb{\nceq}}
+\DeclareMathOperator\nceqo{\oth{\nceq}}
+
+\newcommand{\divt}[0]{\trg{\uparrow}\xspace}
+\newcommand{\tert}[0]{\trg{\downarrow}\xspace}
+\newcommand{\divs}[0]{\src{\uparrow}\xspace}
+\newcommand{\ters}[0]{\src{\downarrow}\xspace}
+\newcommand{\divo}[0]{\oth{\uparrow}\xspace}
+\newcommand{\tero}[0]{\oth{\downarrow}\xspace}
+\newcommand{\divc}[0]{\com{\uparrow}\xspace}
+\newcommand{\terc}[0]{\com{\downarrow}\xspace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Missing envs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{notation}{Notation}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{property}{Property}
+\newtheorem{example}{Example}
+\newtheorem{informal}{Informal definition}
+\newtheorem{corollary}{Corollary}
+\Crefname{corollary}{Corollary}{Corollaries}
+\Crefname{informal}{Definition}{Definition}
+\Crefname{assumption}{Assumption}{Assumptions}
+\crefname{assumption}{Assumption}{Assumptions}
+\Crefname{property}{Property}{Properties}
+\crefname{property}{Property}{Properties}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lambda 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lam}[2]{\ensuremath{\lambda #1\ldotp #2}}
+\newcommand{\pair}[1]{\ensuremath{\left\langle#1\right\rangle}}
+\newcommand{\projone}[1]{\ensuremath{#1.1}}
+\newcommand{\projtwo}[1]{\ensuremath{#1.2}}
+\newcommand{\fix}[1]{\ensuremath{fix}_{#1}}
+\newcommand{\case}{\ensuremath{{case}}}
+\newcommand{\of}{\ensuremath{{of}}}
+\newcommand{\caseof}[3]{\ensuremath{{case}~#1~{of}~\inl{x_1}\mapsto #2\mid\inr{x_2}\mapsto #3}}
+\newcommand{\caseofmultlin}[3]{{{case}~#1~{of}~\inl{x_1}\mapsto #2\mid\inr{x_2}\mapsto #3}}
+\newcommand{\casefoldeds}[3]{
+	\src{\case}~#1~\src{\of}\left|\begin{aligned}
+			&
+			\src{\inl{x_1}\mapsto} #2
+			\\
+			&
+			\src{\inr{x_2}\mapsto} #3
+		\end{aligned}\right.
+}
+\newcommand{\casefoldedt}[3]{
+	\trg{\case}~#1~\trg{\of}\left|\begin{aligned}
+			&
+			\trg{\inl{x_1}\mapsto} #2
+			\\
+			&
+			\trg{\inr{x_2}\mapsto} #3
+		\end{aligned}\right.
+}
+\newcommand{\casefoldedo}[3]{
+	\oth{\case}~#1~\oth{\of}\left|\begin{aligned}
+			&
+			\oth{\inl{x_1}\mapsto} #2
+			\\
+			&
+			\oth{\inr{x_2}\mapsto} #3
+		\end{aligned}\right.
+}
+\newcommand{\casefoldedsupert}[3]{
+	\begin{aligned}
+		&
+		\trg{\case}~#1~\trg{\of}
+		\\
+		&\
+		\left|\begin{aligned}
+			&
+			\trg{\inl{x_1}\mapsto} #2
+			\\
+			&
+			\trg{\inr{x_2}\mapsto} #3
+		\end{aligned}\right.
+	\end{aligned}
+}
+\newcommand{\casefoldedsupero}[3]{
+	\begin{aligned}
+		&
+		\oth{\case}~#1~\oth{\of}
+		\\
+		&\
+		\left|\begin{aligned}
+			&
+			\oth{\inl{x_1}\mapsto} #2
+			\\
+			&
+			\oth{\inr{x_2}\mapsto} #3
+		\end{aligned}\right.
+	\end{aligned}
+}
+\newcommand{\ifte}[3]{\ensuremath{{if}~#1~{then}~#2~{else}~#3}}
+\newcommand{\iftes}[3]{\ensuremath{\src{if}~#1~\src{then}~#2~\src{else}~#3}}
+\newcommand{\iftet}[3]{\ensuremath{\trg{if}~#1~\trg{then}~#2~\trg{else}~#3}}
+\newcommand{\ifteo}[3]{\ensuremath{\oth{if}~#1~\oth{then}~#2~\oth{else}~#3}}
+
+\newcommand{\iftefoldedsupero}[3]{
+	\begin{aligned}
+		&
+		\oth{if}~#1~
+		\\
+		&\
+		\begin{aligned}
+			&
+			\oth{then}~ #2
+			\\
+			&
+			\oth{else}~ #3
+		\end{aligned}
+	\end{aligned}
+}
+\newcommand{\iftefoldedsupert}[3]{
+	\begin{aligned}
+		&
+		\trg{if}~#1~
+		\\
+		&\
+		\begin{aligned}
+			&
+			\trg{then}~ #2
+			\\
+			&
+			\trg{else}~ #3
+		\end{aligned}
+	\end{aligned}
+}
+
+\newcommand{\inl}[1]{\ensuremath{{inl}~#1}}
+\newcommand{\inr}[1]{\ensuremath{{inr}~#1}}
+\newcommand{\wrong}[0]{\trg{wrong}}
+\newcommand{\protd}[1]{\ensuremath{\funname{\trg{protect}_{\src{#1}}}}}
+\newcommand{\confi}[1]{\ensuremath{\funname{\trg{confine}_{\src{#1}}}}}
+\newcommand{\conf}[1]{\confi{#1}}
+\newcommand{\fold}[1]{\ensuremath{{fold}_{\trgb{#1}}}}
+\newcommand{\unfold}[1]{\ensuremath{{unfold}_{\trgb{#1}}}}
+\newcommand{\Lam}[2]{\ensuremath{\Lambda #1\ldotp #2}}
+\newcommand{\Lamt}[2]{\ensuremath{\trg{\trgb{\Lambda} #1\ldotp #2}}}
+\newcommand{\tapp}[2]{\ensuremath{#1 \hole{#2}}}
+\newcommand{\pack}[3]{\ensuremath{pack~\pair{#1,#2}~as~#3}}
+\newcommand{\packt}[3]{\ensuremath{\trg{pack}~\trg{\pair{#1,#2}}~\trg{as}~#3}}
+\newcommand{\packo}[3]{\ensuremath{\oth{pack}~\oth{\pair{#1,#2}}~\oth{as}~#3}}
+\newcommand{\unpack}[4]{\ensuremath{unpack~#1~as~\pair{#2,#3}~in~#4}}
+\newcommand{\unpackt}[4]{\ensuremath{\trg{unpack}~#1~\trg{as}~\trg{\pair{#2,#3}}~\trg{in}~#4}}
+
+\newcommand{\alpt}[0]{\trgb{\alpha}}
+\newcommand{\tat}[0]{\trgb{\tau}}
+\newcommand{\Det}[0]{\trgb{\Delta}}
+\newcommand{\Gat}[0]{\trgb{\Gamma}}
+
+\newcommand{\type}[3]{\ensuremath{ \left\{#1:#2\relmiddle|#3 \right\}}}
+
+\newcommand{\matgen}[2]{\ensuremath{\mu #1\ldotp#2}}
+\newcommand{\mat}[0]{\matgen{\alpha}{\tau}}
+\newcommand{\fatgen}[2]{\ensuremath{\forall #1\ldotp#2}}
+\newcommand{\fat}[0]{\fatgen{\alpha}{\tau}}
+\newcommand{\eatgen}[2]{\ensuremath{\exists #1\ldotp#2}}
+\newcommand{\eat}[0]{\eatgen{\alpha}{\tau}}
+\newcommand{\fatgent}[2]{\ensuremath{\trgb{\forall} #1\ldotp#2}}
+\newcommand{\fatt}[0]{\fatgent{\alpt}{\tat}}
+\newcommand{\eatgent}[2]{\ensuremath{\trgb{\exists} #1\ldotp#2}}
+\newcommand{\eatt}[0]{\eatgent{\alpt}{\tat}}
+
+
+\newcommand{\erase}[1]{\fun{erase}{\src{#1}}}
+
+\newcommand{\fail}[0]{\mi{fail}}
+\newcommand{\fails}[0]{\src{fail}\xspace}
+\newcommand{\failt}[0]{\trg{fail}\xspace}
+\newcommand{\failo}[0]{\oth{fail}\xspace}
+\newcommand{\failc}[0]{\com{fail}\xspace}
+
+\newcommand{\fatsem}[0]{\formatCompilers{fat}}
+
+\newcommand{\redgen}[1]{\ensuremath{ \hookrightarrow^{#1} }}
+\newcommand{\nredgen}[1]{\ensuremath{\not\hookrightarrow^{#1}}}
+\newcommand{\red}[0]{\redgen{}}
+\newcommand{\nred}[0]{\nredgen{}}
+\newcommand{\redstar}[0]{\redgen{*}}
+\newcommand{\redapp}[1]{\ensuremath{\!^{#1}\ }}
+
+\newcommand{\dredgen}[1]{\ensuremath{ \rightsquigarrow^{#1}} }
+\newcommand{\ndredgen}[1]{\ensuremath{ \not\rightsquigarrow^{#1}} }
+\newcommand{\dred}[0]{\dredgen{}}
+\DeclareMathOperator\dredo{\oth{\dred}}
+\DeclareMathOperator\dredostar{\oth{\dredgen{*}}}
+
+\DeclareMathOperator\dto{\oth{\rightarrowtriangle}}
+\DeclareMathOperator\dsimp{\oth{\ssearrow}}
+
+\newcommand{\nredt}[0]{\trgb{\nred}}
+\newcommand{\nreds}[0]{\src{\nred}}
+\newcommand{\nredc}[0]{\com{\nred}}
+\newcommand{\nredo}[0]{\oth{\nred}}
+\newcommand{\redstars}[0]{\src{\redstar}}
+\newcommand{\redstarc}[0]{\com{\redstar}}
+\newcommand{\redstart}[0]{\trgb{\redstar}}
+\newcommand{\redstaro}[0]{\oth{\redstar}}
+
+\DeclareMathOperator\reds{\src{\red}}
+\DeclareMathOperator\redt{\trgb{\red}}
+\DeclareMathOperator\redc{\com{\red}}
+\DeclareMathOperator\redo{\oth{\red}}
+
+\newcommand{\diverge}{\Uparrow}
+
+\AtEndEnvironment{example}{\null\hfill$\boxdot$}
+
+\makeatletter
+\xdef\@thefnmark{\@empty}
+\newcommand{\thmref}[1]{\cref{#1}~(\nameref{#1})}
+\newcommand{\Thmref}[1]{\Cref{#1}~(\nameref{#1})}
+\makeatother
+
+\newcommand{\subst}[2]{\ensuremath{\bl{\left[#1\bl{/}#2\right]}}} %replace 1 in place of 2
+\newcommand{\subs}[2]{\subst{\src{#1}}{\src{#2}}}
+\newcommand{\subt}[2]{\subst{\trg{#1}}{\trg{#2}}}
+\newcommand{\subo}[2]{\subst{\oth{#1}}{\oth{#2}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	logrel 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\oftype}[1]{\fun{oftype}{#1}}
+\newcommand{\oftypes}[1]{\src{oftype\left(#1\right)}}
+\newcommand{\oftypet}[1]{\trg{oftype\left(#1\right)}}
+\newcommand{\oftypeo}[1]{\oth{oftype\left(#1\right)}}
+
+\newcommand{\logrelgen}[1]{\ensuremath{\operatorname{\approx}^{#1}}}
+\DeclareMathOperator\logrel{\logrelgen{}}
+\DeclareMathOperator\bothlogrel{\logrelgen{}}
+\newcommand{\underapproxlogrelgen}[1]{\ensuremath{\operatorname{\lesssim}^{#1}}}
+\DeclareMathOperator\underlogrel{\underapproxlogrelgen{}}
+\newcommand{\overapproxlogrelgen}[1]{\ensuremath{\operatorname{\gtrsim}^{#1}}}
+\DeclareMathOperator\overlogrel{\overapproxlogrelgen{}}
+
+\newcommand{\arbsim}{\ensuremath{\triangledown}}%{\ensuremath{\square}} 
+\newcommand{\arbsimrel}{\ensuremath{\mathrel{\arbsim}}}
+\newcommand{\genlogrel}[0]{\arbsim}
+\DeclareMathOperator\anylogrel{\genlogrel{}}
+
+\newcommand{\underlogreln}[1]{\ensuremath{\mathrel{\lesssim_{#1}}}}
+\newcommand{\overlogreln}[1]{\ensuremath{\mathrel{\gtrsim_{#1}}}}
+\newcommand{\anylogreln}[1]{\ensuremath{\mathrel{\triangledown_{#1}}}}
+
+\newcommand{\genrel}[4]{\ensuremath{\bl{\mc{#1}\left\llbracket{#2}\right\rrbracket^{#3}_{#4}}}}
+\newcommand{\valrel}[1]{\genrel{V}{\src{#1}}{}{\anylogrel}}
+\newcommand{\valrelp}[2]{\genrel{V}{#1}{#2}{\anylogrel}}
+\newcommand{\contrel}[1]{\genrel{K}{\src{#1}}{}{\anylogrel}}
+\newcommand{\contrelp}[2]{\genrel{K}{#1}{#2}{\anylogrel}}
+\newcommand{\termrel}[1]{\genrel{E}{\src{#1}}{}{\anylogrel}}
+\newcommand{\termrelp}[2]{\genrel{E}{#1}{#2}{\anylogrel}}
+\newcommand{\envrel}[1]{\genrel{G}{\src{#1}}{}{\anylogrel}}
+\newcommand{\envrelp}[2]{\genrel{G}{#1}{#2}{\anylogrel}}
+\newcommand{\tyenvrel}[1]{\genrel{D}{#1}{}{\anylogrel}}
+
+\newcommand{\valrelem}[2]{\genrel{V}{\trgb{#1 \bl{-} #2}}{}{\anylogrelem}} %\trgb{\rho}
+\newcommand{\contrelem}[2]{\genrel{K}{\trgb{#1 \bl{-} #2}}{}{\anylogrelem}}
+\newcommand{\termrelem}[2]{\genrel{E}{\trgb{#1 \bl{-} #2}}{}{\anylogrelem}}
+\newcommand{\envrelem}[2]{\genrel{G}{\trgb{#1 \bl{-} #2}}{}{\anylogrelem}}
+
+\newcommand{\valrelemp}[2]{\genrel{V}{\trgb{#1}}{{#2}}{\anylogrelem}}
+\newcommand{\contrelemp}[2]{\genrel{K}{\trgb{#1}}{{#2}}{\anylogrelem}}
+\newcommand{\termrelemp}[2]{\genrel{E}{\trgb{#1}}{{#2}}{\anylogrelem}}
+\newcommand{\envrelemp}[2]{\genrel{G}{\trgb{#1}}{{#2}}{\anylogrelem}}
+
+
+\DeclareMathOperator\anylogrelem{\approx}
+\newcommand{\anylogrelemn}[1]{\ensuremath{\mathrel{\approx_{#1}}}}
+
+
+
+\newcommand{\langsp}[1]{\ensuremath{\mi{#1}}}
+\newcommand{\langspfun}[2]{\ensuremath{\langsp{#1}(#2)}}
+\newcommand{\W}[0]{\langsp{W}\xspace}
+
+\newcommand{\monotfun}[1]{\fun{\nearrow}{#1}}
+
+\newcommand{\stepsgen}[1]{\ensuremath{\langsp{lev}^{#1}}}
+\newcommand{\stepsfungen}[2]{\ensuremath{\langspfun{lev^{#1}}{#2}}}
+\newcommand{\steps}[0]{\stepsgen{}}
+\newcommand{\stepsfun}[1]{\stepsfungen{}{#1}}
+
+\newcommand{\latergen}[1]{\ensuremath{\triangleright^{#1}}}
+\DeclareMathOperator\later{\latergen{}}
+\newcommand{\laterfun}[1]{\langspfun{\triangleright}{#1}}
+
+\newcommand{\obswgen}[1]{\ensuremath{\langsp{O}^{#1}}}
+\newcommand{\obswfungen}[3]{\langspfun{O^{#1}}{#2}_{#3}}
+\newcommand{\obsw}[0]{\obswgen{}}
+\newcommand{\obsfun}[2]{\obswfungen{}{#1}{#2}}
+
+\newcommand{\futwgen}[1]{\ensuremath{\sqsupseteq^{#1}}}
+\newcommand{\strfutwgen}[1]{\ensuremath{\sqsupset_{\later}^{#1}}}
+\DeclareMathOperator\futw{\futwgen{}}
+\DeclareMathOperator\futwpub{\futwpubgen{}}
+\DeclareMathOperator\strfutw{\strfutwgen{}}
+
+\newcommand{\precise}{\ensuremath{\mtt{precise}}}
+\newcommand{\imprecise}{\ensuremath{\mtt{imprecise}}}
+
+
+\newcommand{\convej}[2]{\ensuremath{\bl{\lbag#1,#2\rbag}}}
+\newcommand{\conve}[3]{\ensuremath{\bl{\lbag#1,#2,#3\rbag}}}
+
+\newcommand{\upder}[2]{\ensuremath{\fun{upd}{#1,#2}}}
+\newcommand{\subsderiv}[3]{\ensuremath{\fun{dersubs}{#1,#2,#3}}}
+
