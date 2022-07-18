@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marco Patrignani</title>
+    <link>https://squera.github.io/</link>
+    <description></description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://squera.github.io/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title></title>
+        <link>https://squera.github.io/about/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/about/</guid>
+        <description>Home page of Marco Patrignani, Assistant Professor (tenure track) at Department of Information Engineering and Computer Science (DISI), University of Trento
+In the publications page you can see our latest and no-so-latest work. In the research page you can see my research group and our interest as well as possible job openings. In the teaching page you can see information on courses and theses.
+Here you can find my cv [ .</description>
+      </item>
+    
+      <item>
+        <title></title>
+        <link>https://squera.github.io/lists/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/lists/</guid>
+        <description>I enjoy keeping track of things I’ve enjoyed such as books, places I skied and some D&amp;amp;D stuff.
+Books 2022: Blood of Elves Andrzej Sapkowski The Last Wish Andrzej Sapkowski 2021: The Tales Of Bauchelain and Korbal Broach, Vol 1 (Malazan Empire) by Steven Erikson 2020: Kellanved&amp;rsquo;s reach by Ian C. Esslemont The Crippled God by Steven Erikson 2019: Dust of dreams by Steven Erikson 2018: Toll the hounds by Steven Erikson Reaper’s gale by Steven Erikson The Bonehunters by Steven Erikson Midnight tides by Steven Erikson Deadhouse landing by Ian C.</description>
+      </item>
+    
+      <item>
+        <title></title>
+        <link>https://squera.github.io/papers/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/papers/</guid>
+        <description>Below is a list of my publications, sorted by year, followed by my talks.
+Papers My publications can also be found on DBLP or on my Google Scholar page.
+I encourage people to write articles using syntax highlighting.
+Patrignani. Why Should Anyone Use Colours?
+[ .pdf ] | [ arxiv ] | [ .tex macros ] 2023 Patrignani, Blackshear: Robust Safety for Move. In CSF&#39;23.
+[ .pdf ] | [ .</description>
+      </item>
+    
+      <item>
+        <title></title>
+        <link>https://squera.github.io/personal/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/personal/</guid>
+        <description>Short Bio I was born in Ravenna, Italy in 1986.
+I got my bachelor and master degree (theoretical curriculum) from the University of Bologna. I did my bachelor thesis with Danilo Montesi and my master one jointly with Davide Sangiorgi and Dave Clarke.
+I did my Ph.D. in Leuven with Dave Clarke and (after he left) Frank Piessens. You can find my thesis in this page (2015).
+Afterwards, I spent 2 years as a postdoc at MPI-SWS in Saarbrücken with Deepak Garg.</description>
+      </item>
+    
+      <item>
+        <title></title>
+        <link>https://squera.github.io/research/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/research/</guid>
+        <description>Research Interests Broadly, I am interested in formal methods, programming language and security (generally, programming language security and secure compilation).
+I am one of the main promotors of the secure compilation research field, having developed with my collaborators:
+secure compilation criteria (modular full abstraction, trace-preserving compilation, robustly safe compilation, robust hyperproperty preservation criteria); proof techniques for secure compilation (trace-based backtranslation, approximate context-based backtranslation); instances of secure compilers in action (secure compilation for Spectre, for PMA and for high-level capability machines); teaching material for secure compilation (see my teaching page);</description>
+      </item>
+    
+      <item>
+        <title></title>
+        <link>https://squera.github.io/teaching/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/teaching/</guid>
+        <description>Below you find recent courses and theses. Further down you find older courses.
+Di seguito trovate i corsi recenti e le proposte di tesi. In fondo alla pagina ci sono i miei vecchi corsi.
+Recent:2022-23 [First semester] Advanced Programming Theses Master and Bachelor theses are available upon request, contact me in case you are interested in a master thesis on programming languages and security.
+Sono disponibili tesi di master e di triennale su temi di: linguaggi di programmazione e sicurezza, programmazione.</description>
+      </item>
+    
+      <item>
+        <title>Advanced Programming 2022-23</title>
+        <link>https://squera.github.io/ap-22-23/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/ap-22-23/</guid>
+        <description>By prof. Marco Patrignani
+General Course Information This Advanced Programming course has two goals: (1) making you well-versed in a novel, advanced programming language, and (2), making you capable of developing large projects without relying solely on your code. Thus, the course will first present the Rust programming language, and then it will have a major W3C-style class-wide project.
+The first part of the class will be more Rust-focussed, while the latter one will be more project-focussed, with working group meetings and the software fair.</description>
+      </item>
+    
+      <item>
+        <title>CS358 2020-2021</title>
+        <link>https://squera.github.io/cs350-20-21/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/cs350-20-21/</guid>
+        <description>CS350: SECURE COMPILATION By prof. Marco Patrignani
+Below you will find the following information for the course:
+&amp;ndash; general course information,
+&amp;ndash; prerequisites and interest,
+&amp;ndash; location and timeslots,
+&amp;ndash; evaluation and grading,
+&amp;ndash; high-level syllabus outline,
+&amp;ndash; class and lecture outline.
+Some entries are still TBD, please contact the instructor if you have questions.
+PIAZZA, CANVAS AND OTHER LINKS: Canvas: https://canvas.stanford.edu/courses/135723
+Piazza: https://piazza.com/class/kmewl9o18oi3je
+Gradescope: https://www.gradescope.com/courses/255564 (find the code in Piazza)</description>
+      </item>
+    
+      <item>
+        <title>CS358 2020-2021</title>
+        <link>https://squera.github.io/cs358-20-21/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/cs358-20-21/</guid>
+        <description>CS358: PROGRAMMING LANGUAGE FOUNDATIONS By profs. Marco Patrignani and Marco Vassena
+General Course Information How can programming language designers ensure that programmers know exactly what their programs do? Programming language (PL) theory can help answer this and similar questions precisely.
+In this course, we study fundamental concepts of PL theory that are essential to the design and specification of programming languages. We will learn how to formalize fundamental concepts such as program syntax, semantics, and type systems, starting from a minimal language (lambda calculus), which we will then extend progressively with more advanced features (algebraic data types, heaps, recursion, and polymorphism) typical of many existing programming languages.</description>
+      </item>
+    
+  </channel>
+</rss>
