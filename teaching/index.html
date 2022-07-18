@@ -3,7 +3,7 @@
   <head prefix="og: http://ogp.me/ns#">
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Hugo 0.75.1">
+<meta name="generator" content="Hugo 0.101.0">
 <meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
 
 
@@ -121,7 +121,7 @@
 
 
 
-<link rel="stylesheet" href="/css/main.min.67541ff42a34c6bc54d2c51e07a589255e6ff99032ad66cae11f1e7f95fda30c50cdd9dfc36e4179fe72477157e0c9935c8ce74453908d98664e200ca3910516.css" integrity="sha512-Z1Qf9Co0xrxU0sUeB6WJJV5v&#43;ZAyrWbK4R8ef5X9owxQzdnfw25Bef5yR3FX4MmTXIznRFOQjZhmTiAMo5EFFg==">
+<link rel="stylesheet" href="/css/main.min.70a78c315fcfc6ee516d5f3dfc5ed1b20afa7e3d78247ef049f1ebd257d91989281b34e8d41c2afcea53fd07bf6e41f545f3b61e722533821859fac5f87df603.css" integrity="sha512-cKeMMV/Pxu5RbV89/F7Rsgr6fj14JH7wSfHr0lfZGYkoGzTo1Bwq/OpT/Qe/bkH1RfO2HnIlM4IYWfrF&#43;H32Aw==">
 
 
 
@@ -175,7 +175,7 @@
 
 
 
-<script defer src="/js/lazysizes.min.min.a85a0eccaf9ef0d2f083a9dc4d0e05dc90acc5be0e84b43e20fde692871e1861ae0191f7c3ca2c00f2664efabf6aff2625a478b8f22ea43cb056cb6ec9a8d948.js" crossorigin="anonymous"></script>
+<script defer src="/js/lazysizes.min.min.adf7bc6270eb381aa8421a6282fb66b779b1f8f32914ba67f955bb2584cdeda33c1efa41dfa2e9cc5e135e093236c3b3143ba85f201b5d8244f95588f0ad762d.js" crossorigin="anonymous"></script>
 
 
 
@@ -192,13 +192,7 @@
 
   <script>
     
-      'use strict';const PREFERS_LIGHT=window.matchMedia('(prefers-color-scheme: light)');const PREFERS_DARK=window.matchMedia('(prefers-color-scheme: dark)');const ROOT=document.documentElement;const SHEET=document.documentElement.style;const META_THEME_COLOR=document.querySelector('meta[name=theme-color]');function setDark(){ROOT.dataset.mode='dark'};function setLight(){ROOT.dataset.mode='light'};if(localStorage.getItem('isDark')=='true'){setDark()}else if(localStorage.getItem('isDark')=='false'){setLight()}else if(PREFERS_DARK.matches){setDark()}else if(PREFERS_LIGHT.matches){setLight()};function getAccent(){if(ROOT.dataset.mode==='dark'){if(localStorage.getItem('darkAccent')===null){var currentAccent="#dd587c"}else{var currentAccent=localStorage.getItem('darkAccent')
-}}else if(ROOT.dataset.mode==='light'){if(localStorage.getItem('lightAccent')===null){var currentAccent="#225670"}else{var currentAccent=localStorage.getItem('lightAccent')
-}};return currentAccent};var activeAccent=getAccent();SHEET.setProperty('--accent',activeAccent);META_THEME_COLOR.setAttribute('content',activeAccent);function updateAccent(){var activeAccent=getAccent();SHEET.setProperty('--accent',activeAccent);PALETTE.value=activeAccent;META_THEME_COLOR.setAttribute('content',activeAccent);};document.addEventListener('DOMContentLoaded',function(){PALETTE.value=activeAccent;function smoothTransition(){document.body.style.transition=document.querySelector('header').style.transition=document.querySelector('footer').style.transition='background-color .3s ease, color .3s ease'};function userModeChange(){smoothTransition();if(ROOT.dataset.mode=='light'){setDark();localStorage.setItem('isDark','true')
-}else{setLight();localStorage.setItem('isDark','false')
-};updateAccent()};function OSModeChange(){smoothTransition();if(PREFERS_LIGHT.matches){setLight();localStorage.setItem('isDark','false')
-}else if(PREFERS_DARK.matches){setDark();localStorage.setItem('isDark','true')
-};updateAccent()};PREFERS_LIGHT.addListener(OSModeChange);PREFERS_DARK.addListener(OSModeChange);document.querySelector('footer button').addEventListener('click',userModeChange)})
+      "use strict";const PREFERS_LIGHT=window.matchMedia("(prefers-color-scheme: light)"),PREFERS_DARK=window.matchMedia("(prefers-color-scheme: dark)"),ROOT=document.documentElement,SHEET=document.documentElement.style,META_THEME_COLOR=document.querySelector("meta[name=theme-color]");function setDark(){ROOT.dataset.mode="dark"}function setLight(){ROOT.dataset.mode="light"}localStorage.getItem("isDark")=="true"?setDark():localStorage.getItem("isDark")=="false"?setLight():PREFERS_DARK.matches?setDark():PREFERS_LIGHT.matches&&setLight(),function getAccent(){if(ROOT.dataset.mode==="dark")if(localStorage.getItem("darkAccent")===null){var e="#dd587c"}else e=localStorage.getItem("darkAccent"),else ROOT.dataset.mode==="light"&&(localStorage.getItem("lightAccent")===null?(return e}var activeAccent=getAccent();SHEET.setProperty("--accent",activeAccent),META_THEME_COLOR.setAttribute("content",activeAccent);function updateAccent(){var e=getAccent();SHEET.setProperty("--accent",e),PALETTE.value=e,META_THEME_COLOR.setAttribute("content",e)}document.addEventListener("DOMContentLoaded",function(){PALETTE.value=activeAccent;function e(){document.body.style.transition=document.querySelector("header").style.transition=document.querySelector("footer").style.transition="background-color .3s ease, color .3s ease"}function n(){e(),ROOT.dataset.mode=="light"?(setDark(),localStorage.setItem("isDark","true"),console.log("Mode changed to 'dark' by the user.")):(setLight(),localStorage.setItem("isDark","false"),console.log("Mode changed to 'light' by the user.")),updateAccent()}function t(){e(),PREFERS_LIGHT.matches?(setLight(),localStorage.setItem("isDark","false"),console.log("Mode changed to 'light' in OS level.")):PREFERS_DARK.matches&&(setDark(),localStorage.setItem("isDark","true"),console.log("Mode changed to 'dark' in OS level.")),updateAccent()}PREFERS_LIGHT.addListener(t),PREFERS_DARK.addListener(t),document.querySelector("footer button").addEventListener("click",n)})
     
   </script>
 
@@ -308,24 +302,20 @@
 
 
 
-<!-- ![](/flags/en.png#floatleft)  -->
-<p><img style="float:left" src="/flags/en2.png" width="50" height="38" /><br>
-Below you find <a href="#Recent:2021-22">recent courses</a> and <a href="#theses">theses</a>.  Further down you find <a href="#old-teaching">older courses</a>.</p>
-<p><img style="float:left" src="/flags/it.png" width="50" height="38" /><br>
-Di seguito trovate i <a href="#Recent:2021-22">corsi recenti</a> e le <a href="#theses">proposte di tesi</a>. In fondo alla pagina ci sono i miei <a href="#old-teaching">vecchi corsi</a>.</p>
+<img style="float:left" src="/flags/en2.png" width="50" height="38" />  
+<p>Below you find <a href="#Recent:2022-23">recent courses</a> and <a href="#theses">theses</a>.  Further down you find <a href="#old-teaching">older courses</a>.</p>
+<img style="float:left" src="/flags/it.png" width="50" height="38" />
+<p>Di seguito trovate i <a href="#Recent:2021-22">corsi recenti</a> e le <a href="#theses">proposte di tesi</a>. In fondo alla pagina ci sono i miei <a href="#old-teaching">vecchi corsi</a>.</p>
 <hr>
 
 
 
 
 
-  <h4 id="recent2021-22"><a class="anchor" href="#recent2021-22" title='Anchor for "Recent:2021-22".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Recent:2021-22</h4> 
+  <h4 id="recent2022-23"><a class="anchor" href="#recent2022-23" title='Anchor for "Recent:2022-23".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Recent:2022-23</h4> 
 
 <ul>
-<li>[27-31 June] <a href="https://iecs.unitn.it/node/1249">Doctoral Course on Secure Compilation at University of Trento</a></li>
-<li>[3, 5 May] Doctoral <a href="http://pages.di.unipi.it/bodei/HTLBS.html">Course on Secure Compilation at University of Pisa</a></li>
-<li>[Secondo semestre] <a href="http://latemar.science.unitn.it/segue/index.php?&amp;site=2022Programmazione2&amp;section=492&amp;action=site">Programmazione 2 @ UniTN</a></li>
-<li>[Winter semester] <a href="https://cms.cispa.saarland/fms_2122/">Formal Methods in Security @ CISPA</a></li>
+<li>[First semester] <a href="/ap-22-23">Advanced Programming</a></li>
 </ul>
 <hr>
 
@@ -335,14 +325,13 @@ Di seguito trovate i <a href="#Recent:2021-22">corsi recenti</a> e le <a href="#
 
   <h3 id="theses"><a class="anchor" href="#theses" title='Anchor for "Theses".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Theses</h3> 
 
-<p><img style="float:left" src="/flags/en2.png" width="50" height="38" /><br>
-Master and Bachelor theses are available upon request, contact me in case you are interested in a master thesis on programming languages and security.</p>
-<!-- <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">I</span> <span style="color:#a6e22e">am</span> <span style="color:#a6e22e">looking</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">student</span> <span style="color:#a6e22e">assistants</span> <span style="color:#a6e22e">that</span> <span style="color:#a6e22e">are</span> <span style="color:#a6e22e">interested</span> 
-<span style="color:#a6e22e">in</span> <span style="color:#a6e22e">programming</span> <span style="color:#a6e22e">language</span> <span style="color:#f92672">&amp;</span> <span style="color:#a6e22e">security</span> <span style="color:#a6e22e">and</span> <span style="color:#a6e22e">want</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">either</span> 
-() <span style="color:#a6e22e">work</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">me</span> <span style="color:#a6e22e">or</span> () <span style="color:#a6e22e">do</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Bachelor</span> <span style="color:#a6e22e">or</span> <span style="color:#a6e22e">Master</span> <span style="color:#a6e22e">thesis</span>
-</code></pre></div>  -->
-<p><img style="float:left" src="/flags/it.png" width="50" height="38" /><br>
-Sono disponibili tesi di master e di triennale su temi di: linguaggi di programmazione e sicurezza, programmazione.<br>
+<img style="float:left" src="/flags/en2.png" width="50" height="38" />  
+<p>Master and Bachelor theses are available upon request, contact me in case you are interested in a master thesis on programming languages and security.</p>
+<!-- <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">I</span> <span style="color:#a6e22e">am</span> <span style="color:#a6e22e">looking</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">student</span> <span style="color:#a6e22e">assistants</span> <span style="color:#a6e22e">that</span> <span style="color:#a6e22e">are</span> <span style="color:#a6e22e">interested</span> 
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">in</span> <span style="color:#a6e22e">programming</span> <span style="color:#a6e22e">language</span> <span style="color:#f92672">&amp;</span> <span style="color:#a6e22e">security</span> <span style="color:#a6e22e">and</span> <span style="color:#a6e22e">want</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">either</span> 
+</span></span><span style="display:flex;"><span>() <span style="color:#a6e22e">work</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">me</span> <span style="color:#a6e22e">or</span> () <span style="color:#a6e22e">do</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Bachelor</span> <span style="color:#a6e22e">or</span> <span style="color:#a6e22e">Master</span> <span style="color:#a6e22e">thesis</span></span></span></code></pre></div>  -->
+<img style="float:left" src="/flags/it.png" width="50" height="38" />  
+<p>Sono disponibili tesi di master e di triennale su temi di: linguaggi di programmazione e sicurezza, programmazione.<br>
 Mandate una mail se siete interessati.</p>
 <hr>
 
@@ -352,6 +341,19 @@ Mandate una mail se siete interessati.</p>
 
   <h3 id="old-teaching"><a class="anchor" href="#old-teaching" title='Anchor for "Old Teaching".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> Old Teaching</h3> 
 
+
+
+
+
+
+  <h4 id="2021-22"><a class="anchor" href="#2021-22" title='Anchor for "2021-22".'><svg aria-hidden="true"><use xlink:href="#hashtag"/></svg></a> 2021-22</h4> 
+
+<!-- - [27-31 June] [Doctoral Course on Secure Compilation at University of Trento](https://iecs.unitn.it/node/1249) -->
+<ul>
+<li>[3, 5 May] <a href="http://pages.di.unipi.it/bodei/HTLBS.html">Course on Secure Compilation at University of Pisa</a></li>
+<li>[Secondo semestre] <a href="http://latemar.science.unitn.it/segue/index.php?&amp;site=2022Programmazione2&amp;section=492&amp;action=site">Programmazione 2 @ UniTN</a></li>
+<li>[Winter semester] <a href="https://cms.cispa.saarland/fms_2122/">Formal Methods in Security @ CISPA</a></li>
+</ul>
 
 
 
@@ -469,7 +471,7 @@ Mandate una mail se siete interessati.</p>
 
       <script>
         
-          'use strict';const PALETTE=document.querySelector('footer input');PALETTE.onchange=function(){const PICK=PALETTE.value;SHEET.setProperty('--accent',PICK);if(ROOT.dataset.mode==='light'){localStorage.setItem('lightAccent',PICK)}else{localStorage.setItem('darkAccent',PICK)};updateAccent()};
+          "use strict";const PALETTE=document.querySelector("footer input");PALETTE.onchange=function(){const e=PALETTE.value;SHEET.setProperty("--accent",e),ROOT.dataset.mode==="light"?localStorage.setItem("lightAccent",e):localStorage.setItem("darkAccent",e),updateAccent()}
         
       </script>
 
