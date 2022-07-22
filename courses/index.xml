@@ -2,68 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Marco Patrignani</title>
-    <link>https://squera.github.io/</link>
+    <link>https://squera.github.io/courses/</link>
     <description></description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://squera.github.io/index.xml" rel="self" type="application/rss+xml" />
-      <item>
-        <title></title>
-        <link>https://squera.github.io/lists/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://squera.github.io/lists/</guid>
-        <description>I enjoy keeping track of things I’ve enjoyed such as books, places I skied and some D&amp;amp;D stuff.
-Books 2022: Blood of Elves Andrzej Sapkowski The Last Wish Andrzej Sapkowski 2021: The Tales Of Bauchelain and Korbal Broach, Vol 1 (Malazan Empire) by Steven Erikson 2020: Kellanved&amp;rsquo;s reach by Ian C. Esslemont The Crippled God by Steven Erikson 2019: Dust of dreams by Steven Erikson 2018: Toll the hounds by Steven Erikson Reaper’s gale by Steven Erikson The Bonehunters by Steven Erikson Midnight tides by Steven Erikson Deadhouse landing by Ian C.</description>
-      </item>
-    
-      <item>
-        <title></title>
-        <link>https://squera.github.io/papers/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://squera.github.io/papers/</guid>
-        <description>Below is a list of my publications, sorted by year, followed by my talks.
-Papers My publications can also be found on DBLP or on my Google Scholar page.
-I encourage people to write articles using syntax highlighting.
-Patrignani. Why Should Anyone Use Colours?
-[ .pdf ] | [ arxiv ] | [ .tex macros ] 2023 Patrignani, Blackshear: Robust Safety for Move. In CSF&#39;23.
-[ .pdf ] | [ .</description>
-      </item>
-    
-      <item>
-        <title></title>
-        <link>https://squera.github.io/personal/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://squera.github.io/personal/</guid>
-        <description>Short Bio I was born in Ravenna, Italy in 1986.
-I got my bachelor and master degree (theoretical curriculum) from the University of Bologna. I did my bachelor thesis with Danilo Montesi and my master one jointly with Davide Sangiorgi and Dave Clarke.
-I did my Ph.D. in Leuven with Dave Clarke and (after he left) Frank Piessens. You can find my thesis in this page (2015).
-Afterwards, I spent 2 years as a postdoc at MPI-SWS in Saarbrücken with Deepak Garg.</description>
-      </item>
-    
-      <item>
-        <title></title>
-        <link>https://squera.github.io/research/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://squera.github.io/research/</guid>
-        <description>Research Interests Broadly, I am interested in formal methods, programming language and security (generally, programming language security and secure compilation).
-I am an active promotor of the secure compilation research field, having developed with my collaborators:
-secure compilation criteria (modular full abstraction, trace-preserving compilation, robustly safe compilation, robust hyperproperty preservation criteria); proof techniques for secure compilation (trace-based backtranslation, approximate context-based backtranslation); instances of secure compilers in action (secure compilation for Spectre, for PMA and for high-level capability machines); teaching material for secure compilation (see my teaching page);</description>
-      </item>
-    
-      <item>
-        <title></title>
-        <link>https://squera.github.io/teaching/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://squera.github.io/teaching/</guid>
-        <description>Below you find recent courses and theses. Further down you find older courses.
-Di seguito trovate i corsi recenti e le proposte di tesi. In fondo alla pagina ci sono i miei vecchi corsi.
-Recent:2022-23 [First semester] Advanced Programming (EN) [First semester] Programming Language Semantics (EN) [Secondo semestre] [Programmazione 2] (IT) Theses Master and Bachelor theses are available upon request, contact me in case you are interested in a master thesis on programming languages and security.</description>
-      </item>
-    
+    <language>en-us</language><atom:link href="https://squera.github.io/courses/index.xml" rel="self" type="application/rss+xml" />
       <item>
         <title>Advanced Programming 2022-23</title>
         <link>https://squera.github.io/courses/ap-22-23/</link>

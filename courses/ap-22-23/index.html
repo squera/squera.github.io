@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.101.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>Advanced Programming 2022-23</title>
+
+
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://squera.github.io/courses/ap-22-23/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Marco Patrignani">
+<meta property="og:title" content="Advanced Programming 2022-23">
+
+  <meta property="og:url" content="https://squera.github.io/courses/ap-22-23/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="article">
+  
+  
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebSite",
+        "@id": "https://squera.github.io"
+      },
+      "headline": "Advanced Programming 2022-23",
+      "description": "",
+      
+      "url": "https://squera.github.io/courses/ap-22-23/",
+      "inLanguage": "en",
+      
+      
+      "wordCount" : "913",
+      "publisher": {
+        "@type": "Person",
+        "name": ""
+      },
+      "author": {
+        "@type": "Person",
+        "name": "",
+        
+        
+      }
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://squera.github.io/css/main.min.8f06e60873be8d196050c790a6cedb89aa90881653120caf5cc2cf8c1c7fcd63.css" integrity="sha256-jwbmCHO&#43;jRlgUMeQps7biaqQiBZTEgyvXMLPjBx/zWM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://squera.github.io/css/noscript.min.c63aa197c1cdbb9146936f72b208955bb7257979da77fce3911555309716908d.css" integrity="sha256-xjqhl8HNu5FGk29ysgiVW7cleXnad/zjkRVVMJcWkI0=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v17-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v17-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v17-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://squera.github.io/js/main.e825f7044baffdc7a30a63e6a25f9fb77c953bb2609eb106c059c15274e099a5.js" integrity="sha256-6CX3BEuv/cejCmPmol&#43;ft3yVO7JgnrEGwFnBUnTgmaU=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Marco Patrignani</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/papers/">Papers</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/research/">Research</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/teaching/">Teaching</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/personal/">Personal</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/lists/">Lists</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>Advanced Programming 2022-23</h1>
+
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>By prof. <a href="https://squera.github.io/about/">Marco Patrignani</a></p>
+
+
+
+
+
+
+
+
+
+  <h4 id="general-course-information"><a class="anchor" href="#general-course-information" title='Anchor for: General Course Information.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> General Course Information</h4> 
+
+<p>This Advanced Programming course has two goals: (1) making you well-versed in a novel, advanced programming language, and (2), making you capable of developing large projects without relying solely on your code.
+Thus, the course will first present the Rust programming language, and then it will have a major W3C-style class-wide project.</p>
+<p>The first part of the class will be more Rust-focussed, while the latter one will be more project-focussed, with working group meetings and the software fair.
+Time permitting (their time), we will have speakers from the industry come in and share their Rust experience with you.</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="useful-links"><a class="anchor" href="#useful-links" title='Anchor for: Useful Links.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Useful Links</h4> 
+
+<ul>
+<li>Rust Book: <a href="https://doc.rust-lang.org/book/title-page.html">https://doc.rust-lang.org/book/title-page.html</a></li>
+<li>Rust Cheat sheet: <a href="https://cs140e.sergio.bz/notes/lec3/cheat-sheet.pdf">https://cs140e.sergio.bz/notes/lec3/cheat-sheet.pdf</a></li>
+<li>Clion IDE: <a href="https://www.jetbrains.com/clion/download/">https://www.jetbrains.com/clion/download/</a></li>
+<li>Piazza: TBD</li>
+<li>Online notes: TBD</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="location-and-time-slots"><a class="anchor" href="#location-and-time-slots" title='Anchor for: Location and Time Slots.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Location and Time Slots</h4> 
+
+<ul>
+<li>Time slot:<br>
+TBD</li>
+<li>Location:<br>
+TBD</li>
+<li>Office hours:<br>
+TBD</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="evaluation-and-grading"><a class="anchor" href="#evaluation-and-grading" title='Anchor for: Evaluation and Grading.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Evaluation and Grading</h4> 
+
+<ul>
+<li>30% 2 small midterms (15% each)</li>
+<li>70% the project (+ its presentation)</li>
+<li>bonuses</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="midterms"><a class="anchor" href="#midterms" title='Anchor for: Midterms.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Midterms</h6> 
+
+<p>We will have 2 small programming midterms with small code problems and where you have to supply your own solution. Each Midterm contributes to 15% of the final score.</p>
+
+
+
+
+
+
+
+
+
+  <h6 id="final-project"><a class="anchor" href="#final-project" title='Anchor for: Final Project.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Final Project</h6> 
+
+<p>The final project is the main evaluation chunk of the class, contributing to 70% of the final score. You&rsquo;ll have to demo your project and describe it in an oral examination too. See the high-level syllabus below for details.</p>
+
+
+
+
+
+
+
+
+
+  <h6 id="bonuses"><a class="anchor" href="#bonuses" title='Anchor for: Bonuses.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Bonuses</h6> 
+
+<ul>
+<li>group bonus (up to 10%) for in-class partecipation</li>
+<li>group bonus (up to 5%) for faire sales</li>
+<li>bonus (up to 5%) for the WG chair</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="high-level-syllabus"><a class="anchor" href="#high-level-syllabus" title='Anchor for: High-level Syllabus.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> High-level Syllabus</h4> 
+
+
+
+
+
+
+
+
+
+
+  <h6 id="what-is-rust-and-why-rust"><a class="anchor" href="#what-is-rust-and-why-rust" title='Anchor for: What is Rust, and Why Rust?.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> What is Rust, and Why Rust?</h6> 
+
+<p>Rust is a relatively new programming language that promises both type (and memory) safety as well as the speed and expressiveness of C++.
+Rust is multi-paradigm, it is especially well suited for systems programming, and it is gaining enormous traction in industry &ndash; virtually all major software companies use Rust.
+Expected topics covered include: the Rust type system (structs, enums, traits, generics), memory management (safety, ownership, borrowing, and lifetimes), multiparadigm programming (functional &ndash;closures, higher order functions &ndash; and object-oriented &ndash; traits, polymorphism &ndash;).
+Note that the goal of class is not to explore all of the nitty-gritty advanced features of Rust (e.g., concurrency or the full trait system), but you&rsquo;ll have enough of an expertise to delve into those topics afterwards!</p>
+
+
+
+
+
+
+
+
+
+  <h6 id="what-is-a-w3c-style-class-wide-project-and-why-should-we-do-it"><a class="anchor" href="#what-is-a-w3c-style-class-wide-project-and-why-should-we-do-it" title='Anchor for: What is a W3C-style class-wide project and Why should we do it?.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> What is a W3C-style class-wide project and Why should we do it?</h6> 
+
+<p>Software is not developed in isolation. Even within the same companies, the final product is the outcome of the interoperation of bits of code written by different company teams.
+What is crucial is that these teams use each other&rsquo;s code, and often also external code, according to some documented API, or specification (aka spec).
+It is therefore important for real-world programmers to be able to not just rely on their code, but be able to both use other people&rsquo;s code as well as supply other people with working code.
+But what is working code? For the sake of simplicity, we&rsquo;ll assume that working code is code that behaves as an agreed-upon specification.
+And here is where the W3C aspect of class kicks in.
+With a gross oversimplification, W3C is the main international standards organization that develops those protocols that make the World Wide Web work.
+In a smaller scale, the class will assume a W3C-like role (as well as structure) and develop the spec that will make the project work.
+Thus, a part of the project will be agreeing on a spec, implement it and &lsquo;sell&rsquo; it.
+Then, another part will be writing code that uses (possibly multiple versions of) that implementation, all of which are not developed by your group.</p>
+
+
+
+
+
+
+
+
+
+  <h6 id="groups-organisation"><a class="anchor" href="#groups-organisation" title='Anchor for: Groups Organisation.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Groups Organisation</h6> 
+
+<p>As mentioned, the class will form in groups of 3 / 4 people, the preferred and suggested size is 4. Each group will have a:</p>
+<ul>
+<li>WG representative</li>
+</ul>
+<p>One group will have:</p>
+<ul>
+<li>a WG representative and the WG chair (who will be neutral)</li>
+</ul>
+<!-- There are two other roles that will rotate between class members: 
+- poll master and 
+- answer machine  
+
+The poll master is responsible of answering the polls that happen during class on behalf of the group (so, sit close by).
+The answer machine will need to provide answers for those questions and exercises that I ask during class (for example, i may ask: "what does this code do? Group 2, answer me" and the answer machine of Group 2 will do just that).
+ -->
+
+
+
+
+
+
+
+
+
+  <h4 id="class-outline"><a class="anchor" href="#class-outline" title='Anchor for: Class Outline.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Class Outline</h4> 
+
+<p><em>Please note that this is tentative and precise class contents can vary slightly</em></p>
+<p>Before class, students are requested to fill in this <a href="https://forms.gle/yP9c6CDmGhMFhBgE9">survey</a>.</p>
+<p>Classes are split between ordinary classes laboratories.
+The former are ordinary classes while the latter serve the purpose of running the W3C-style WG.</p>
+
+
+
+
+
+
+
+
+
+  <h6 id="01-week"><a class="anchor" href="#01-week" title='Anchor for: 01 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 01 Week</h6> 
+
+<ul>
+<li>01 Class - Classlass
+Introduction, class overview, trivial and technicals<br>
+Form groups<br>
+Code examples and flavour of Rust, ide setup</li>
+<li>02 Class - Class<br>
+fundamentals, mutability, functions, testing, options, results,</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="02-week"><a class="anchor" href="#02-week" title='Anchor for: 02 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 02 Week</h6> 
+
+<ul>
+<li>03 Class - Class<br>
+strings, vec, hashmap, ownership</li>
+<li>04 Class - Class<br>
+references, borrowing, slices</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="03-week"><a class="anchor" href="#03-week" title='Anchor for: 03 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 03 Week</h6> 
+
+<ul>
+<li>05 Class - Class<br>
+pattern-matching, collections, errors, enums</li>
+<li>06 Class - Class<br>
+Rust build system +
+Project presentation + WG setup</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="04-week"><a class="anchor" href="#04-week" title='Anchor for: 04 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 04 Week</h6> 
+
+<ul>
+<li>07 Class - Class<br>
+struct/impl</li>
+<li>08 Class - Class + Midterm<br>
+lifetimes</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="05-week"><a class="anchor" href="#05-week" title='Anchor for: 05 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 05 Week</h6> 
+
+<ul>
+<li>09 Class - Class<br>
+Traits</li>
+<li>10 Class - Class<br>
+Polymorphism</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="06-week"><a class="anchor" href="#06-week" title='Anchor for: 06 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 06 Week</h6> 
+
+<ul>
+<li>11 Class - Lab<br>
+WG meeting</li>
+<li>12 Class - Class<br>
+OO in Rust</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="07-week"><a class="anchor" href="#07-week" title='Anchor for: 07 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 07 Week</h6> 
+
+<ul>
+<li>13 Class - Class + Lab<br>
+WG meeting<br>
+heap allocation, smart pointers</li>
+<li>14 Class - Class<br>
+heap allocation, smart pointers</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="08-week"><a class="anchor" href="#08-week" title='Anchor for: 08 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 08 Week</h6> 
+
+<ul>
+<li>15 Class - Lab<br>
+WG meeting</li>
+<li>16 Class - Class<br>
+Interior mutability</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="09-week"><a class="anchor" href="#09-week" title='Anchor for: 09 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 09 Week</h6> 
+
+<ul>
+<li>17 Class - Lab<br>
+WG meeting</li>
+<li>18 Class - Class<br>
+iterators + Midterm</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="10-week"><a class="anchor" href="#10-week" title='Anchor for: 10 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 10 Week</h6> 
+
+<ul>
+<li>19 Class - Lab<br>
+WG meeting + alpha (tentative)</li>
+<li>20 Class - Class<br>
+Functional programming and closures</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="11-week"><a class="anchor" href="#11-week" title='Anchor for: 11 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 11 Week</h6> 
+
+<ul>
+<li>21 Class - Lab<br>
+WG meeting + v1 (tentative)</li>
+<li>22 Class - Class<br>
+external Experts&rsquo; class</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="12-week"><a class="anchor" href="#12-week" title='Anchor for: 12 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 12 Week</h6> 
+
+<ul>
+<li>23 Class - Lab<br>
+Software Faire (tentative)</li>
+<li>24 Class - Class<br>
+external Experts&rsquo; class</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h6 id="13-week"><a class="anchor" href="#13-week" title='Anchor for: 13 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 13 Week</h6> 
+
+<p>Buffer</p>
+
+
+
+
+
+
+
+
+
+  <h6 id="14-week"><a class="anchor" href="#14-week" title='Anchor for: 14 Week.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> 14 Week</h6> 
+
+<p>Buffer</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="1f676b" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="1f676b"><option value="1dbc91"></datalist>
+</div>
+
+
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

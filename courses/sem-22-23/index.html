@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.101.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>Programming Languages Semantics 2022-2023</title>
+
+
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://squera.github.io/courses/sem-22-23/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Marco Patrignani">
+<meta property="og:title" content="Programming Languages Semantics 2022-2023">
+
+  <meta property="og:url" content="https://squera.github.io/courses/sem-22-23/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="article">
+  
+  
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebSite",
+        "@id": "https://squera.github.io"
+      },
+      "headline": "Programming Languages Semantics 2022-2023",
+      "description": "",
+      
+      "url": "https://squera.github.io/courses/sem-22-23/",
+      "inLanguage": "en",
+      
+      
+      "wordCount" : "985",
+      "publisher": {
+        "@type": "Person",
+        "name": ""
+      },
+      "author": {
+        "@type": "Person",
+        "name": "",
+        
+        
+      }
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://squera.github.io/css/main.min.8f06e60873be8d196050c790a6cedb89aa90881653120caf5cc2cf8c1c7fcd63.css" integrity="sha256-jwbmCHO&#43;jRlgUMeQps7biaqQiBZTEgyvXMLPjBx/zWM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://squera.github.io/css/noscript.min.c63aa197c1cdbb9146936f72b208955bb7257979da77fce3911555309716908d.css" integrity="sha256-xjqhl8HNu5FGk29ysgiVW7cleXnad/zjkRVVMJcWkI0=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v17-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v17-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v17-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://squera.github.io/js/main.e825f7044baffdc7a30a63e6a25f9fb77c953bb2609eb106c059c15274e099a5.js" integrity="sha256-6CX3BEuv/cejCmPmol&#43;ft3yVO7JgnrEGwFnBUnTgmaU=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Marco Patrignani</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/papers/">Papers</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/research/">Research</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/teaching/">Teaching</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/personal/">Personal</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/lists/">Lists</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>Programming Languages Semantics 2022-2023</h1>
+
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>By prof. <a href="https://squera.github.io/about/">Marco Patrignani</a></p>
+
+
+
+
+
+
+
+
+
+  <h4 id="general-course-information"><a class="anchor" href="#general-course-information" title='Anchor for: General Course Information.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> General Course Information</h4> 
+
+<p>How can programming language designers ensure that programmers know exactly what their programs do?
+Programming language (PL) theory can help answer this and similar questions precisely.</p>
+<p>In this course, we study fundamental concepts of PL theory that are essential to the design and specification of programming languages.
+We will learn how to formalize fundamental concepts such as program syntax, semantics, and type systems, starting from a minimal language (lambda calculus), which we will then extend progressively with more advanced features (algebraic data types, heaps, recursion, and polymorphism) typical of many existing programming languages. Finally, we will see how these PL concepts enable powerful reasoning principles through the use of logical relations, and how to apply them to enforce security (data confidentiality and integrity) through basic language-based information-flow control techniques.</p>
+<p>The theoretical lectures on the whiteboard will be accompanied with practical computer sessions on the Agda proof assistant.
+In these sessions, we will develop interactively, assisted by Agda, computer-certified software artefacts of formal definitions, theorem statements, and proofs. These artefacts are automatically checked for correctness by Agda and therefore give us high-assurance of the validity of the theoretical results.</p>
+<p>At the end of the course, students will be able to:</p>
+<ol>
+<li>Design expressive programming languages with complex features following established PL methods</li>
+<li>Formalize sophisticated type systems that enforce rich program properties and analyse their guarantees using advanced proof techniques.</li>
+<li>Reason about program equivalence, correctness, and security formally.</li>
+</ol>
+<p>For any question, please contact Marco Patrignani (see mail <a href="/about">here</a>).</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="useful-links"><a class="anchor" href="#useful-links" title='Anchor for: Useful Links.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Useful Links</h4> 
+
+<ul>
+<li>Piazza: TBB</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="prerequisites-and-interests"><a class="anchor" href="#prerequisites-and-interests" title='Anchor for: Prerequisites and Interests.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Prerequisites and Interests</h4> 
+
+<p>Interest in formal languages and formal techniques is important.</p>
+<p>Auditing is welcome.</p>
+<p>Students that show interest in these topics and want to further their knowledge of them and perform research on these topics are welcome to contact the instructors.</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="location-and-time-slots-all-times-are-in-pacific"><a class="anchor" href="#location-and-time-slots-all-times-are-in-pacific" title='Anchor for: Location and Time Slots (all times are in Pacific).'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Location and Time Slots (all times are in Pacific)</h4> 
+
+<ul>
+<li>Time slot:<br>
+TBD</li>
+<li>Location:<br>
+TBD</li>
+<li>Office hours:<br>
+Please drop an email ahead of time if you plan to come.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="evaluation-and-grading"><a class="anchor" href="#evaluation-and-grading" title='Anchor for: Evaluation and Grading.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Evaluation and Grading</h4> 
+
+<p>The course has a number of intermediate assignments and a final exam.
+Assignments will help a student consolidate the skills necessary to understand this course as well as prepare them for the final exam. You can collaborate on solutions to exercises together, but you must write your solution individually, in your own words.</p>
+<ul>
+<li>Assignment 1 [  ] release date: TBD</li>
+<li>Assignment 2 [  ] release date: TBD</li>
+<li>Assignment 3 [  ] release date: TBD</li>
+<li>Assignment 4 [  ] release date: TBD</li>
+</ul>
+<p>Assignment turn-in must happen through Gradescope (see link above).</p>
+<hr>
+<p>The final exam is a take-home set of exercises analogous to those presented in the assignments.
+The same collaboration policy as the assignments applies to the exam as well.
+It will be available on canvas.</p>
+<ul>
+<li>Exam [  ] release date: TBD</li>
+</ul>
+<p>Final exam turn-in must happen through Gradescope (see link above).</p>
+<hr>
+<p>Grading:</p>
+<ul>
+<li>40% assignments</li>
+<li>60% final exam</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="course-material"><a class="anchor" href="#course-material" title='Anchor for: Course Material.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Course Material</h4> 
+
+<p>Courses on foundations on PL are widespread, and there are many textbooks and lecture notes out there.
+However, we focus on quite advanced subjects, and so we recommend the following notes in order to integrate notes taken during class. Please note that the course will indeed follow Dreyer&rsquo;s notes .</p>
+<ul>
+<li>Derek Dreyer&rsquo;s lecture notes <a href="https://plv.mpi-sws.org/semantics/2017/lecturenotes.pdf"> [.pdf] </a></li>
+<li>Benjamin Pierce&rsquo;s TAPL <a href="https://www.amazon.com/Types-Programming-Languages-MIT-Press/dp/0262162091/ref=sr_1_1?keywords=tapl&amp;qid=1552933582&amp;s=gateway&amp;sr=8-1-spell"> amazon </a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="high-level-syllabus"><a class="anchor" href="#high-level-syllabus" title='Anchor for: High-level Syllabus.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> High-level Syllabus</h4> 
+
+<p>The course is divided in the following parts:</p>
+<ul>
+<li><strong>Part 0</strong>: Typesetting PL notions in LaTeX and Knowing Agda
+In order to typeset PL notions in LaTeX (akin to those we see in class), please check out this document <a href="http://theory.stanford.edu/~mp/mp/CS358-2019_files/langref.tex"> langref.tex </a> and the related commands file <a href="http://theory.stanford.edu/~mp/mp/CS358-2019_files/cmds.tex"> cmds.tex </a>, it should compile to this document <a href="http://theory.stanford.edu/~mp/mp/CS358-2019_files/langref.pdf"> .pdf </a>.</li>
+<li><strong>Part 1</strong>: the lambda calculus.
+Here we&rsquo;ll see the untyped (ULC) and the simply-typed lambda calculus (STLC), different forms of operational semantics: structural (SOS) and contextual (COS), types such as pairs, products, properties such as progress, preservation, strong normalisation, semantic type soundness.</li>
+<li><strong>Part 2</strong>: System F
+Here we&rsquo;ll see System F (SF), the polymorphic lambda calculus with universal and existential types, how to encode them in a semantic model of type soundness (or, logical relation: LR), how to scale the previous properties to this complex setting and how to reason about Parametricity.</li>
+<li><strong>Part 3</strong>: Recursion and Mutable State
+Here we&rsquo;ll see how to extend the language with recursive (or \mu) types, their different forms, the semantic model for (now) possibly-diverging computation in the form of Kripke Logical Relations.
+We&rsquo;ll also extend the language with a state, so a heap with operations for allocation, reading and writing to it, changing the computation from pure to impure, we will study the semantic model for stateful computation.</li>
+<li><strong>Part 4</strong>: Program equivalence
+Here we&rsquo;ll learn how to formalise and reason about the semantics of programs and how to tell when they behave the same, we will see what properties to encode as equivalences and how to develop a semantic model for program equivalence.</li>
+<li><strong>Part 5</strong>: Advanced Type Systems
+Here we’ll study advanced type systems such as linear types, security types for secure information flow and non-interference, robust-safety typing, multilanguage semantics.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="class-outline"><a class="anchor" href="#class-outline" title='Anchor for: Class Outline.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#hashtag"/></svg></a> Class Outline</h4> 
+
+<p><em>Please note that this is tentative and precise class contents can vary slightly</em></p>
+<p>Class number  // class content:</p>
+<ol>
+<li>ULC syntax, SOS semantics, examples</li>
+<li>ULC small step CBV, CBN, SOS big step</li>
+<li>ULC contextual semantics, equivalence of SOS and COS</li>
+<li>STLC sums, pairs, encoding if-then-else, typing</li>
+<li>STLC progress and preservation, strong normalisation,</li>
+<li>logical relation (LR), semantic typing, fundamental prop</li>
+<li>STLC compatibility lemmas.</li>
+<li>SF: universal types syntax, typing, semantics, existential types &amp; records.</li>
+<li>SF new logical relation &amp; compatibility lemmas</li>
+<li>Free theorems</li>
+<li>Assertions, type safety despite untypability, using the value relation for existentials</li>
+<li>Mu types, iso and equi recursive types, step-indexed LR for mu types</li>
+<li>References, usage and typing</li>
+<li>Kripke worlds</li>
+<li>LR with references</li>
+<li>Advanced type systems: Non interference pt1</li>
+<li>Advanced type systems: Non interference pt2</li>
+<li>Contextual equivalence (CEQ), program contexts</li>
+<li>Binary logical relation for CEQ and for parametricity, representation independence</li>
+<li>Advanced type systems: speculative semantics and spectre</li>
+<li>Advanced type systems: linear typing</li>
+<li>..</li>
+<li>..</li>
+<li>..</li>
+</ol>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.ae45e7a9a0a65150dd900a58f35fe84d.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="1f676b" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="1f676b"><option value="1dbc91"></datalist>
+</div>
+
+
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>
