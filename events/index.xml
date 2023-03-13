@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marco Patrignani</title>
+    <link>https://squera.github.io/events/</link>
+    <description></description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://squera.github.io/events/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title></title>
+        <link>https://squera.github.io/events/fcs23/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/events/fcs23/</guid>
+        <description> FCS 2023: Workshop on Foundations of Computer Security 9th July 2023 - Dubrovnik, Croatia &amp;ndash; co-located with CSF23
+New Format: a Workshop-Mentoring Event Important Dates &amp;amp; Submission Submission Registration Program All times are in Central European Time (CET), which is GMT+1.
+Program Committee Misc </description>
+      </item>
+    
+  </channel>
+</rss>

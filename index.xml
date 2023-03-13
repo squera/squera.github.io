@@ -8,6 +8,17 @@
     <language>en-us</language><atom:link href="https://squera.github.io/index.xml" rel="self" type="application/rss+xml" />
       <item>
         <title></title>
+        <link>https://squera.github.io/fcs23/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/fcs23/</guid>
+        <description> FCS 2023: Workshop on Foundations of Computer Security 9th July 2023 - Dubrovnik, Croatia &amp;ndash; co-located with CSF23
+New Format: a Workshop-Mentoring Event Important Dates &amp;amp; Submission Submission Registration Program All times are in Central European Time (CET), which is GMT+1.
+Program Committee Misc </description>
+      </item>
+    
+      <item>
+        <title></title>
         <link>https://squera.github.io/lists/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
@@ -60,7 +71,7 @@ secure compilation criteria (modular full abstraction, trace-preserving compilat
         <guid>https://squera.github.io/teaching/</guid>
         <description>Below you find recent courses, internship and theses proposals. Further down you find older courses.
 Di seguito trovate i corsi recenti e le proposte di tirocinio e di tesi. In fondo alla pagina ci sono i miei vecchi corsi.
-I am looking for: 1 PhD student (at UniTN) on PL &amp;amp; security 1 PhD student (at CISPA) on PL &amp;amp; security 1 student researcher (at UniTN) Recent:2022-23 [First semester] Advanced Programming (EN) [First semester] Programming Language Semantics (EN) [Secondo semestre] [Programmazione 2] (IT) Internship Bachelor students can work with me via the 9CFU internship.</description>
+I am looking for: 1 PhD student (at UniTN) on PL &amp;amp; security 1 PhD student (at CISPA) on PL &amp;amp; security 1 student researcher (at UniTN) Recent:2022-23 [First semester] Advanced Programming (EN) [First semester] Programming Language Semantics (EN) [Secondo semestre] Programmazione 2 (IT) Internship Bachelor students can work with me via the 9CFU internship.</description>
       </item>
     
       <item>
