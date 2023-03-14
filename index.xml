@@ -8,17 +8,6 @@
     <language>en-us</language><atom:link href="https://squera.github.io/index.xml" rel="self" type="application/rss+xml" />
       <item>
         <title></title>
-        <link>https://squera.github.io/fcs23/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://squera.github.io/fcs23/</guid>
-        <description> FCS 2023: Workshop on Foundations of Computer Security 9th July 2023 - Dubrovnik, Croatia &amp;ndash; co-located with CSF23
-New Format: a Workshop-Mentoring Event Important Dates &amp;amp; Submission Submission Registration Program All times are in Central European Time (CET), which is GMT+1.
-Program Committee Misc </description>
-      </item>
-    
-      <item>
-        <title></title>
         <link>https://squera.github.io/lists/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
@@ -72,6 +61,16 @@ secure compilation criteria (modular full abstraction, trace-preserving compilat
         <description>Below you find recent courses, internship and theses proposals. Further down you find older courses.
 Di seguito trovate i corsi recenti e le proposte di tirocinio e di tesi. In fondo alla pagina ci sono i miei vecchi corsi.
 I am looking for: 1 PhD student (at UniTN) on PL &amp;amp; security 1 PhD student (at CISPA) on PL &amp;amp; security 1 student researcher (at UniTN) Recent:2022-23 [First semester] Advanced Programming (EN) [First semester] Programming Language Semantics (EN) [Secondo semestre] Programmazione 2 (IT) Internship Bachelor students can work with me via the 9CFU internship.</description>
+      </item>
+    
+      <item>
+        <title> FCS 2023: Workshop on Foundations of Computer Security &lt;br&gt; &lt;p align=center&gt;9th July  2023 - Dubrovnik, Croatia -- co-located with &lt;a href=https://csf2023.ieee-security.org/&gt;CSF23&lt;/a&gt; &lt;/p&gt; </title>
+        <link>https://squera.github.io/fcs23/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/fcs23/</guid>
+        <description>New Format: a Workshop-Mentoring Event Computer security is an established field of both theoretical and practical significance. In recent years, there has been sustained interest in the formal foundations of methods used in computer security. The first goal of the FCS 2023 workshop is to provide a forum for the discussion of continued research in this area.
+FCS 2023 also wants to provide young researchers with a place where to form long-term connections in the research community, and to access the perspectives of researchers from other institutions.</description>
       </item>
     
       <item>
