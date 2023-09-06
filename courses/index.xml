@@ -59,5 +59,16 @@ General Course Information How can programming language designers ensure that pr
 In this course, we study fundamental concepts of PL theory that are essential to the design and specification of programming languages. We will learn how to formalize fundamental concepts such as program syntax, semantics, and type systems, starting from a minimal language (lambda calculus), which we will then extend progressively with more advanced features (algebraic data types, heaps, recursion, and polymorphism) typical of many existing programming languages.</description>
       </item>
     
+      <item>
+        <title>Programming Languages Semantics 2023-2024</title>
+        <link>https://squera.github.io/courses/sem-23-24/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/courses/sem-23-24/</guid>
+        <description>By prof. Marco Patrignani
+General Course Information How can programming language designers ensure that programmers know exactly what their programs do? Programming language (PL) theory can help answer this and similar questions precisely.
+In this course, we study fundamental concepts of PL theory that are essential to the design and specification of programming languages. We will learn how to formalize fundamental concepts such as program syntax, semantics, and type systems, starting from a minimal language (lambda calculus), which we will then extend progressively with more advanced features (algebraic data types, heaps, recursion, and polymorphism) typical of many existing programming languages.</description>
+      </item>
+    
   </channel>
 </rss>
