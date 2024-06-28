@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataIndex battleScribeVersion="2.03" name="C5" indexUrl="https://squera.github.io/misc/c5/" xmlns="http://www.battlescribe.net/schema/dataIndexSchema">
+  <dataIndexEntries>
+    <dataIndexEntry filePath="Confr_[C5].gstz" dataType="gamesystem" dataId="5fd679b4-a5a1-6c30-3721-e2bf973a23b8" dataName="Confrontation [C5]" dataBattleScribeVersion="2.03" dataRevision="12"/>
+    <dataIndexEntry filePath="Bran-O-Kor_Orcs_[C5].catz" dataType="catalogue" dataId="7ee9-18f8-367a-6115" dataName="Orcs of Bran-O-Kor [C5]" dataBattleScribeVersion="2.03" dataRevision="3"/>
+    <dataIndexEntry filePath="Daikinee_Elves_[C5].catz" dataType="catalogue" dataId="c774-e224-7374-ecfb" dataName="Daikinee Elves [C5]" dataBattleScribeVersion="2.03" dataRevision="4"/>
+    <dataIndexEntry filePath="Mid-Nor_Dwarves_[C5].catz" dataType="catalogue" dataId="9c3f-41e1-d587-3561" dataName="Mid-Nor Dwarves [C5]" dataBattleScribeVersion="2.03" dataRevision="3"/>
+    <dataIndexEntry filePath="Kelt_Sessair_[C5].catz" dataType="catalogue" dataId="ce13-54cc-4798-6702" dataName="Kelt Sessair [C5]" dataBattleScribeVersion="2.03" dataRevision="17"/>
+    <dataIndexEntry filePath="Tir-Na-Bor_Dwarves_[C5].catz" dataType="catalogue" dataId="8602-9a42-ef68-c75f" dataName="Tir-Na-Bor Dwarves [C5]" dataBattleScribeVersion="2.03" dataRevision="17"/>
+    <dataIndexEntry filePath="Spells.catz" dataType="catalogue" dataId="8d61-813b-713b-e943" dataName="Spells" dataBattleScribeVersion="2.03" dataRevision="8"/>
+    <dataIndexEntry filePath="Acheron_Undeads_[C5] 240622132631632 240622133142324 240622133410720 240622133805174.catz" dataType="catalogue" dataId="f611aa9e-22d0-1b4e-5a66-bbd5763d1f1a" dataName="Acheron Undeads [C5]" dataBattleScribeVersion="2.03" dataRevision="215"/>
+    <dataIndexEntry filePath="Dirz_Alchemists_[C5].catz" dataType="catalogue" dataId="3b5b03eb-d430-7b18-bead-870be27d7198" dataName="Dirz Alchemists [C5]" dataBattleScribeVersion="2.03" dataRevision="74"/>
+    <dataIndexEntry filePath="Kelt_Drunes_[C5].catz" dataType="catalogue" dataId="67f3-5dd4-c7d2-e985" dataName="Kelt Drunes [C5]" dataBattleScribeVersion="2.03" dataRevision="16"/>
+    <dataIndexEntry filePath="Akkylannie_Griffins_[C5].catz" dataType="catalogue" dataId="ce3a5ad7-6925-1888-ffe8-94a72096defb" dataName="Akkylannie Griffins [C5]" dataBattleScribeVersion="2.03" dataRevision="69"/>
+    <dataIndexEntry filePath="Alahan_Lions_[C5].catz" dataType="catalogue" dataId="606146b9-7c3a-49e6-1d60-01d548bc9737" dataName="Alahan Lions [C5]" dataBattleScribeVersion="2.03" dataRevision="31"/>
+    <dataIndexEntry filePath="Miracles.catz" dataType="catalogue" dataId="e822-05d1-c2b6-fb85" dataName="Miracles" dataBattleScribeVersion="2.03" dataRevision="5"/>
+    <dataIndexEntry filePath="TEMPLATE.catz" dataType="catalogue" dataId="f228-3b3f-693e-e31f" dataName="TEMPLARRRRRRE" dataBattleScribeVersion="2.03" dataRevision="3"/>
+  </dataIndexEntries>
+</dataIndex>
