@@ -13,7 +13,7 @@
         
         <guid>https://squera.github.io/lists/</guid>
         <description>I enjoy keeping track of things I’ve enjoyed such as books, places I skied and some D&amp;amp;D stuff.
-Books 2024: Forge of the high mage by Ian C. Esslemont The lady of the lake Andrzej Sapkowski 2023: The tower of the swallow Andrzej Sapkowski Baptism of fire Andrzej Sapkowski 2022: Time of contempt Andrzej Sapkowski Blood of elves Andrzej Sapkowski The last wish Andrzej Sapkowski 2021: The Tales Of Bauchelain and Korbal Broach, Vol 1 (Malazan Empire) by Steven Erikson 2020: Kellanved&amp;rsquo;s reach by Ian C.</description>
+Books 2025: Gardens of the moon [1st reread] by Steven Erikson 2024: Forge of the high mage by Ian C. Esslemont The lady of the lake Andrzej Sapkowski 2023: The tower of the swallow Andrzej Sapkowski Baptism of fire Andrzej Sapkowski 2022: Time of contempt Andrzej Sapkowski Blood of elves Andrzej Sapkowski The last wish Andrzej Sapkowski 2021: The Tales Of Bauchelain and Korbal Broach, Vol 1 (Malazan Empire) by Steven Erikson 2020: Kellanved&amp;rsquo;s reach by Ian C.</description>
       </item>
     
       <item>
@@ -60,7 +60,7 @@ secure compilation criteria (modular full abstraction, trace-preserving compilat
         <guid>https://squera.github.io/teaching/</guid>
         <description>Below you find recent courses, internship and theses proposals. Further down you find older courses.
 Di seguito trovate i corsi recenti e le proposte di tirocinio e di tesi. In fondo alla pagina ci sono i miei vecchi corsi.
-I do not have open positions at the moment. Recent:2024-25 [First semester] Advanced Programming (EN) [First semester] Programming Language Semantics (+ local page) (EN) [First semester] Teaching Programming Languages (IT) [Secondo semestre] Programmazione 2 (IT) Theses Master and Bachelor theses are available upon request, look here in case you are interested in a thesis on programming languages and security.</description>
+I do not have open positions at the moment. Recent:2025-26 [First semester] Advanced Programming (EN) [First semester] Teaching Programming Languages (IT) [Second semester] Programming Language Semantics (+ local page) (EN) [Secondo semestre] Programmazione 2 (IT) Theses Master and Bachelor theses are available upon request, look here in case you are interested in a thesis on programming languages and security.</description>
       </item>
     
       <item>
@@ -146,6 +146,16 @@ In this course, we study fundamental concepts of PL theory that are essential to
         <description>By prof. Marco Patrignani
 General Course Information How can programming language designers ensure that programmers know exactly what their programs do? Programming language (PL) theory can help answer this and similar questions precisely.
 In this course, we study fundamental concepts of PL theory that are essential to the design and specification of programming languages. We will learn how to formalize fundamental concepts such as program syntax, semantics, and type systems, starting from a minimal language (lambda calculus), which we will then extend progressively with more advanced features (algebraic data types, heaps, recursion, and polymorphism) typical of many existing programming languages.</description>
+      </item>
+    
+      <item>
+        <title>Trento E Lode</title>
+        <link>https://squera.github.io/trentoelode/tel/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/trentoelode/tel/</guid>
+        <description>Obiettivi Il progetto Trento&amp;amp;Lode (T&amp;amp;L) vuole fornire tutte le indicazioni necessarie a quegli studenti del DISI che (1) hanno ambizioni di eccellenza accademica, e (2) progettano già di fare la magistrale in un altro ateneo fuori dall&amp;rsquo;Italia (perchè se volete stare in Italia, meglio stare al DISI).
+Una volta compiuto il vostro percorso all&amp;rsquo;estero, ci auguriamo che vogliate poi tornare in italia, come molti di noi han fatto, e infatti questo sito fornisce indicazioni anche al riguardo.</description>
       </item>
     
   </channel>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marco Patrignani</title>
+    <link>https://squera.github.io/trentoelode/</link>
+    <description></description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://squera.github.io/trentoelode/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>Trento E Lode</title>
+        <link>https://squera.github.io/trentoelode/tel/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://squera.github.io/trentoelode/tel/</guid>
+        <description>Obiettivi Il progetto Trento&amp;amp;Lode (T&amp;amp;L) vuole fornire tutte le indicazioni necessarie a quegli studenti del DISI che (1) hanno ambizioni di eccellenza accademica, e (2) progettano già di fare la magistrale in un altro ateneo fuori dall&amp;rsquo;Italia (perchè se volete stare in Italia, meglio stare al DISI).
+Una volta compiuto il vostro percorso all&amp;rsquo;estero, ci auguriamo che vogliate poi tornare in italia, come molti di noi han fatto, e infatti questo sito fornisce indicazioni anche al riguardo.</description>
+      </item>
+    
+  </channel>
+</rss>
